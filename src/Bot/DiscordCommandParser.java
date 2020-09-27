@@ -2,6 +2,8 @@ package Bot;
 
 import Command.CommandData;
 
+import java.util.Arrays;
+
 public class DiscordCommandParser implements CommandParser {
 
     private final String prefix;
@@ -20,8 +22,8 @@ public class DiscordCommandParser implements CommandParser {
         line = line.substring(prefix.length()).toLowerCase();
         if (line.isEmpty())
             throw new IllegalArgumentException("Строка не содержит команду");
-        var parts = line.split(" ", 2);
-        return new CommandData(parts[0], parts.length > 1 ? parts[1] : "");
+        var parts = line.split(" ");
+        return new CommandData(parts[0], (String[])Arrays.stream(parts).skip(1).toArray());
     }
 
 }

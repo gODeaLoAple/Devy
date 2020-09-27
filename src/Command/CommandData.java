@@ -2,18 +2,18 @@ package Command;
 
 public class CommandData {
     private final String name;
-    private final String line;
+    private final String[] args;
 
-    public CommandData(String name, String line) {
+    public CommandData(String name, String[] args) {
         this.name = name;
-        this.line = line;
+        this.args = args;
     }
 
     public String getName() {
         return name;
     }
 
-    public String getLine() {
-        return line;
+    public String[] getArgs() {
+        return args;
     }
 }
