@@ -1,15 +1,22 @@
 package Command;
+import Bot.HelperBot;
+import com.beust.jcommander.JCommander;
 
-import Bot.GroupInfo;
-import jdk.jshell.spi.ExecutionControl;
+public abstract class Command {
+    protected HelperBot bot;
+    public void execute(CommandData command){ //для логгирования, например
+        ParseArgs(command);
+    };
+    public abstract String getName();
 
-public class Command {
-
-    public Command(GroupInfo group, CommandData data) {
-
+    public Command(Bot.HelperBot bot){
+        this.bot = bot;
     }
 
-    public CommandResult Execute() {
-        return null;
+    public void ParseArgs(CommandData command){
+        JCommander.newBuilder()
+                .addObject(this)
+                .build()
+                .parse(command.getArgs());
     }
 }

@@ -23,7 +23,7 @@ public class DiscordBot implements Bot {
         var groupId = group.getId();
         if (!helpers.containsKey(groupId))
             throw new IllegalArgumentException("Группа не найдена");
-        helpers.get(groupId).Execute(parser.Parse(line));
+        helpers.get(groupId).execute(parser.Parse(line));
     }
 
     @Override

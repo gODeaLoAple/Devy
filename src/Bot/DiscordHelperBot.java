@@ -3,7 +3,7 @@ package Bot;
 import Command.CommandData;
 import Command.CommandFactory;
 
-public class DiscordHelperBot {
+public class DiscordHelperBot implements HelperBot{
 
     private final GroupInfo group;
 
@@ -11,8 +11,11 @@ public class DiscordHelperBot {
         this.group = group;
     }
 
-    public void Execute(CommandData data) {
-        DiscordBot.getInstance()
-                .Send(CommandFactory.Create(group, data).Execute().Stringify());
+    public void execute(CommandData data) {
+        CommandFactory.create(this, data.getName()).execute(data);
+    }
+
+    public void send(String message){
+        DiscordBot.getInstance().Send(message);
     }
 }
