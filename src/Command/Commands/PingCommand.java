@@ -29,6 +29,6 @@ public class PingCommand extends Command {
 
     @Override
     public String getInfo() {
-        bot.send("send ping to get pong response");
+        return "send ping to get pong response";
     }
 }

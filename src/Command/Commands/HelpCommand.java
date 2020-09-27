@@ -19,7 +19,7 @@ public class HelpCommand extends Command{
 
     @Override
     public String getInfo() {
-        bot.send("help about help =)?");
+        return "help about help =)?";
     }
 
     @Override
