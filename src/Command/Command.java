@@ -8,6 +8,7 @@ public abstract class Command {
         ParseArgs(command);
     };
     public abstract String getName();
+    public abstract String getInfo();
 
     public Command(Bot.HelperBot bot){
         this.bot = bot;
