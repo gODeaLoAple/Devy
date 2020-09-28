@@ -13,7 +13,7 @@ public class DiscordCommandParser implements CommandParser {
     }
 
     @Override
-    public CommandData Parse(String line) {
+    public CommandData parse(String line) {
         line = line.strip();
         if (line.isEmpty())
             throw new IllegalArgumentException("Строка должна содержать непробельные символы");

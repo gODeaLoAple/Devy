@@ -1,5 +1,5 @@
 package Command;
 
 public interface CommandResult {
-    String Stringify();
+    String stringify();
 }

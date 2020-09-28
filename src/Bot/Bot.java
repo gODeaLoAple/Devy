@@ -1,8 +1,8 @@
 package Bot;
 
 public interface Bot {
-    void Send(String message);
-    void Receive(GroupInfo from, String message);
-    void AddGroup(GroupInfo group);
-    void RemoveGroup(GroupInfo group);
+    void send(String message);
+    void receive(GroupInfo from, String message);
+    void addGroup(GroupInfo group);
+    void removeGroup(GroupInfo group);
 }

@@ -19,25 +19,25 @@ public class DiscordBot implements Bot {
         return instance;
     }
 
-    public void Execute(GroupInfo group, String line) {
+    public void execute(GroupInfo group, String line) {
         var groupId = group.getId();
         if (!helpers.containsKey(groupId))
             throw new IllegalArgumentException("Группа не найдена");
-        helpers.get(groupId).execute(parser.Parse(line));
+        helpers.get(groupId).execute(parser.parse(line));
     }
 
     @Override
-    public void Send(String message) {
+    public void send(String message) {
 
     }
 
     @Override
-    public void Receive(GroupInfo from, String message) {
-        Execute(from, message);
+    public void receive(GroupInfo from, String message) {
+        execute(from, message);
     }
 
     @Override
-    public void RemoveGroup(GroupInfo group) {
+    public void removeGroup(GroupInfo group) {
        var groupId = group.getId();
        if (!helpers.containsKey(groupId))
            throw new IllegalArgumentException("Группа не была добавлена");
@@ -45,7 +45,7 @@ public class DiscordBot implements Bot {
     }
 
     @Override
-    public void AddGroup(GroupInfo group) {
+    public void addGroup(GroupInfo group) {
         var groupId = group.getId();
         if (helpers.containsKey(groupId))
             throw new IllegalArgumentException("Группа уже была добавлена");

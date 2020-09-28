@@ -7,7 +7,6 @@ import com.beust.jcommander.Parameter;
 public class PingCommand extends Command {
     @Parameter(names = {"-f, --fuck"}, description = "don't press f")
     protected boolean fuck;
-    public static Integer aaa = 123;
 
     @Parameter(description = "some text if you want")
     protected String[] text;
@@ -19,7 +18,12 @@ public class PingCommand extends Command {
     @Override
     public void execute(CommandData command) {
         super.execute(command);
-        bot.send("Pong " + String.join(" ", text) + (fuck ? "FUCK YOURSELF" : ""));
+        var result = new StringBuilder("Pong ");
+        if(text != null && text.length != 0)
+            result.append(String.join(" ", text));
+        if(fuck)
+            result.append("FUCK YOURSELF");
+        bot.send(result.toString());
     }
 
     @Override

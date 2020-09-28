@@ -5,7 +5,7 @@ import com.beust.jcommander.JCommander;
 public abstract class Command {
     protected HelperBot bot;
     public void execute(CommandData command){ //для логгирования, например
-        ParseArgs(command);
+        parseArgs(command);
     };
     public abstract String getName();
     public abstract String getInfo();
@@ -14,7 +14,7 @@ public abstract class Command {
         this.bot = bot;
     }
 
-    public void ParseArgs(CommandData command){
+    public void parseArgs(CommandData command){
         JCommander.newBuilder()
                 .addObject(this)
                 .build()
