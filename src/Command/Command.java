@@ -7,8 +7,6 @@ public abstract class Command {
     public void execute(CommandData command){ //для логгирования, например
         parseArgs(command);
     };
-    public abstract String getName();
-    public abstract String getInfo();
 
     public Command(Bot.HelperBot bot){
         this.bot = bot;

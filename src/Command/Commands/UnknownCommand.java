@@ -12,14 +12,4 @@ public class UnknownCommand extends Command{
     public void execute(CommandData command) {
         bot.send("Unknown command. Try again!");
     }
-
-    @Override
-    public String getName() {
-        return "";
-    }
-
-    @Override
-    public String getInfo() {
-        return null;
-    }
 }

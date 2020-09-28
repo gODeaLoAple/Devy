@@ -4,6 +4,7 @@ import Bot.HelperBot;
 import Command.*;
 import com.beust.jcommander.Parameter;
 
+@CommandAnnotation(name = "ping")
 public class PingCommand extends Command {
     @Parameter(names = {"-f, --fuck"}, description = "don't press f")
     protected boolean fuck;
@@ -16,23 +17,13 @@ public class PingCommand extends Command {
     }
 
     @Override
-    public void execute(CommandData command) {
+    public void execute(CommandData command){
         super.execute(command);
         var result = new StringBuilder("Pong ");
-        if(text != null && text.length != 0)
+        if (text != null && text.length != 0)
             result.append(String.join(" ", text));
-        if(fuck)
+        if (fuck)
             result.append("FUCK YOURSELF");
         bot.send(result.toString());
-    }
-
-    @Override
-    public String getName() {
-        return "Ping";
-    }
-
-    @Override
-    public String getInfo() {
-        return "send ping to get pong response";
     }
 }

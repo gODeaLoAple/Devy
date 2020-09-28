@@ -3,6 +3,7 @@ import Bot.HelperBot;
 import Command.*;
 import com.beust.jcommander.Parameter;
 
+@CommandAnnotation(name = "help")
 public class HelpCommand extends Command{
 
     public HelpCommand(HelperBot bot) {
@@ -13,17 +14,7 @@ public class HelpCommand extends Command{
     private String targetCommand;
 
     @Override
-    public String getName() {
-        return null;
-    }
-
-    @Override
-    public String getInfo() {
-        return "help about help =)?";
-    }
-
-    @Override
-    public void execute(CommandData command) {
+    public void execute(CommandData command){
         super.execute(command);
         if(targetCommand.isEmpty()){
             //info about concrete command. mb reflection
