@@ -3,7 +3,7 @@ import Bot.HelperBot;
 import Command.*;
 import com.beust.jcommander.Parameter;
 
-public class HelpCommand extends Command{
+public class HelpCommand extends Command {
 
     public HelpCommand(HelperBot bot) {
         super(bot);
@@ -23,14 +23,12 @@ public class HelpCommand extends Command{
     }
 
     @Override
-    public void execute(CommandData command) {
-        super.execute(command);
+    public String execute(CommandData command) {
         if(targetCommand.isEmpty()){
             //info about concrete command. mb reflection
-            bot.send("help me");
-            return;
+            return "help me";
         }
         //info about all commands
-        bot.send("help");
+        return "help";
     }
 }

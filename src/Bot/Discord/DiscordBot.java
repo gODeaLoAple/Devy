@@ -1,16 +1,21 @@
-package Bot;
+package Bot.Discord;
+
+import Bot.Bot;
+import Bot.HelperBot;
+import Command.CommandParser;
+import Goups.GroupInfo;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class DiscordBot implements Bot {
-    private static final String DISCORD_BOT_TOKEN = "";
-    private static DiscordBot instance;
-    private final Map<Integer, DiscordHelperBot> helpers = new HashMap<>();
-    private final DiscordCommandParser parser;
+    public static final String DISCORD_BOT_TOKEN = "";
+    protected static DiscordBot instance;
+    protected final Map<Integer, HelperBot> helpers = new HashMap<>();
+    protected final CommandParser parser;
 
     private DiscordBot() {
-        parser = new DiscordCommandParser("$");
+        parser = new CommandParser("$");
     }
 
     public static DiscordBot getInstance() {
@@ -23,12 +28,12 @@ public class DiscordBot implements Bot {
         var groupId = group.getId();
         if (!helpers.containsKey(groupId))
             throw new IllegalArgumentException("Группа не найдена");
-        helpers.get(groupId).execute(parser.parse(line));
+        send(helpers.get(groupId).execute(parser.parse(line)));
     }
 
     @Override
     public void send(String message) {
-
+        System.out.println(message);
     }
 
     @Override
@@ -49,8 +54,7 @@ public class DiscordBot implements Bot {
         var groupId = group.getId();
         if (helpers.containsKey(groupId))
             throw new IllegalArgumentException("Группа уже была добавлена");
-        helpers.put(groupId, new DiscordHelperBot(group));
+        helpers.put(groupId, new HelperBot(group));
     }
 
 }
-

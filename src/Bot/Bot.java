@@ -1,5 +1,7 @@
 package Bot;
 
+import Goups.GroupInfo;
+
 public interface Bot {
     void send(String message);
     void receive(GroupInfo from, String message);

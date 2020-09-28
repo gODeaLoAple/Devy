@@ -16,14 +16,13 @@ public class PingCommand extends Command {
     }
 
     @Override
-    public void execute(CommandData command) {
-        super.execute(command);
+    public String execute(CommandData command) {
         var result = new StringBuilder("Pong ");
         if(text != null && text.length != 0)
             result.append(String.join(" ", text));
         if(fuck)
             result.append("FUCK YOURSELF");
-        bot.send(result.toString());
+        return result.toString();
     }
 
     @Override

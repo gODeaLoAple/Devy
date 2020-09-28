@@ -1,4 +1,4 @@
-package Bot;
+package Goups;
 
 public class GroupInfo {
     private final Integer id;

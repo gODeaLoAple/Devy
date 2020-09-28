@@ -9,8 +9,8 @@ public class UnknownCommand extends Command{
     }
 
     @Override
-    public void execute(CommandData command) {
-        bot.send("Unknown command. Try again!");
+    public String execute(CommandData command) {
+        return "Unknown command. Try again!";
     }
 
     @Override
