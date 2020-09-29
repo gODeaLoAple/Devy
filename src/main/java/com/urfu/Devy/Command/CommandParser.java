@@ -10,24 +10,23 @@ public class CommandParser {
         this.prefix = prefix;
     }
 
-    public CommandData parse(String line) {
+
+    public String getPrefix() {
+        return prefix;
+    }
+
+    public CommandData parse(String line) throws ParseCommandException {
         line = line.strip().toLowerCase();
-        validateLine(line);
-        var parts = line.substring(prefix.length()).split(" ");
-        validateParts(parts);
-        return new CommandData(parts[0], Arrays.copyOfRange(parts, 1, parts.length));
-    }
-
-    private void validateLine(String line) {
-        if (line.isEmpty())
-            throw new IllegalArgumentException("Строка должна содержать непробельные символы");
         if (!line.startsWith(prefix))
-            throw new IllegalArgumentException(String.format("Строка должна начинаться с %s", prefix));
+            throw new ParseCommandException(String.format("Строка должна начинаться с %s", prefix));
+        return parseLineWithoutPrefix(line.substring(prefix.length()).strip());
     }
 
-    private void validateParts(String[] parts) {
-        if (parts.length == 0)
-            throw new IllegalArgumentException("Список аргументов пуст");
+    protected CommandData parseLineWithoutPrefix(String line) throws ParseCommandException {
+        if (line.isEmpty())
+            throw new ParseCommandException("Строка должна включать в себя команду");
+        var parts = line.split("\s+");
+        return new CommandData(parts[0], Arrays.copyOfRange(parts, 1, parts.length));
     }
 
 }

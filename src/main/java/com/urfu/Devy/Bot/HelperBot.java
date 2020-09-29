@@ -6,10 +6,10 @@ import main.java.com.urfu.Devy.Goups.GroupInfo;
 
 public class HelperBot {
 
-    private final GroupInfo group;
+    protected final GroupInfo group;
 
-    public HelperBot(GroupInfo group) {
-        this.group = group;
+    public HelperBot(GroupInfo groupInfo) {
+        group = groupInfo;
     }
 
     public String execute(CommandData data) {

@@ -3,32 +3,32 @@ package main.java.com.urfu.Devy.Bot.Discord;
 import main.java.com.urfu.Devy.Bot.Bot;
 import main.java.com.urfu.Devy.Bot.HelperBot;
 import main.java.com.urfu.Devy.Command.CommandParser;
+import main.java.com.urfu.Devy.Command.ParseCommandException;
 import main.java.com.urfu.Devy.Goups.GroupInfo;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class DiscordBot implements Bot {
-    public static final String DISCORD_BOT_TOKEN = "";
-    protected static DiscordBot instance;
     protected final Map<Integer, HelperBot> helpers = new HashMap<>();
     protected final CommandParser parser;
+    protected final String token;
 
-    private DiscordBot() {
+    public DiscordBot(String discordToken) {
+        token = discordToken;
         parser = new CommandParser("$");
-    }
-
-    public static DiscordBot getInstance() {
-        if (instance == null)
-            instance = new DiscordBot();
-        return instance;
     }
 
     public void execute(GroupInfo group, String line) {
         var groupId = group.getId();
         if (!helpers.containsKey(groupId))
             throw new IllegalArgumentException("Группа не найдена");
-        send(helpers.get(groupId).execute(parser.parse(line)));
+        try {
+            send(helpers.get(groupId).execute(parser.parse(line)));
+        }
+        catch (ParseCommandException e) {
+            send(e.getMessage());
+        }
     }
 
     @Override

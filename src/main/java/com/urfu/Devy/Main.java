@@ -6,7 +6,7 @@ import main.java.com.urfu.Devy.Goups.GroupInfo;
 public class Main {
 
     public static void main(String[] args) {
-        var bot = DiscordBot.getInstance();
+        var bot = new DiscordBot("nope");
         var exampleGroup = new GroupInfo(1);
         bot.addGroup(exampleGroup);
         bot.receive(exampleGroup, "$lljk");
