@@ -3,7 +3,7 @@ package test.java.com.urfu.Devy;
 import main.java.com.urfu.Devy.Command.CommandData;
 import main.java.com.urfu.Devy.Command.CommandParser;
 import main.java.com.urfu.Devy.Command.ParseCommandException;
-import org.junit.jupiter.api.Test;
+import org.testng.annotations.Test;
 
 public class ParserTest {
 

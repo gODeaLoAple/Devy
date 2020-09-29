@@ -2,6 +2,7 @@ package main.java.com.urfu.Devy.Command;
 
 import main.java.com.urfu.Devy.Command.Commands.HelpCommand;
 import main.java.com.urfu.Devy.Command.Commands.PingCommand;
+import org.reflections.Reflections;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -12,23 +13,13 @@ public class CommandsController {
     private static final Map<String, Class<? extends Command>> commands = new HashMap<>(){};
 
     public static void constructCommandsDictionary(){
-        //var commandClasses = (new Reflections(Parent.class)).getSubTypesOf(Parent.class);
-        //var a = 0; //.getSubTypesOf(Command.class);
-        commands.put("ping", PingCommand.class);
-        commands.put("help", HelpCommand.class);
-        //System.out.println(Command.class);
-        //System.out.println(commandClasses);
-        //for(var command : commandClasses){
-        //    if(command.isAnnotationPresent(CommandAnnotation.class)){
-        //        var annotation = command.getDeclaredAnnotation(CommandAnnotation.class);
-        //        try {
-        //            System.out.println(annotation.name());
-        //            commands.put(annotation.name(), command.getConstructor(HelperBot.class));
-        //        } catch (NoSuchMethodException e) {
-        //            e.printStackTrace();
-        //        }
-        //    }
-        //}
+        var commandClasses = (new Reflections(Command.class)).getSubTypesOf(Command.class);
+        for(var command : commandClasses) {
+            if (command.isAnnotationPresent(CommandName.class)) {
+                var annotation = command.getDeclaredAnnotation(CommandName.class);
+                commands.put(annotation.name(), command);
+            }
+        }
     }
 
     public static Class<? extends Command> getCommand(String commandName) {
