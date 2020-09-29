@@ -1,4 +1,4 @@
-package Command;
+package main.java.com.urfu.Devy.Command;
 
 public class CommandData {
     private final String name;

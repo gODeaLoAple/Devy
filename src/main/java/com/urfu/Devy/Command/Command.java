@@ -1,6 +1,7 @@
-package Command;
-import Bot.HelperBot;
+package main.java.com.urfu.Devy.Command;
+
 import com.beust.jcommander.JCommander;
+import main.java.com.urfu.Devy.Bot.HelperBot;
 
 public abstract class Command {
     protected HelperBot bot;
@@ -8,7 +9,7 @@ public abstract class Command {
     public abstract String getName();
     public abstract String getInfo();
 
-    public Command(Bot.HelperBot bot){
+    public Command(HelperBot bot){
         this.bot = bot;
     }
 

@@ -1,8 +1,9 @@
-package Command.Commands;
+package main.java.com.urfu.Devy.Command.Commands;
 
-import Bot.HelperBot;
-import Command.*;
 import com.beust.jcommander.Parameter;
+import main.java.com.urfu.Devy.Bot.HelperBot;
+import main.java.com.urfu.Devy.Command.Command;
+import main.java.com.urfu.Devy.Command.CommandData;
 
 public class PingCommand extends Command {
     @Parameter(names = {"-f, --fuck"}, description = "don't press f")

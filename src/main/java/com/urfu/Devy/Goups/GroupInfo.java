@@ -1,4 +1,4 @@
-package Goups;
+package main.java.com.urfu.Devy.Goups;
 
 public class GroupInfo {
     private final Integer id;

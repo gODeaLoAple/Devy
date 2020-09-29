@@ -1,6 +1,6 @@
-package Bot;
+package main.java.com.urfu.Devy.Bot;
 
-import Goups.GroupInfo;
+import main.java.com.urfu.Devy.Goups.GroupInfo;
 
 public interface Bot {
     void send(String message);

@@ -1,8 +1,8 @@
-package Bot;
+package main.java.com.urfu.Devy.Bot;
 
-import Command.CommandData;
-import Command.CommandFactory;
-import Goups.GroupInfo;
+import main.java.com.urfu.Devy.Command.CommandData;
+import main.java.com.urfu.Devy.Command.CommandFactory;
+import main.java.com.urfu.Devy.Goups.GroupInfo;
 
 public class HelperBot {
 

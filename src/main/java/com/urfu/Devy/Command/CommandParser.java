@@ -1,7 +1,4 @@
-package Command;
-
-import Bot.Bot;
-import Command.CommandData;
+package main.java.com.urfu.Devy.Command;
 
 import java.util.Arrays;
 

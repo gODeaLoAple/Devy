@@ -1,7 +1,9 @@
-package Command.Commands;
-import Bot.HelperBot;
-import Command.*;
+package main.java.com.urfu.Devy.Command.Commands;
+
 import com.beust.jcommander.Parameter;
+import main.java.com.urfu.Devy.Bot.HelperBot;
+import main.java.com.urfu.Devy.Command.Command;
+import main.java.com.urfu.Devy.Command.CommandData;
 
 public class HelpCommand extends Command {
 

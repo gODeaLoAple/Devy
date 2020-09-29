@@ -1,9 +1,9 @@
-package Bot.Discord;
+package main.java.com.urfu.Devy.Bot.Discord;
 
-import Bot.Bot;
-import Bot.HelperBot;
-import Command.CommandParser;
-import Goups.GroupInfo;
+import main.java.com.urfu.Devy.Bot.Bot;
+import main.java.com.urfu.Devy.Bot.HelperBot;
+import main.java.com.urfu.Devy.Command.CommandParser;
+import main.java.com.urfu.Devy.Goups.GroupInfo;
 
 import java.util.HashMap;
 import java.util.Map;

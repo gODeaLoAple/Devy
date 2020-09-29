@@ -1,7 +1,7 @@
-package com.company;
+package main.java.com.urfu.Devy;
 
-import Bot.Discord.DiscordBot;
-import Goups.GroupInfo;
+import main.java.com.urfu.Devy.Bot.Discord.DiscordBot;
+import main.java.com.urfu.Devy.Goups.GroupInfo;
 
 public class Main {
 

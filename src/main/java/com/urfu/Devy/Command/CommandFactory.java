@@ -1,9 +1,9 @@
-package Command;
+package main.java.com.urfu.Devy.Command;
 
-import Bot.HelperBot;
-import Command.Commands.HelpCommand;
-import Command.Commands.PingCommand;
-import Command.Commands.UnknownCommand;
+import main.java.com.urfu.Devy.Bot.HelperBot;
+import main.java.com.urfu.Devy.Command.Commands.HelpCommand;
+import main.java.com.urfu.Devy.Command.Commands.PingCommand;
+import main.java.com.urfu.Devy.Command.Commands.UnknownCommand;
 
 public class CommandFactory {
     public static Command create(HelperBot bot, String commandName) {

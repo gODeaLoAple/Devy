@@ -1,9 +1,11 @@
-package Command.Commands;
+package main.java.com.urfu.Devy.Command.Commands;
 
-import Bot.HelperBot;
-import Command.*;
 
-public class UnknownCommand extends Command{
+import main.java.com.urfu.Devy.Bot.HelperBot;
+import main.java.com.urfu.Devy.Command.Command;
+import main.java.com.urfu.Devy.Command.CommandData;
+
+public class UnknownCommand extends Command {
     public UnknownCommand(HelperBot bot) {
         super(bot);
     }
