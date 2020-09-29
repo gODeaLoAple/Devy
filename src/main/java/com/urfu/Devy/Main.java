@@ -11,13 +11,12 @@ import java.util.Properties;
 import java.util.Scanner;
 
 public class Main {
-    public static String PATH_TO_PROPERTIES = "src/config.properties";
+    public static String PATH_TO_TOKEN = "src/config.properties";
     public static void main(String[] args) {
         try {
-            var fileInputSystem = new FileInputStream(PATH_TO_PROPERTIES);
             var prop = new Properties();
-            prop.load(fileInputSystem);
-            var token = prop.getProperty("token", "wrong key");
+            prop.load(new FileInputStream(PATH_TO_TOKEN));
+            var token = prop.getProperty("token");
 
             var bot = new DiscordBot(token);
             CommandsController.constructCommandsDictionary();
