@@ -2,10 +2,15 @@ package main.java.com.urfu.Devy.Bot.Discord;
 
 import main.java.com.urfu.Devy.Bot.Bot;
 import main.java.com.urfu.Devy.Bot.HelperBot;
+import main.java.com.urfu.Devy.Command.Command;
+import main.java.com.urfu.Devy.Command.CommandName;
 import main.java.com.urfu.Devy.Command.CommandParser;
+import main.java.com.urfu.Devy.Command.Commands.HelpCommand;
+import main.java.com.urfu.Devy.Command.Commands.PingCommand;
 import main.java.com.urfu.Devy.Command.ParseCommandException;
 import main.java.com.urfu.Devy.Goups.GroupInfo;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 

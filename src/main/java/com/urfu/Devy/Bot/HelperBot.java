@@ -1,8 +1,10 @@
 package main.java.com.urfu.Devy.Bot;
 
 import main.java.com.urfu.Devy.Command.CommandData;
-import main.java.com.urfu.Devy.Command.CommandFactory;
+import main.java.com.urfu.Devy.Command.CommandsController;
 import main.java.com.urfu.Devy.Goups.GroupInfo;
+
+import java.lang.reflect.InvocationTargetException;
 
 public class HelperBot {
 
@@ -13,7 +15,14 @@ public class HelperBot {
     }
 
     public String execute(CommandData data) {
-        return CommandFactory.create(this, data.getName()).execute(data);
+        try {
+            var command = CommandsController.getCommand(data.getName())
+                    .getDeclaredConstructor(HelperBot.class).newInstance(this);
+            return command.execute(data);
+        } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 }
 
