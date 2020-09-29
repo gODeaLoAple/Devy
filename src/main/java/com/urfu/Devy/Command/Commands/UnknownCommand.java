@@ -14,4 +14,14 @@ public class UnknownCommand extends Command {
     public String execute(CommandData command) {
         return "Unknown command. Try again!";
     }
+
+    @Override
+    public String getName() {
+        return "";
+    }
+
+    @Override
+    public String getInfo() {
+        return null;
+    }
 }
