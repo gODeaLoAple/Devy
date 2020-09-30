@@ -1,5 +1,7 @@
 package main.java.com.urfu.Devy.Command;
 
+import org.reflections.Reflections;
+
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -8,7 +10,7 @@ public class CommandsController {
     private static final Map<String, Class<? extends Command>> commands = new HashMap<>(){};
 
     public static void constructCommandsDictionary(){
-        var commandClasses = (new Reflections(Command.class)).getSubTypesOf(Command.class);
+        var commandClasses = new Reflections(Command.class).getSubTypesOf(Command.class);
         for(var command : commandClasses) {
             if (command.isAnnotationPresent(CommandName.class)) {
                 var annotation = command.getDeclaredAnnotation(CommandName.class);

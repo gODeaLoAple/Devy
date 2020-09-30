@@ -5,7 +5,6 @@ import main.java.com.urfu.Devy.Command.CommandsController;
 import main.java.com.urfu.Devy.Goups.GroupInfo;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
 import java.util.Scanner;
