@@ -1,4 +1,4 @@
-package main.java.com.urfu.Devy.Command;
+package main.java.com.urfu.Devy.Command.Parser;
 
 public class ParseCommandException extends Exception {
 

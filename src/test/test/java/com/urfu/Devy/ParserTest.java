@@ -1,9 +1,10 @@
 package test.java.com.urfu.Devy;
 
 import main.java.com.urfu.Devy.Command.CommandData;
-import main.java.com.urfu.Devy.Command.CommandParser;
-import main.java.com.urfu.Devy.Command.ParseCommandException;
-import org.testng.annotations.Test;
+import main.java.com.urfu.Devy.Command.Parser.CommandParser;
+import main.java.com.urfu.Devy.Command.Parser.ParseCommandException;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class ParserTest {
 

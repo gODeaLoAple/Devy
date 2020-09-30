@@ -1,10 +1,5 @@
 package main.java.com.urfu.Devy.Command;
 
-import main.java.com.urfu.Devy.Command.Commands.HelpCommand;
-import main.java.com.urfu.Devy.Command.Commands.PingCommand;
-import org.reflections.Reflections;
-
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
