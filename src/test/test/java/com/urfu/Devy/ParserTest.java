@@ -12,30 +12,30 @@ public class ParserTest {
 
     @Test
     public void throwExceptionWhenEmptyLine() {
-        testThrowParseCommandException("");
+        assertThrowParseCommandException("");
     }
 
     @Test
     public void throwExceptionWhenBlankLine() {
-        testThrowParseCommandException(" ");
+        assertThrowParseCommandException(" ");
     }
 
     @Test
     public void throwExceptionWhenPrefixNotFound() {
-        testThrowParseCommandException("help");
+        assertThrowParseCommandException("help");
     }
 
     @Test
     public void throwExceptionWhenPrefixWithoutAnyCommand() {
-        testThrowParseCommandException(parser.getPrefix());
+        assertThrowParseCommandException(parser.getPrefix());
     }
 
     @Test
     public void throwExceptionWhenPrefixWithOnlyBlank() {
-        testThrowParseCommandException(parser.getPrefix() + " ");
+        assertThrowParseCommandException(parser.getPrefix() + " ");
     }
 
-    private void testThrowParseCommandException(String line) {
+    private void assertThrowParseCommandException(String line) {
         Assertions.assertThrows(ParseCommandException.class, () -> parser.parse(line));
     }
 
@@ -69,6 +69,19 @@ public class ParserTest {
             var actual = parser.parse("$help  1   2");
             assertEquals(new CommandData("help", new String[]{"1", "2"}), actual);
         });
+    }
+
+    @Test
+    public void returnCommandDataWhenHasStringWithDoubleQuotesArgumentWithSpaces() {
+        Assertions.assertDoesNotThrow(() -> {
+            var actual = parser.parse("$help \"hello world\"");
+            assertEquals(new CommandData("help", new String[] {"hello world"}), actual);
+        });
+    }
+
+    @Test
+    public void throwExceptionWhenSecondDoubleQuoteNotFound() {
+        assertThrowParseCommandException("$help \"hello world");
     }
 
     private void assertEquals(CommandData expected, CommandData actual) {
