@@ -1,13 +1,13 @@
 package main.java.com.urfu.Devy.Goups;
 
 public class GroupInfo {
-    private final Integer id;
+    private final String id;
 
-    public GroupInfo(int id) {
+    public GroupInfo(String id) {
         this.id = id;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 }

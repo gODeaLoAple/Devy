@@ -15,14 +15,10 @@ public class HelperBot {
     }
 
     public String execute(CommandData data) {
-        try {
-            var command = CommandsController.getCommand(data.getName())
-                    .getDeclaredConstructor(HelperBot.class).newInstance(this);
-            return command.execute(data);
-        } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
-            e.printStackTrace();
-        }
-        return "";
+        var command = CommandsController.getCommandInstance(data.getName(), this);
+        if(command == null)
+            return "no such command"; // в будущем заменить на result
+        return command.execute(data);
     }
 }
 
