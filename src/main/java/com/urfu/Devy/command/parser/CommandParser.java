@@ -1,6 +1,6 @@
-package main.java.com.urfu.Devy.Command.Parser;
+package main.java.com.urfu.Devy.command.parser;
 
-import main.java.com.urfu.Devy.Command.CommandData;
+import main.java.com.urfu.Devy.command.CommandData;
 
 import java.util.ArrayList;
 import java.util.Arrays;

@@ -1,8 +1,8 @@
 package test.java.com.urfu.Devy;
 
-import main.java.com.urfu.Devy.Command.CommandData;
-import main.java.com.urfu.Devy.Command.Parser.CommandParser;
-import main.java.com.urfu.Devy.Command.Parser.ParseCommandException;
+import main.java.com.urfu.Devy.command.CommandData;
+import main.java.com.urfu.Devy.command.parser.CommandParser;
+import main.java.com.urfu.Devy.command.parser.ParseCommandException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

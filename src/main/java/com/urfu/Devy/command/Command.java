@@ -1,7 +1,7 @@
-package main.java.com.urfu.Devy.Command;
+package main.java.com.urfu.Devy.command;
 
 import com.beust.jcommander.JCommander;
-import main.java.com.urfu.Devy.Bot.HelperBot;
+import main.java.com.urfu.Devy.bot.HelperBot;
 
 public abstract class Command {
     protected HelperBot bot;

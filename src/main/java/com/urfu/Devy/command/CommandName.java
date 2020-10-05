@@ -1,4 +1,4 @@
-package main.java.com.urfu.Devy.Command;
+package main.java.com.urfu.Devy.command;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

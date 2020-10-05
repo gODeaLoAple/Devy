@@ -1,23 +1,19 @@
-package main.java.com.urfu.Devy.Command;
+package main.java.com.urfu.Devy.command;
 
-
-import main.java.com.urfu.Devy.Bot.HelperBot;
-import main.java.com.urfu.Devy.Command.Commands.HelpCommand;
-import main.java.com.urfu.Devy.Command.Commands.PingCommand;
+import main.java.com.urfu.Devy.bot.HelperBot;
 import org.reflections.Reflections;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
 public class CommandsController {
-    private static final Map<String, Class<? extends Command>> commands = new HashMap<>(){};
+    private static final Map<String, Class<? extends  Command>> commands = new HashMap<>(){};
 
-    public static void constructCommandsDictionary(){
+    public static void constructCommandsDictionary() {
         var commandClasses = new Reflections(Command.class).getSubTypesOf(Command.class);
-        for(var command : commandClasses) {
+        for (var command : commandClasses) {
             if (command.isAnnotationPresent(CommandName.class)) {
                 var annotation = command.getDeclaredAnnotation(CommandName.class);
                 commands.put(annotation.name(), command);
@@ -25,19 +21,23 @@ public class CommandsController {
         }
     }
 
-    public static Class<? extends Command> getCommand(String commandName) {
-        if (!commands.containsKey(commandName))
-            throw new IllegalArgumentException("no such command yet");
-        return commands.get(commandName);
-    }
-
-    public static Command getCommandInstance(String commandName, HelperBot bot){
+    public static Command CreateCommand(String commandName, HelperBot bot){
         try {
-            return getCommand(commandName).getDeclaredConstructor(HelperBot.class).newInstance(bot);
-        } catch (InstantiationException | IllegalAccessException | InvocationTargetException | IllegalArgumentException | NoSuchMethodException e) {
-            //log.write
+            return getCommandClass(commandName).getDeclaredConstructor(HelperBot.class).newInstance(bot);
+        }
+        catch (InstantiationException
+                | IllegalAccessException
+                | InvocationTargetException
+                | IllegalArgumentException
+                | NoSuchMethodException e) {
             return null;
         }
+    }
+
+    protected static Class<? extends Command> getCommandClass(String commandName) {
+        if (!commands.containsKey(commandName))
+            throw new IllegalArgumentException("Команда не найдена");
+        return commands.get(commandName);
     }
 
     public static Collection<Class<? extends Command>> getAllCommands(){
@@ -47,7 +47,7 @@ public class CommandsController {
     public static String getCommandNameAndInfo(String commandName) throws IllegalArgumentException{
         var command= commands.get(commandName);
         if(command == null)
-            throw new IllegalArgumentException("wrong command: " + commandName);
+            throw new IllegalArgumentException("Команда не найдена: " + commandName);
         return getCommandNameAndInfo(command);
     }
 
