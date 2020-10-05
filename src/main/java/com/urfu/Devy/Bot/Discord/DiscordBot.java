@@ -9,8 +9,12 @@ import main.java.com.urfu.Devy.Main;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageChannel;
+import net.dv8tion.jda.api.events.GenericEvent;
+import net.dv8tion.jda.api.events.guild.GuildReadyEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import org.apache.log4j.Logger;
+import org.jetbrains.annotations.NotNull;
 
 import javax.security.auth.login.LoginException;
 import java.util.ArrayList;
@@ -18,6 +22,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class DiscordBot extends ListenerAdapter implements Bot {
+    private static final Logger log = Logger.getLogger(Main.class);
     protected final Map<String, HelperBot> helpers = new HashMap<>();
     protected final CommandParser parser;
     protected final String token;
@@ -29,10 +34,14 @@ public class DiscordBot extends ListenerAdapter implements Bot {
 
     public void start(){
         try {
-            var c = JDABuilder.createDefault(token).addEventListeners(this).build();
-            c.awaitReady();
+            JDABuilder
+                    .createDefault(token)
+                    .addEventListeners(this)
+                    .build()
+                    .awaitReady();
+            log.info("bot started");
         } catch (InterruptedException | LoginException e) {
-            e.printStackTrace();
+            log.error("EXCEPTION at startBot", e);
         }
     }
 
@@ -84,6 +93,11 @@ public class DiscordBot extends ListenerAdapter implements Bot {
         if (helpers.containsKey(groupId))
             throw new IllegalArgumentException("Группа уже была добавлена");
         helpers.put(groupId, new HelperBot(group));
+    }
+    
+    @Override
+    public void onGuildReady(@NotNull GuildReadyEvent event){
+        event.getGuild().getId();
     }
 
     @Override

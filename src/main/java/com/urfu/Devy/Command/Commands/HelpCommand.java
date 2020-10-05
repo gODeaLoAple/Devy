@@ -27,7 +27,7 @@ public class HelpCommand extends Command{
                     result.append(CommandsController.getCommandNameAndInfo(cmd));
                     result.append("\n");
                 }
-                return result.toString().substring(0, result.length() - 1);
+                return result.substring(0, result.length() - 1);
             }
             return CommandsController.getCommandNameAndInfo(targetCommand);
         }

@@ -29,7 +29,7 @@ public class PingCommand extends Command {
         if (!fuck) {
             return result.toString();
         }
-        result.append("FUCK YOURSELF");
+        result.append(" FUCK YOURSELF");
         return result.toString();
     }
 }
