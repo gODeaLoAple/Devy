@@ -1,7 +1,7 @@
 package main.java.com.urfu.Devy;
 
-import main.java.com.urfu.Devy.Bot.Discord.DiscordBot;
-import main.java.com.urfu.Devy.Command.CommandsController;
+import main.java.com.urfu.Devy.bot.discord.DiscordBot;
+import main.java.com.urfu.Devy.command.CommandsController;
 
 import org.apache.log4j.Logger;
 
@@ -10,20 +10,13 @@ import java.io.IOException;
 import java.util.Properties;
 
 public class Main {
-    public static String PATH_TO_TOKEN = "config.properties";
 
     private static final Logger log = Logger.getLogger(Main.class);
 
+    private static final String PATH_TO_TOKEN = "src/config.properties";
     public static void main(String[] args) {
-        var prop = new Properties();
         try {
-            prop.load(new FileInputStream(PATH_TO_TOKEN));
-        } catch (IOException e) {
-            log.error("config file not found", e);
-        }
-
-        try{
-            var token = prop.getProperty("token");
+            var token = loadProperties(PATH_TO_TOKEN).getProperty("token");
             var bot = new DiscordBot(token);
             CommandsController.constructCommandsDictionary();
             bot.start();
@@ -31,7 +24,15 @@ public class Main {
         catch (IllegalArgumentException e){
             log.error("wrong token", e);
         }
-
     }
 
+    private static Properties loadProperties(String path) {
+        var properties = new Properties();
+        try {
+            properties.load(new FileInputStream(path));
+        } catch (IOException e) {
+            log.error("config file not found", e);
+        }
+        return properties;
+    }
 }

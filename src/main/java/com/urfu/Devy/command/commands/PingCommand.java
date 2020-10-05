@@ -1,10 +1,10 @@
-package main.java.com.urfu.Devy.Command.Commands;
+package main.java.com.urfu.Devy.command.commands;
 
 import com.beust.jcommander.Parameter;
-import main.java.com.urfu.Devy.Bot.HelperBot;
-import main.java.com.urfu.Devy.Command.Command;
-import main.java.com.urfu.Devy.Command.CommandData;
-import main.java.com.urfu.Devy.Command.CommandName;
+import main.java.com.urfu.Devy.bot.HelperBot;
+import main.java.com.urfu.Devy.command.Command;
+import main.java.com.urfu.Devy.command.CommandData;
+import main.java.com.urfu.Devy.command.CommandName;
 
 import java.util.List;
 
