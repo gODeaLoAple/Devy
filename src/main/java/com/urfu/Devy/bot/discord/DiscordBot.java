@@ -3,7 +3,7 @@ package main.java.com.urfu.Devy.bot.discord;
 import main.java.com.urfu.Devy.bot.Bot;
 import main.java.com.urfu.Devy.command.parser.CommandParser;
 import main.java.com.urfu.Devy.command.parser.ParseCommandException;
-import main.java.com.urfu.Devy.groups.GroupInfo;
+import main.java.com.urfu.Devy.bot.GroupInfo;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.events.channel.text.TextChannelCreateEvent;
 import net.dv8tion.jda.api.events.guild.GuildReadyEvent;
@@ -17,9 +17,9 @@ import org.apache.log4j.Logger;
 
 public class DiscordBot extends ListenerAdapter implements Bot {
     private static final Logger log = Logger.getLogger(DiscordBot.class);
-    protected final HashMap<String, GroupInfo> groups = new HashMap<>();
-    protected final CommandParser parser;
-    protected final String token;
+    private final HashMap<String, GroupInfo> groups = new HashMap<>();
+    private final CommandParser parser;
+    private final String token;
 
     public DiscordBot(String discordToken) {
         token = discordToken;
@@ -33,30 +33,31 @@ public class DiscordBot extends ListenerAdapter implements Bot {
                     .addEventListeners(this)
                     .build()
                     .awaitReady();
-            log.info("bot started successfully");
+            log.info("Bot started successfully!");
         } catch (InterruptedException | LoginException e) {
-            log.error("error on start");
+            log.error("Error on start: " + e.getMessage());
         }
     }
 
     @Override
     public void removeGroup(GroupInfo group) {
         if (!groups.containsKey(group.getId()))
-            throw new IllegalArgumentException("Группа не была добавлена");
+            throw new IllegalArgumentException("The group had not been added.");
         groups.remove(group.getId());
     }
 
     @Override
     public void addGroup(GroupInfo group) {
         if (groups.containsKey(group.getId()))
-            throw new IllegalArgumentException("Группа уже была добавлена");
+            throw new IllegalArgumentException("The group had been added.");
         groups.put(group.getId(), group);
+        log.info("Group was added: " + group.getId());
     }
 
     @Override
     public void handleMessage(String groupId, String senderId, String message) throws ParseCommandException {
         if(!groups.containsKey(groupId))
-            throw new IllegalArgumentException("Группа не была добавлена");
+            throw new IllegalArgumentException("The group had not been added.");
         groups.get(groupId).execute(parser.parse(message), senderId);
     }
 
@@ -88,7 +89,9 @@ public class DiscordBot extends ListenerAdapter implements Bot {
         super.onTextChannelCreate(event);
         var groupId = event.getGuild().getId();
         var channel = event.getChannel();
-        groups.get(groupId).addSender(new DiscordMessageSender(channel));
+        var sender = new DiscordMessageSender(channel);
+        groups.get(groupId).addSender(sender);
+        log.info("Sender %s was added to group %s".formatted(sender.getId(), groupId));
     }
 
 }

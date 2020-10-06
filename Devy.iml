@@ -35,7 +35,6 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" name="log4j:log4j:1.2.17" level="project" />
     <orderEntry type="module-library">
       <library>
         <CLASSES>
@@ -45,5 +44,10 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="library" name="log4j:log4j:1.2.17" level="application" />
+    <orderEntry type="library" name="reflections-0.9.12" level="project" />
+    <orderEntry type="library" name="JDA-4.2.0_168-withDependencies" level="project" />
+    <orderEntry type="library" name="java" level="project" />
+    <orderEntry type="library" name="annotations-19.0.0" level="project" />
   </component>
 </module>
