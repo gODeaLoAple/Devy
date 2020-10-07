@@ -14,10 +14,10 @@ public abstract class Command {
         this.group = group;
         this.sender = sender;
         this.args = args;
-        parseArgs(args);
+        parseArgs();
     }
 
-    private void parseArgs(String[] args){
+    private void parseArgs(){
         JCommander.newBuilder()
                 .addObject(this)
                 .build()

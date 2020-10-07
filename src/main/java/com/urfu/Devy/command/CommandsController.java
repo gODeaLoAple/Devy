@@ -27,7 +27,7 @@ public class CommandsController {
     public static Command createCommand(GroupInfo group, MessageSender sender, CommandData data){
         try {
             return getCommandClass(data.getName())
-                    .getDeclaredConstructor(GroupInfo.class, MessageSender.class, CommandData.class)
+                    .getDeclaredConstructor(GroupInfo.class, MessageSender.class, String[].class)
                     .newInstance(group, sender, data.getArgs());
         }
         catch (InstantiationException
