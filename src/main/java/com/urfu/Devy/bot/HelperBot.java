@@ -12,6 +12,10 @@ public class HelperBot {
         this.group = group;
     }
 
+    public GroupInfo getGroup(){
+        return group;
+    }
+
     public String execute(CommandData data) {
         var command = CommandsController.CreateCommand(data.getName(), this);
         if(command == null)

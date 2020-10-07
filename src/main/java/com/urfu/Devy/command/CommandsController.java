@@ -13,12 +13,9 @@ public class CommandsController {
 
     public static void constructCommandsDictionary() {
         var commandClasses = new Reflections(Command.class).getSubTypesOf(Command.class);
-        for (var command : commandClasses) {
-            if (command.isAnnotationPresent(CommandName.class)) {
-                var annotation = command.getDeclaredAnnotation(CommandName.class);
-                commands.put(annotation.name(), command);
-            }
-        }
+        for (var command : commandClasses)
+            if (command.isAnnotationPresent(CommandName.class))
+                commands.put(command.getDeclaredAnnotation(CommandName.class).name(), command);
     }
 
     public static Command CreateCommand(String commandName, HelperBot bot){

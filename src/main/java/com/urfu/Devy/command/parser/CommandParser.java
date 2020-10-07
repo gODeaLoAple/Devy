@@ -22,7 +22,7 @@ public class CommandParser {
     }
 
     public CommandData parse(String line) throws ParseCommandException {
-        line = line.strip().toLowerCase();
+        line = line.strip();//.toLowerCase();
         if (!line.startsWith(prefix))
             throw new ParseCommandException(String.format("Строка должна начинаться с %s", prefix));
         return parseLineWithoutPrefix(line.substring(prefix.length()).strip());
