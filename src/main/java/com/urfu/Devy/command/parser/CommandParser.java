@@ -22,17 +22,18 @@ public class CommandParser {
     }
 
     public CommandData parse(String line) throws ParseCommandException {
-        line = line.strip();//.toLowerCase();
+
+        line = line.strip();
         if (!line.startsWith(prefix))
-            throw new ParseCommandException(String.format("Строка должна начинаться с %s", prefix));
+            throw new ParseCommandException(String.format("The string have to start with %s.", prefix));
         return parseLineWithoutPrefix(line.substring(prefix.length()).strip());
     }
 
     protected CommandData parseLineWithoutPrefix(String line) throws ParseCommandException {
         if (line.isEmpty())
-            throw new ParseCommandException("Строка должна включать в себя команду");
+            throw new ParseCommandException("The string have to include a command.");
         if (line.chars().filter(x -> x == '"').count() % 2 > 0)
-            throw new ParseCommandException("Неправильное количество кавычек");
+            throw new ParseCommandException("Incorrect quotes amount.");
         var parts = collectParts(line);
         return new CommandData(parts[0], Arrays.copyOfRange(parts, 1, parts.length));
     }

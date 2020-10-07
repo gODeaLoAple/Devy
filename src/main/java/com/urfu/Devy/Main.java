@@ -22,7 +22,7 @@ public class Main {
             bot.start();
         }
         catch (IllegalArgumentException e){
-            log.error("wrong token", e);
+            log.error("Wrong token", e);
         }
     }
 
@@ -31,7 +31,7 @@ public class Main {
         try {
             properties.load(new FileInputStream(path));
         } catch (IOException e) {
-            log.error("config file not found", e);
+            log.error("Config file not found", e);
         }
         return properties;
     }
