@@ -28,8 +28,9 @@ public class PingCommand extends Command {
             result.append(String.join(" ", text));
         if (!fuck) {
             sender.send(result.toString());
+            return;
         }
-        result.append(" FUCK YOURSELF");
+        result.append(" Hello");
         sender.send(result.toString());
     }
 }

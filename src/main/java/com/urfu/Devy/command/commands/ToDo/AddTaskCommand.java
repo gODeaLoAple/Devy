@@ -16,7 +16,7 @@ import java.util.List;
 public class AddTaskCommand extends Command {
 
     @Parameter(description = "Ooh, my finger so deep!")
-    protected ArrayList<String> text = new ArrayList<>();
+    protected ArrayList<String> text;
 
     public AddTaskCommand(GroupInfo group, MessageSender sender, String[] args) {
         super(group, sender, args);
@@ -24,7 +24,6 @@ public class AddTaskCommand extends Command {
 
     @Override
     public void execute() {
-        parseArgs(args);
         var name = text.get(0);
         var toDo = group.getToDo(name);
         toDo.addTask(new ToDoTask(text.get(1), "", "", text.get(2)));
