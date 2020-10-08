@@ -1,9 +1,9 @@
 package main.java.com.urfu.Devy.command;
 
 import main.java.com.urfu.Devy.bot.GroupInfo;
-import main.java.com.urfu.Devy.bot.HelperBot;
 import main.java.com.urfu.Devy.bot.MessageSender;
 import main.java.com.urfu.Devy.command.commands.UnknownCommand;
+import main.java.com.urfu.Devy.command.parser.ParseCommandException;
 import org.reflections.Reflections;
 
 import java.lang.reflect.InvocationTargetException;
@@ -16,15 +16,12 @@ public class CommandsController {
 
     public static void constructCommandsDictionary() {
         var commandClasses = new Reflections(Command.class).getSubTypesOf(Command.class);
-        for (var command : commandClasses) {
-            if (command.isAnnotationPresent(CommandName.class)) {
-                var annotation = command.getDeclaredAnnotation(CommandName.class);
-                commands.put(annotation.name(), command);
-            }
-        }
+        for (var command : commandClasses)
+            if (command.isAnnotationPresent(CommandName.class))
+                commands.put(command.getDeclaredAnnotation(CommandName.class).name(), command);
     }
 
-    public static Command createCommand(GroupInfo group, MessageSender sender, CommandData data){
+    public static Command createCommand(GroupInfo group, MessageSender sender, CommandData data) throws ParseCommandException {
         try {
             return getCommandClass(data.getName())
                     .getDeclaredConstructor(GroupInfo.class, MessageSender.class, String[].class)

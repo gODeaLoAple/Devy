@@ -1,21 +1,20 @@
 package main.java.com.urfu.Devy.bot;
 import main.java.com.urfu.Devy.ToDo.ToDo;
 import main.java.com.urfu.Devy.command.CommandData;
+import main.java.com.urfu.Devy.command.CommandException;
 import main.java.com.urfu.Devy.command.CommandsController;
+import main.java.com.urfu.Devy.command.parser.ParseCommandException;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class GroupInfo {
-
-    protected final HelperBot bot;
     protected final String id;
     protected final HashMap<String, MessageSender> senders;
     protected final Map<String, ToDo> toDoLists;
 
     public GroupInfo(String id) {
         this.id = id;
-        bot = new HelperBot(this);
         senders = new HashMap<>();
         toDoLists = new HashMap<>();
     }
@@ -52,7 +51,7 @@ public class GroupInfo {
 
     public ToDo getToDo(String toDoId) {
         if (!toDoLists.containsKey(toDoId))
-            throw new IllegalArgumentException("The ToDo list %s was not founded.");
+            throw new IllegalArgumentException("The ToDo list \"%s\" was not founded.".formatted(toDoId));
         return toDoLists.get(toDoId);
     }
 
@@ -60,7 +59,7 @@ public class GroupInfo {
         return id;
     }
 
-    public void execute(CommandData data, String senderId) {
+    public void execute(CommandData data, String senderId) throws CommandException, ParseCommandException {
         CommandsController
                 .createCommand(this, senders.get(senderId), data)
                 .execute();

@@ -9,11 +9,16 @@ public class ToDo {
 
     public ToDo(String id) {
         this.id = id;
-        this.tasks = new HashMap<>();
+        tasks = new HashMap<>();
     }
 
     public Map<String, ToDoTask> getTasks() {
         return tasks;
+    }
+    public ToDoTask getTask(String taskId){
+        if(!tasks.containsKey(taskId))
+            throw new IllegalArgumentException("Task not found");
+        return tasks.get(taskId);
     }
 
     public String getId() {
@@ -28,4 +33,7 @@ public class ToDo {
         tasks.remove(taskId);
     }
 
+    public boolean hasTask(String taskId) {
+        return tasks.containsKey(taskId);
+    }
 }

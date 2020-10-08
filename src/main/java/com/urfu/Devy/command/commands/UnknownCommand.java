@@ -5,6 +5,7 @@ import main.java.com.urfu.Devy.bot.GroupInfo;
 import main.java.com.urfu.Devy.bot.MessageSender;
 import main.java.com.urfu.Devy.command.Command;
 import main.java.com.urfu.Devy.command.CommandData;
+import main.java.com.urfu.Devy.command.parser.ParseCommandException;
 
 public class UnknownCommand extends Command {
     public UnknownCommand(GroupInfo group, MessageSender sender, String[] args) {

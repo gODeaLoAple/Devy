@@ -29,25 +29,12 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://D:/Downloads/JDA-4.2.0_168-withDependencies.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/log4j-1.2.17.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://D:/Downloads/slf4j-simple-1.6.1.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="library" name="log4j:log4j:1.2.17" level="application" />
-    <orderEntry type="library" name="reflections-0.9.12" level="project" />
     <orderEntry type="library" name="JDA-4.2.0_168-withDependencies" level="project" />
-    <orderEntry type="library" name="java" level="project" />
-    <orderEntry type="library" name="annotations-19.0.0" level="project" />
   </component>
 </module>

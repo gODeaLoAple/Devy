@@ -22,6 +22,7 @@ public class CommandParser {
     }
 
     public CommandData parse(String line) throws ParseCommandException {
+
         line = line.strip();
         if (!line.startsWith(prefix))
             throw new ParseCommandException(String.format("The string have to start with %s.", prefix));

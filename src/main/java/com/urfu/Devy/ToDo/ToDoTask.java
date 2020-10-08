@@ -28,4 +28,9 @@ public class ToDoTask {
     public String getExecutor() {
         return executor;
     }
+
+    @Override
+    public String toString(){
+        return "name: %s\nauthor: %s\nexecutor: %s\ntask: %s".formatted(id, author, executor, text);
+    }
 }
