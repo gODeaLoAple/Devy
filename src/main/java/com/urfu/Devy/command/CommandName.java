@@ -10,4 +10,5 @@ import java.lang.annotation.Target;
 public @interface CommandName {
     String name();
     String info() default "";
+    String detailedInfo() default "no detail info about this command";
 }

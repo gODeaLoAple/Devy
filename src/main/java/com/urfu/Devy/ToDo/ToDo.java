@@ -9,7 +9,7 @@ public class ToDo {
 
     public ToDo(String id) {
         this.id = id;
-        this.tasks = new HashMap<>();
+        tasks = new HashMap<>();
     }
 
     public Map<String, ToDoTask> getTasks() {
@@ -33,4 +33,7 @@ public class ToDo {
         tasks.remove(taskId);
     }
 
+    public boolean hasTask(String taskId) {
+        return tasks.containsKey(taskId);
+    }
 }

@@ -1,13 +1,18 @@
 package main.java.com.urfu.Devy.bot.discord;
 
 import main.java.com.urfu.Devy.bot.Bot;
+import main.java.com.urfu.Devy.command.CommandException;
 import main.java.com.urfu.Devy.command.parser.CommandParser;
 import main.java.com.urfu.Devy.command.parser.ParseCommandException;
 import main.java.com.urfu.Devy.bot.GroupInfo;
 import net.dv8tion.jda.api.JDABuilder;
+import net.dv8tion.jda.api.MessageBuilder;
+import net.dv8tion.jda.api.entities.ChannelType;
+import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.events.channel.text.TextChannelCreateEvent;
 import net.dv8tion.jda.api.events.guild.GuildReadyEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.priv.PrivateMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 
@@ -55,7 +60,8 @@ public class DiscordBot extends ListenerAdapter implements Bot {
     }
 
     @Override
-    public void handleMessage(String groupId, String senderId, String message) throws ParseCommandException {
+    public void handleMessage(String groupId, String senderId, String message)
+            throws ParseCommandException, CommandException {
         if(!groups.containsKey(groupId))
             throw new IllegalArgumentException("The group had not been added.");
         groups.get(groupId).execute(parser.parse(message), senderId);
@@ -70,7 +76,7 @@ public class DiscordBot extends ListenerAdapter implements Bot {
             if (message.startsWith(parser.getPrefix()) && !event.getAuthor().isBot())
                 handleMessage(group.getId(), channel.getId(), message);
         }
-        catch (ParseCommandException | IllegalArgumentException e) {
+        catch (ParseCommandException | IllegalArgumentException | CommandException e) {
             channel.sendMessage(e.getMessage()).queue();
         }
     }
@@ -93,5 +99,4 @@ public class DiscordBot extends ListenerAdapter implements Bot {
         groups.get(groupId).addSender(sender);
         log.info("Sender %s was added to group %s".formatted(sender.getId(), groupId));
     }
-
 }

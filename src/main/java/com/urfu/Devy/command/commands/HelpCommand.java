@@ -6,10 +6,11 @@ import main.java.com.urfu.Devy.bot.MessageSender;
 import main.java.com.urfu.Devy.command.Command;
 import main.java.com.urfu.Devy.command.CommandName;
 import main.java.com.urfu.Devy.command.CommandsController;
+import main.java.com.urfu.Devy.command.parser.ParseCommandException;
 
 @CommandName(name = "help")
 public class HelpCommand extends Command{
-    public HelpCommand(GroupInfo group, MessageSender sender, String[] args) {
+    public HelpCommand(GroupInfo group, MessageSender sender, String[] args) throws ParseCommandException {
         super(group, sender, args);
     }
 
@@ -22,19 +23,14 @@ public class HelpCommand extends Command{
     }
 
     private String getResult() {
-        try {
-            if (targetCommand == null || targetCommand.isEmpty()) {
-                var result = new StringBuilder();
-                for (var cmd : CommandsController.getAllCommands()) {
-                    result.append(CommandsController.getCommandNameAndInfo(cmd));
-                    result.append(System.lineSeparator());
-                }
-                return result.substring(0, result.length() - 1);
+        if (targetCommand == null || targetCommand.isEmpty()) {
+            var result = new StringBuilder();
+            for (var cmd : CommandsController.getAllCommands()) {
+                result.append(CommandsController.getCommandNameAndShortInfo(cmd));
+                result.append(System.lineSeparator());
             }
-            return CommandsController.getCommandNameAndInfo(targetCommand);
+            return result.substring(0, result.length() - 1);
         }
-        catch (IllegalArgumentException e){
-            return e.getMessage();
-        }
+        return CommandsController.getCommandNameAndFullInfo(targetCommand);
     }
 }
