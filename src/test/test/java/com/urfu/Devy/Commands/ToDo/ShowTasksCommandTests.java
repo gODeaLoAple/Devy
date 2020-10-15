@@ -3,15 +3,15 @@ package test.java.com.urfu.Devy.Commands.ToDo;
 import main.java.com.urfu.Devy.ToDo.ToDo;
 import main.java.com.urfu.Devy.ToDo.ToDoTask;
 import main.java.com.urfu.Devy.bot.GroupInfo;
+import main.java.com.urfu.Devy.command.Command;
+import main.java.com.urfu.Devy.command.CommandException;
 import main.java.com.urfu.Devy.command.commands.ToDo.ShowTasksCommand;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import test.java.com.urfu.Devy.Commands.CommandTest;
 import test.java.com.urfu.Devy.Commands.EmptySender;
 
-public class ShowTasksCommandTests {
-
-    private EmptySender sender;
-    private GroupInfo group;
+public class ShowTasksCommandTests extends ToDoCommandTest {
 
     @BeforeEach
     public void setUp() {
@@ -20,9 +20,18 @@ public class ShowTasksCommandTests {
     }
 
     @Test
+    public void handleWhenIncorrectCountOfArgs() {
+        assertHandle(new String[0], "Incorrect count of arguments.");
+    }
+
+    @Test
     public void handleWhenNoTasks() {
-        group.addToDo(new ToDo("1"));
-        assertHandle(new String[] { "1" }, "There is no task in this ToDo list.");
+        try {
+            group.addToDo(new ToDo("1"));
+            assertHandle(new String[] { "1" }, "There is no any task in this ToDo list.");
+        } catch (CommandException e) {
+            throw new AssertionError(e.getMessage());
+        }
     }
 
     @Test
@@ -35,7 +44,11 @@ public class ShowTasksCommandTests {
         var toDo = new ToDo("1");
         toDo.addTask(new ToDoTask("task1", "author1", "executor1", "text1"));
         toDo.addTask(new ToDoTask("task2", "author2", "executor2", "text2"));
-        group.addToDo(toDo);
+        try {
+            group.addToDo(toDo);
+        } catch (CommandException e) {
+            throw new AssertionError(e.getMessage());
+        }
         assertHandle(new String[] {"1"}, """
                 **Name**: *task1*
                 **Author**: *author1*
@@ -48,13 +61,9 @@ public class ShowTasksCommandTests {
                 **Task**: *text2*""");
     }
 
-    private ShowTasksCommand createCommandWithArgs(String[] args) {
+
+    @Override
+    protected Command createCommandWithArgs(String[] args) {
         return new ShowTasksCommand(group, sender, args);
     }
-
-    private void assertHandle(String[] arguments, String handledMessage) {
-        createCommandWithArgs(arguments).execute();
-        sender.assertMessage(handledMessage);
-    }
-
 }

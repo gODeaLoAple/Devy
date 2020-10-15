@@ -66,6 +66,6 @@ public class CommandsController {
         if(!hasCommand(commandName))
             throw new IllegalArgumentException("Command was not found: " + commandName);
         var annotation = commands.get(commandName).getDeclaredAnnotation(CommandName.class);
-        return annotation.name() + annotation.detailedInfo();
+        return annotation.name() + " " +  annotation.detailedInfo();
     }
 }

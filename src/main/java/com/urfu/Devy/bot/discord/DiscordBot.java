@@ -81,18 +81,28 @@ public class DiscordBot extends ListenerAdapter implements Bot {
     public void onGuildReady(@NotNull GuildReadyEvent event) {
         super.onGuildReady(event);
         var group = new GroupInfo(event.getGuild().getId());
-        for (var channel : event.getGuild().getTextChannels())
-            group.addSender(new DiscordMessageSender(channel));
+        for (var channel : event.getGuild().getTextChannels()) {
+            try {
+                group.addSender(new DiscordMessageSender(channel));
+            } catch (CommandException e) {
+                log.error(e.getMessage());
+            }
+        }
         addGroup(group);
     }
 
     @Override
     public void onTextChannelCreate(@NotNull TextChannelCreateEvent event) {
-        super.onTextChannelCreate(event);
-        var groupId = event.getGuild().getId();
-        var channel = event.getChannel();
-        var sender = new DiscordMessageSender(channel);
-        groups.get(groupId).addSender(sender);
-        log.info("Sender %s was added to group %s".formatted(sender.getId(), groupId));
+        try {
+            super.onTextChannelCreate(event);
+            var groupId = event.getGuild().getId();
+            var channel = event.getChannel();
+            var sender = new DiscordMessageSender(channel);
+            groups.get(groupId).addSender(sender);
+            log.info("Sender %s was added to group %s".formatted(sender.getId(), groupId));
+        }
+        catch (CommandException e) {
+            log.error(e.getMessage());
+        }
     }
 }

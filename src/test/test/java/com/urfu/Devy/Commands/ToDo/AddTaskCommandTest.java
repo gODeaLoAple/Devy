@@ -3,16 +3,16 @@ package test.java.com.urfu.Devy.Commands.ToDo;
 import main.java.com.urfu.Devy.ToDo.ToDo;
 import main.java.com.urfu.Devy.ToDo.ToDoTask;
 import main.java.com.urfu.Devy.bot.GroupInfo;
+import main.java.com.urfu.Devy.command.Command;
+import main.java.com.urfu.Devy.command.CommandException;
 import main.java.com.urfu.Devy.command.commands.ToDo.AddTaskCommand;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import test.java.com.urfu.Devy.Commands.CommandTest;
 import test.java.com.urfu.Devy.Commands.EmptySender;
 
-public class AddTaskCommandTest {
-
-    private GroupInfo group;
-    private EmptySender sender;
+public class AddTaskCommandTest extends ToDoCommandTest {
 
     public AddTaskCommandTest() {
     }
@@ -20,7 +20,11 @@ public class AddTaskCommandTest {
     @BeforeEach
     public void SetUp() {
         group = new GroupInfo("1");
-        group.addToDo(new ToDo("1"));
+        try {
+            group.addToDo(new ToDo("1"));
+        } catch (CommandException e) {
+            throw new AssertionError(e.getMessage());
+        }
         sender = new EmptySender();
     }
 
@@ -36,7 +40,11 @@ public class AddTaskCommandTest {
 
     @Test
     public void handleWhenTaskWithTheSameIdAlreadyExists() {
-        group.getToDo("1").addTask(new ToDoTask("1", "", "", "hello"));
+        try {
+            group.getToDo("1").addTask(new ToDoTask("1", "", "", "hello"));
+        } catch (CommandException e) {
+            throw new AssertionError(e.getMessage());
+        }
         assertHandle(new String[] { "1", "1", "", "", "hello" }, "The task has been added.");
     }
 
@@ -51,15 +59,6 @@ public class AddTaskCommandTest {
         assertHandle(new String[] { "1", "2" }, "Incorrect count of arguments.");
     }
 
-    private void assertHandle(String[] arguments, String handledMessage) {
-        createCommandWithArgs(arguments).execute();
-        sender.assertMessage(handledMessage);
-    }
-
-    private AddTaskCommand createCommandWithArgs(String[] args) {
-        return new AddTaskCommand(group, sender, args);
-    }
-
     @Test
     public void addTaskWhenDoesNotExist() {
         Assertions.assertDoesNotThrow(() -> {
@@ -68,4 +67,8 @@ public class AddTaskCommandTest {
         });
     }
 
+    @Override
+    protected Command createCommandWithArgs(String[] args) {
+        return new AddTaskCommand(group, sender, args);
+    }
 }

@@ -5,6 +5,7 @@ import main.java.com.urfu.Devy.ToDo.ToDo;
 import main.java.com.urfu.Devy.bot.GroupInfo;
 import main.java.com.urfu.Devy.bot.MessageSender;
 import main.java.com.urfu.Devy.command.Command;
+import main.java.com.urfu.Devy.command.CommandException;
 import main.java.com.urfu.Devy.command.CommandName;
 import main.java.com.urfu.Devy.command.parser.ParseCommandException;
 
@@ -22,7 +23,11 @@ public class AddToDoCommand extends Command {
 
     @Override
     public void execute() {
-        group.addToDo(new ToDo(arguments.get(0)));
-        sender.send("The board has been added.");
+        try {
+            group.addToDo(new ToDo(arguments.get(0)));
+            sender.send("The board has been added.");
+        } catch (CommandException e) {
+            sender.send(e.getMessage());
+        }
     }
 }

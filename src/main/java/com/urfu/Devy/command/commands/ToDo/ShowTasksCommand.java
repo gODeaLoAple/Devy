@@ -33,7 +33,7 @@ public class ShowTasksCommand extends Command {
                     .map(ToDoTask::getInfo)
                     .collect(Collectors.joining("\n\n"));
             if (message.isEmpty() || message.isBlank())
-                message = "There is no task in this ToDo list.";
+                message = "There is no any task in this ToDo list.";
             sender.send(message);
         } catch (IllegalArgumentException | CommandException e) {
             sender.send(e.getMessage());

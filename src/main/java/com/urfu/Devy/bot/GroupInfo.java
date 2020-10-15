@@ -7,6 +7,7 @@ import main.java.com.urfu.Devy.command.CommandsController;
 import main.java.com.urfu.Devy.command.parser.ParseCommandException;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,42 +22,43 @@ public class GroupInfo {
         toDoLists = new HashMap<>();
     }
 
-    public void addSender(MessageSender sender) {
+    public void addSender(MessageSender sender) throws CommandException {
         var senderId = sender.getId();
         if (senders.containsKey(senderId))
-            throw new IllegalArgumentException("The channel had already been added.");
+            throw new CommandException("The channel had already been added.");
         senders.put(sender.getId(), sender);
     }
 
-    public void removeSender(MessageSender sender) {
+    public void removeSender(MessageSender sender) throws CommandException {
         var senderId = sender.getId();
         if (!senders.containsKey(senderId))
-            throw new IllegalArgumentException("The channel was not found.");
+            throw new CommandException("The channel was not found.");
         senders.remove(senderId);
     }
 
-    public void addToDo(ToDo toDo) {
+    public void addToDo(ToDo toDo) throws CommandException {
         if (toDoLists.containsKey(toDo.getId()))
-            throw new IllegalArgumentException("The ToDo list was already added.");
+            throw new CommandException("The ToDo list was already added.");
         toDoLists.put(toDo.getId(), toDo);
     }
 
-    public void removeToDo(ToDo toDo) {
-        removeToDo(toDo.getId());
+    public Boolean removeToDo(ToDo toDo) throws CommandException {
+        return removeToDo(toDo.getId());
     }
 
-    public void removeToDo(String toDoId) {
+    public Boolean removeToDo(String toDoId) throws CommandException {
         if (!toDoLists.containsKey(toDoId))
-            throw new IllegalArgumentException("The ToDo list %s was not founded.".formatted(toDoId));
-        toDoLists.remove(toDoId);
+            throw new CommandException("The ToDo list %s was not founded.".formatted(toDoId));
+        return toDoLists.remove(toDoId) != null;
     }
 
-    public ToDo getToDo(String toDoId) {
+    public ToDo getToDo(String toDoId) throws CommandException {
         if (!toDoLists.containsKey(toDoId))
-            throw new IllegalArgumentException("The ToDo list \"%s\" was not founded.".formatted(toDoId));
+            throw new CommandException("The ToDo list \"%s\" was not founded.".formatted(toDoId));
         return toDoLists.get(toDoId);
     }
 
+    public Collection<ToDo> getAllToDo() { return toDoLists.values(); }
     public String getId() {
         return id;
     }

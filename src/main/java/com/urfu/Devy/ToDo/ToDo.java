@@ -29,8 +29,8 @@ public class ToDo {
         tasks.put(task.getId(), task);
     }
 
-    public void removeTask(String taskId) {
-        tasks.remove(taskId);
+    public Boolean removeTask(String taskId) {
+        return tasks.remove(taskId) != null;
     }
 
     public boolean hasTask(String taskId) {

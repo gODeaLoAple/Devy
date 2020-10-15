@@ -15,8 +15,12 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-@CommandName(name="addTask", info="")
+@CommandName(
+        name="addTask",
+        info="Add new task to todo-list.",
+        detailedInfo = "\nUsage todoName taskName author executor content")
 public class AddTaskCommand extends Command {
+
     @Parameter(description = "Parameters of task (todo id, task name, author, executor, content)!")
     public ArrayList<String> text;
 
