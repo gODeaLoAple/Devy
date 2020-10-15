@@ -29,7 +29,7 @@ public class ToDoTask {
         return executor;
     }
 
-    public String toDiscordString(){
+    public String getInfo(){
         return "**Name**: *%s*\n**Author**: *%s*\n**Executor**: *%s*\n**Task**: *%s*".formatted(id, author, executor, text);
     }
 }

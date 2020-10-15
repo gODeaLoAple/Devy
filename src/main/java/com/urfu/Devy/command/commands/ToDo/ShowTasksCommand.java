@@ -30,7 +30,7 @@ public class ShowTasksCommand extends Command {
                     .getTasks()
                     .values()
                     .stream()
-                    .map(ToDoTask::toString)
+                    .map(ToDoTask::getInfo)
                     .collect(Collectors.joining("\n\n"));
             if (message.isEmpty() || message.isBlank())
                 message = "There is no task in this ToDo list.";

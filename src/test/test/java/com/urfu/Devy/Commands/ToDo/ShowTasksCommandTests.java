@@ -6,6 +6,7 @@ import main.java.com.urfu.Devy.bot.GroupInfo;
 import main.java.com.urfu.Devy.command.commands.ToDo.ShowTasksCommand;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import test.java.com.urfu.Devy.Commands.EmptySender;
 
 public class ShowTasksCommandTests {
 
@@ -36,15 +37,15 @@ public class ShowTasksCommandTests {
         toDo.addTask(new ToDoTask("task2", "author2", "executor2", "text2"));
         group.addToDo(toDo);
         assertHandle(new String[] {"1"}, """
-                name: task1
-                author: author1
-                executor: executor1
-                task: text1
+                **Name**: *task1*
+                **Author**: *author1*
+                **Executor**: *executor1*
+                **Task**: *text1*
                                 
-                name: task2
-                author: author2
-                executor: executor2
-                task: text2""");
+                **Name**: *task2*
+                **Author**: *author2*
+                **Executor**: *executor2*
+                **Task**: *text2*""");
     }
 
     private ShowTasksCommand createCommandWithArgs(String[] args) {

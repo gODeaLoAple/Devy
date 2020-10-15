@@ -24,6 +24,6 @@ public class ShowTodoTaskCommand extends Command {
     public void execute() {
         var todo= group.getToDo(text.get(0));
         var task = todo.getTask(text.get(1));
-        sender.send(task.toDiscordString());
+        sender.send(task.getInfo());
     }
 }

@@ -20,4 +20,5 @@ public class EmptySender implements MessageSender {
     public void assertMessage(String message) {
         Assertions.assertEquals(message, lastMessage);
     }
+
 }

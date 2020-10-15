@@ -22,7 +22,7 @@ public class ShowUserTasksCommand extends Command {
         var result = new StringBuilder();
         var tasks = group.getAllUserTasks(target);
         for(var task : tasks)
-            result.append(task.toDiscordString()).append("\n");
+            result.append(task.getInfo()).append("\n");
         sender.send(result.toString());
     }
 }

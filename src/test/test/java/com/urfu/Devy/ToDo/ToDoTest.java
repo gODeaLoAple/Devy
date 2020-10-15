@@ -5,7 +5,7 @@ import main.java.com.urfu.Devy.ToDo.ToDoTask;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-class ToDoTest {
+public class ToDoTest {
 
     @Test
     public void testId() {
