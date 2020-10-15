@@ -3,32 +3,10 @@ package test.java.com.urfu.Devy.Commands.ToDo;
 import main.java.com.urfu.Devy.ToDo.ToDo;
 import main.java.com.urfu.Devy.ToDo.ToDoTask;
 import main.java.com.urfu.Devy.bot.GroupInfo;
-import main.java.com.urfu.Devy.bot.MessageSender;
 import main.java.com.urfu.Devy.command.commands.ToDo.AddTaskCommand;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import javax.swing.*;
-
-class EmptySender implements MessageSender {
-
-    private String lastMessage;
-
-    @Override
-    public void send(String message) {
-        lastMessage = message;
-    }
-
-    @Override
-    public String getId() {
-        return "";
-    }
-
-    public void assertMessage(String message) {
-        Assertions.assertEquals(lastMessage, message);
-    }
-}
 
 public class AddTaskCommandTest {
 
@@ -62,13 +40,18 @@ public class AddTaskCommandTest {
     }
 
     @Test
+    public void handleWhenToDoDoesNotExists() {
+        assertHandle(new String[] { "2", "1", "", "", "hello"}, "The ToDo list \"2\" was not founded.");
+    }
+
+    @Test
     public void throwExceptionWhenWrongCountOfArguments() {
         assertHandle(new String[] { "1" }, "Incorrect count of arguments.");
         assertHandle(new String[] { "1", "2" }, "Incorrect count of arguments.");
     }
 
     private void assertHandle(String[] arguments, String handledMessage) {
-        new AddTaskCommand(group, sender, arguments).execute();
+        createCommandWithArgs(arguments).execute();
         sender.assertMessage(handledMessage);
     }
 

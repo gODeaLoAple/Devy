@@ -29,15 +29,14 @@ public class AddTaskCommand extends Command {
     public void execute() {
         try {
             validate();
+            var name = text.get(0);
+            var toDo = group.getToDo(name);
+            toDo.addTask(new ToDoTask(text.get(1), text.get(2), text.get(3), text.get(4)));
+            sender.send("The task has been added.");
         }
-        catch (CommandException e) {
+        catch (IllegalArgumentException | CommandException e) {
             sender.send(e.getMessage());
-            return;
         }
-        var name = text.get(0);
-        var toDo = group.getToDo(name);
-        toDo.addTask(new ToDoTask(text.get(1), text.get(2), text.get(3), text.get(4)));
-        sender.send("The task has been added.");
     }
 
     private void validate() throws CommandException {
