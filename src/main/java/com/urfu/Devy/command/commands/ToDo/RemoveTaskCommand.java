@@ -5,25 +5,24 @@ import main.java.com.urfu.Devy.bot.GroupInfo;
 import main.java.com.urfu.Devy.bot.MessageSender;
 import main.java.com.urfu.Devy.command.Command;
 import main.java.com.urfu.Devy.command.CommandName;
-import main.java.com.urfu.Devy.command.parser.ParseCommandException;
-
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-@CommandName(name = "showTask")
-public class ShowTodoTaskCommand extends Command {
+@CommandName(name = "rmTask")
+public class RemoveTaskCommand extends Command {
 
-    @Parameter(description = "what")
+    @Parameter
     private List<String> text;
 
-    public ShowTodoTaskCommand(GroupInfo group, MessageSender sender, String[] args) throws ParseCommandException {
+    public RemoveTaskCommand(GroupInfo group, MessageSender sender, @NotNull String[] args) {
         super(group, sender, args);
     }
 
     @Override
     public void execute() {
         var todo= group.getToDo(text.get(0));
-        var task = todo.getTask(text.get(1));
-        sender.send(task.toDiscordString());
+        todo.removeTask(text.get(1));
+        sender.send("task \"%s\" has been removed from \"%s\"".formatted(text.get(1), text.get(0)));
     }
 }

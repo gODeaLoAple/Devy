@@ -1,10 +1,12 @@
 package main.java.com.urfu.Devy.bot;
 import main.java.com.urfu.Devy.ToDo.ToDo;
+import main.java.com.urfu.Devy.ToDo.ToDoTask;
 import main.java.com.urfu.Devy.command.CommandData;
 import main.java.com.urfu.Devy.command.CommandException;
 import main.java.com.urfu.Devy.command.CommandsController;
 import main.java.com.urfu.Devy.command.parser.ParseCommandException;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -71,4 +73,14 @@ public class GroupInfo {
         senders.get(senderId).send(message);
     }
 
+    public ArrayList<ToDoTask> getAllUserTasks(String target){
+        var result = new ArrayList<ToDoTask>();
+        for(var todo : toDoLists.values())
+            for(var task : todo.getTasks().values())
+                if(task.getExecutor().equals(target))
+                    result.add(task);
+        if(result.size() == 0)
+            throw new IllegalArgumentException("No user with this name: \"%s\"".formatted(target));
+        return result;
+    }
 }

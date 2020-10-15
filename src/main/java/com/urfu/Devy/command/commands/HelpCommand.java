@@ -23,19 +23,14 @@ public class HelpCommand extends Command{
     }
 
     private String getResult() {
-        try {
-            if (targetCommand == null || targetCommand.isEmpty()) {
-                var result = new StringBuilder();
-                for (var cmd : CommandsController.getAllCommands()) {
-                    result.append(CommandsController.getCommandNameAndInfo(cmd));
-                    result.append(System.lineSeparator());
-                }
-                return result.substring(0, result.length() - 1);
+        if (targetCommand == null || targetCommand.isEmpty()) {
+            var result = new StringBuilder();
+            for (var cmd : CommandsController.getAllCommands()) {
+                result.append(CommandsController.getCommandNameAndShortInfo(cmd));
+                result.append(System.lineSeparator());
             }
-            return CommandsController.getCommandNameAndInfo(targetCommand);
+            return result.substring(0, result.length() - 1);
         }
-        catch (IllegalArgumentException e){
-            return e.getMessage();
-        }
+        return CommandsController.getCommandNameAndFullInfo(targetCommand);
     }
 }

@@ -7,6 +7,7 @@ import main.java.com.urfu.Devy.command.commands.ToDo.AddTaskCommand;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import test.java.com.urfu.Devy.Commands.EmptySender;
 
 public class AddTaskCommandTest {
 

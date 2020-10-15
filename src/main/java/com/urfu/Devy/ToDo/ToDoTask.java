@@ -29,8 +29,7 @@ public class ToDoTask {
         return executor;
     }
 
-    @Override
-    public String toString(){
-        return "name: %s\nauthor: %s\nexecutor: %s\ntask: %s".formatted(id, author, executor, text);
+    public String toDiscordString(){
+        return "**Name**: *%s*\n**Author**: *%s*\n**Executor**: *%s*\n**Task**: *%s*".formatted(id, author, executor, text);
     }
 }

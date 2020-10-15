@@ -17,7 +17,6 @@ import java.util.Objects;
 
 @CommandName(name="addTask", info="")
 public class AddTaskCommand extends Command {
-
     @Parameter(description = "Parameters of task (todo id, task name, author, executor, content)!")
     public ArrayList<String> text;
 

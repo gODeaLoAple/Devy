@@ -10,7 +10,9 @@ import main.java.com.urfu.Devy.command.parser.ParseCommandException;
 
 import java.util.List;
 
-@CommandName(name = "ping", info = "c# one love")
+@CommandName(name = "ping",
+        info = "c# one love",
+        detailedInfo = "$ping [-f] someText. just pong on your message.")
 public class PingCommand extends Command {
     @Parameter(names = "-f", description = "don't press f")
     protected boolean fuck;
@@ -24,13 +26,14 @@ public class PingCommand extends Command {
 
     @Override
     public void execute() {
-        var result = new StringBuilder("Pong ");
+        var result = new StringBuilder("Pong");
         if (text != null && text.size() != 0)
-            result.append(String.join(" ", text));
+            result.append(" ").append(String.join(" ", text));
         if (!fuck) {
             sender.send(result.toString());
+            return;
         }
-        result.append(" FUCK YOURSELF");
+        result.append(" Hello");
         sender.send(result.toString());
     }
 }

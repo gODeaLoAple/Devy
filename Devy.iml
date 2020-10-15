@@ -35,6 +35,14 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" name="JDA-4.2.0_168-withDependencies" level="project" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/JDA-4.2.0_168-withDependencies.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>
