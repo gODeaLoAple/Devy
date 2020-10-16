@@ -31,6 +31,10 @@ public class HelpCommand extends Command{
             }
             return result.substring(0, result.length() - 1);
         }
-        return CommandsController.getCommandNameAndFullInfo(targetCommand);
+        try {
+            return CommandsController.getCommandNameAndFullInfo(targetCommand);
+        } catch (ParseCommandException e) {
+            return "";
+        }
     }
 }

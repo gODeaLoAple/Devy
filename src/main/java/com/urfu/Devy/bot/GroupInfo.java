@@ -85,4 +85,8 @@ public class GroupInfo {
             throw new IllegalArgumentException("No user with this name: \"%s\"".formatted(target));
         return result;
     }
+
+    public Boolean isNull() {
+        return false;
+    }
 }

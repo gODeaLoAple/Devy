@@ -12,12 +12,12 @@ import java.util.Collection;
 import java.util.List;
 
 @CommandName(name="showAllToDo", info="Show all todo-lists' names.")
-public class ShowToDoListsCommand extends Command {
+public class ShowAllToDoCommand extends Command {
 
-    @Parameter(description = "Arguments: []")
+    @Parameter
     public List<String> args;
 
-    public ShowToDoListsCommand(GroupInfo group, MessageSender sender, @NotNull String[] args) {
+    public ShowAllToDoCommand(GroupInfo group, MessageSender sender, @NotNull String[] args) {
         super(group, sender, args);
     }
 
@@ -27,14 +27,15 @@ public class ShowToDoListsCommand extends Command {
         if (toDoLists.size() > 0)
             sender.send(extractLists(toDoLists));
         else
-            sender.send("There is no any todo-list");
+            sender.send("There is no any todo-list.");
     }
 
     private String extractLists(Collection<ToDo> lists) {
         return lists
                 .stream()
                 .map(ToDo::getId)
-                .reduce("", (x,y) -> x.concat("\n").concat(y));
+                .reduce((x,y) -> x.concat("\n").concat(y))
+                .orElse("");
     }
 
 }

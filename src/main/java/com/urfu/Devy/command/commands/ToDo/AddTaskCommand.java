@@ -21,7 +21,7 @@ import java.util.Objects;
         detailedInfo = "\nUsage todoName taskName author executor content")
 public class AddTaskCommand extends Command {
 
-    @Parameter(description = "Parameters of task (todo id, task name, author, executor, content)!")
+    @Parameter(description = "[todoName] [taskName] [author] [executor] [content]")
     public ArrayList<String> text;
 
     public AddTaskCommand(GroupInfo group, MessageSender sender, String[] args) {

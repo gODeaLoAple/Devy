@@ -8,8 +8,7 @@ import main.java.com.urfu.Devy.command.CommandException;
 import main.java.com.urfu.Devy.command.commands.ToDo.ShowTasksCommand;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import test.java.com.urfu.Devy.Commands.CommandTest;
-import test.java.com.urfu.Devy.Commands.EmptySender;
+import main.java.com.urfu.Devy.bot.EmptySender;
 
 public class ShowTasksCommandTests extends ToDoCommandTest {
 

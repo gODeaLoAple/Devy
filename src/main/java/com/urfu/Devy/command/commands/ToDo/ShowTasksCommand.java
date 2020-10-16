@@ -11,7 +11,7 @@ import main.java.com.urfu.Devy.command.CommandName;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
-@CommandName(name="showTasks", info="Shows all tasks in ToDo list.")
+@CommandName(name="showTasks", info="Shows all tasks in todo-list.")
 public class ShowTasksCommand extends Command {
 
     @Parameter

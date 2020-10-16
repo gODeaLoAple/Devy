@@ -12,13 +12,13 @@ import main.java.com.urfu.Devy.command.parser.ParseCommandException;
 
 import java.util.List;
 
-@CommandName(name = "showTask")
+@CommandName(name = "showTask", info="Show the task from todo-list.")
 public class ShowTodoTaskCommand extends Command {
 
-    @Parameter(description = "what")
+    @Parameter(description = "[todoName] [taskName]")
     private List<String> text;
 
-    public ShowTodoTaskCommand(GroupInfo group, MessageSender sender, String[] args) throws ParseCommandException {
+    public ShowTodoTaskCommand(GroupInfo group, MessageSender sender, String[] args) {
         super(group, sender, args);
     }
 

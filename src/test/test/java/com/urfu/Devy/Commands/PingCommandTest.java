@@ -1,5 +1,6 @@
 package test.java.com.urfu.Devy.Commands;
 
+import main.java.com.urfu.Devy.bot.EmptySender;
 import main.java.com.urfu.Devy.bot.GroupInfo;
 import main.java.com.urfu.Devy.command.commands.PingCommand;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,7 +11,7 @@ public class PingCommandTest {
 
     @BeforeEach
     public void SetUp() {
-        sender = new test.java.com.urfu.Devy.Commands.EmptySender();
+        sender = new EmptySender();
     }
 
     public PingCommandTest(){}

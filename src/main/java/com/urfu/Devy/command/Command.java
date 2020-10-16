@@ -36,4 +36,22 @@ public abstract class Command {
     public MessageSender getSender() {
         return sender;
     }
+
+    public String getName() {
+        if (getClass().isAnnotationPresent(CommandName.class))
+            return getClass().getAnnotation(CommandName.class).name();
+        return "";
+    };
+
+    public String extractParametersInfo() {
+        var sb = new StringBuilder();
+        var jc = JCommander
+            .newBuilder()
+            .addObject(this)
+            .build();
+        jc.setProgramName("<%s>".formatted(getName()));
+        jc.getUsageFormatter().usage(sb);
+        return sb.toString();
+    }
+
 }

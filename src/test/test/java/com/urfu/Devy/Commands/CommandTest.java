@@ -1,5 +1,6 @@
 package test.java.com.urfu.Devy.Commands;
 
+import main.java.com.urfu.Devy.bot.EmptySender;
 import main.java.com.urfu.Devy.bot.GroupInfo;
 import main.java.com.urfu.Devy.command.Command;
 
@@ -13,4 +14,5 @@ public abstract class CommandTest {
         createCommandWithArgs(arguments).execute();
         sender.assertMessage(handledMessage);
     }
+
 }

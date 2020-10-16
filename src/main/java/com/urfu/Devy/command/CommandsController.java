@@ -1,5 +1,7 @@
 package main.java.com.urfu.Devy.command;
 
+import main.java.com.urfu.Devy.bot.EmptyGroup;
+import main.java.com.urfu.Devy.bot.EmptySender;
 import main.java.com.urfu.Devy.bot.GroupInfo;
 import main.java.com.urfu.Devy.bot.MessageSender;
 import main.java.com.urfu.Devy.command.commands.UnknownCommand;
@@ -8,10 +10,13 @@ import org.reflections.Reflections;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
+import java.util.EmptyStackException;
 import java.util.HashMap;
 import java.util.Map;
 
 public class CommandsController {
+    private static final EmptyGroup group = new EmptyGroup();
+    private static final EmptySender sender = new EmptySender();
     private static final Map<String, Class<? extends  Command>> commands = new HashMap<>(){};
 
     public static void constructCommandsDictionary() {
@@ -32,6 +37,7 @@ public class CommandsController {
                 | InvocationTargetException
                 | IllegalArgumentException
                 | NoSuchMethodException e) {
+            e.printStackTrace();
             return new UnknownCommand(group, sender, data.getArgs());
         }
     }
@@ -62,10 +68,10 @@ public class CommandsController {
         return annotation.name() + (info.isEmpty() ? "" : " :: " + info);
     }
 
-    public static String getCommandNameAndFullInfo(String commandName){
-        if(!hasCommand(commandName))
-            throw new IllegalArgumentException("Command was not found: " + commandName);
-        var annotation = commands.get(commandName).getDeclaredAnnotation(CommandName.class);
-        return annotation.name() + " " +  annotation.detailedInfo();
+    public static String getCommandNameAndFullInfo(String commandName) throws ParseCommandException {
+            var command = createCommand(group, sender, new CommandData(commandName, new String[0]));
+            var annotation = commands.get(commandName).getDeclaredAnnotation(CommandName.class);
+            var result = annotation.name() + " " +  annotation.detailedInfo();
+            return command.extractParametersInfo();
     }
 }

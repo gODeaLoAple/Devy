@@ -9,8 +9,7 @@ import main.java.com.urfu.Devy.command.commands.ToDo.AddTaskCommand;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import test.java.com.urfu.Devy.Commands.CommandTest;
-import test.java.com.urfu.Devy.Commands.EmptySender;
+import main.java.com.urfu.Devy.bot.EmptySender;
 
 public class AddTaskCommandTest extends ToDoCommandTest {
 
@@ -20,11 +19,7 @@ public class AddTaskCommandTest extends ToDoCommandTest {
     @BeforeEach
     public void SetUp() {
         group = new GroupInfo("1");
-        try {
-            group.addToDo(new ToDo("1"));
-        } catch (CommandException e) {
-            throw new AssertionError(e.getMessage());
-        }
+        addToDo(group, new ToDo("1"));
         sender = new EmptySender();
     }
 

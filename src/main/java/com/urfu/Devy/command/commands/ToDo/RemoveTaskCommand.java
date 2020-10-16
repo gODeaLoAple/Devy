@@ -13,7 +13,7 @@ import java.util.List;
 @CommandName(name = "rmTask", info="Remove task from todo-list.")
 public class RemoveTaskCommand extends Command {
 
-    @Parameter(description = "Parameters: [todoName, taskName]")
+    @Parameter(description = "[todoName] [taskName]")
     private List<String> text;
 
     public RemoveTaskCommand(GroupInfo group, MessageSender sender, @NotNull String[] args) {

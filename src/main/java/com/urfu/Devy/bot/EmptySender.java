@@ -1,6 +1,5 @@
-package test.java.com.urfu.Devy.Commands;
+package main.java.com.urfu.Devy.bot;
 
-import main.java.com.urfu.Devy.bot.MessageSender;
 import org.junit.jupiter.api.Assertions;
 
 public class EmptySender implements MessageSender {

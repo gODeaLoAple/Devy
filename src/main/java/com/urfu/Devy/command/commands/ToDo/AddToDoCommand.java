@@ -1,6 +1,7 @@
 package main.java.com.urfu.Devy.command.commands.ToDo;
 
 import com.beust.jcommander.Parameter;
+import com.beust.jcommander.Parameters;
 import main.java.com.urfu.Devy.ToDo.ToDo;
 import main.java.com.urfu.Devy.bot.GroupInfo;
 import main.java.com.urfu.Devy.bot.MessageSender;
@@ -11,13 +12,13 @@ import main.java.com.urfu.Devy.command.parser.ParseCommandException;
 
 import java.util.ArrayList;
 
-@CommandName(name="addToDo")
+@CommandName(name="addToDo", info="Add new todo-list to the group.")
 public class AddToDoCommand extends Command {
 
-    @Parameter(description = "a")
+    @Parameter(description = "[todoName]")
     public ArrayList<String> arguments;
 
-    public AddToDoCommand(GroupInfo group, MessageSender sender, String[] args) throws ParseCommandException {
+    public AddToDoCommand(GroupInfo group, MessageSender sender, String[] args) {
         super(group, sender, args);
     }
 

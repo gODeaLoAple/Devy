@@ -9,8 +9,7 @@ import main.java.com.urfu.Devy.command.commands.ToDo.RemoveTaskCommand;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import test.java.com.urfu.Devy.Commands.CommandTest;
-import test.java.com.urfu.Devy.Commands.EmptySender;
+import main.java.com.urfu.Devy.bot.EmptySender;
 
 public class RemoveTaskCommandTest extends ToDoCommandTest {
 
