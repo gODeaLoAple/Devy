@@ -26,15 +26,11 @@ public class HelpCommand extends Command{
         if (targetCommand == null || targetCommand.isEmpty()) {
             var result = new StringBuilder();
             for (var cmd : CommandsController.getAllCommands()) {
-                result.append(CommandsController.getCommandNameAndShortInfo(cmd));
+                result.append(CommandsController.getCommandNameAndShortInfo(cmd.getName()));
                 result.append(System.lineSeparator());
             }
             return result.substring(0, result.length() - 1);
         }
-        try {
-            return CommandsController.getCommandNameAndFullInfo(targetCommand);
-        } catch (ParseCommandException e) {
-            return "";
-        }
+        return CommandsController.getCommandNameAndFullInfo(targetCommand);
     }
 }

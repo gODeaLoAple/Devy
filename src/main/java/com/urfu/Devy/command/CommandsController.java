@@ -5,12 +5,10 @@ import main.java.com.urfu.Devy.bot.EmptySender;
 import main.java.com.urfu.Devy.bot.GroupInfo;
 import main.java.com.urfu.Devy.bot.MessageSender;
 import main.java.com.urfu.Devy.command.commands.UnknownCommand;
-import main.java.com.urfu.Devy.command.parser.ParseCommandException;
 import org.reflections.Reflections;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
-import java.util.EmptyStackException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,7 +24,7 @@ public class CommandsController {
                 commands.put(command.getDeclaredAnnotation(CommandName.class).name(), command);
     }
 
-    public static Command createCommand(GroupInfo group, MessageSender sender, CommandData data) throws ParseCommandException {
+    public static Command createCommand(GroupInfo group, MessageSender sender, CommandData data) {
         try {
             return getCommandClass(data.getName())
                     .getDeclaredConstructor(GroupInfo.class, MessageSender.class, String[].class)
@@ -62,16 +60,15 @@ public class CommandsController {
         return getCommandNameAndShortInfo(commands.get(commandName));
     }
 
-    public static String getCommandNameAndShortInfo(Class<? extends Command> command) throws IllegalArgumentException{
+    protected static String getCommandNameAndShortInfo(Class<? extends Command> command) throws IllegalArgumentException{
         var annotation = command.getDeclaredAnnotation(CommandName.class);
         var info = annotation.info();
         return annotation.name() + (info.isEmpty() ? "" : " :: " + info);
     }
 
-    public static String getCommandNameAndFullInfo(String commandName) throws ParseCommandException {
-            var command = createCommand(group, sender, new CommandData(commandName, new String[0]));
-            var annotation = commands.get(commandName).getDeclaredAnnotation(CommandName.class);
-            var result = annotation.name() + " " +  annotation.detailedInfo();
-            return command.extractParametersInfo();
+    public static String getCommandNameAndFullInfo(String commandName) {
+        if(!hasCommand(commandName))
+            throw new IllegalArgumentException("Command was not found: " + commandName);
+        return createCommand(group, sender, new CommandData(commandName, new String[0])).extractParametersInfo();
     }
 }
