@@ -7,14 +7,11 @@ import main.java.com.urfu.Devy.command.Command;
 import main.java.com.urfu.Devy.command.CommandException;
 import main.java.com.urfu.Devy.command.commands.ToDo.AddTaskCommand;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import main.java.com.urfu.Devy.bot.EmptySender;
-
 public class AddTaskCommandTest extends ToDoCommandTest {
-
-    public AddTaskCommandTest() {
-    }
 
     @BeforeEach
     public void SetUp() {

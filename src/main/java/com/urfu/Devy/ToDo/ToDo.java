@@ -1,39 +1,46 @@
 package main.java.com.urfu.Devy.ToDo;
 
-import java.util.HashMap;
-import java.util.Map;
+import main.java.com.urfu.Devy.database.RepositoryController;
+import java.util.ArrayList;
 
 public class ToDo {
-    private final Map<String, ToDoTask> tasks;
-    private final String id;
+    private final String name;
+    private final int id;
 
-    public ToDo(String id) {
+    public ToDo(int id, String name) {
+        this.name = name;
         this.id = id;
-        tasks = new HashMap<>();
     }
 
-    public Map<String, ToDoTask> getTasks() {
-        return tasks;
+    public ToDo(String name) {
+        this(0, name);
     }
-    public ToDoTask getTask(String taskId){
-        if(!tasks.containsKey(taskId))
+
+
+    public ArrayList<ToDoTask> getTasks() {
+        return RepositoryController.getToDoTaskRepository().getAllTasksInToDo(id);
+    }
+
+    public ToDoTask getTask(String taskName) {
+        var task = RepositoryController.getToDoTaskRepository().getTaskByName(id, taskName);
+        if (task == null)
             throw new IllegalArgumentException("Task not found");
-        return tasks.get(taskId);
+        return task;
     }
 
-    public String getId() {
-        return id;
+    public String getName() {
+        return name;
     }
 
-    public void addTask(ToDoTask task) {
-        tasks.put(task.getId(), task);
+    public boolean addTask(ToDoTask task) {
+        return RepositoryController.getToDoTaskRepository().addTask(id, task);
     }
 
-    public Boolean removeTask(String taskId) {
-        return tasks.remove(taskId) != null;
+    public boolean removeTask(String taskName) {
+        return RepositoryController.getToDoTaskRepository().removeTaskByName(id, taskName);
     }
 
-    public boolean hasTask(String taskId) {
-        return tasks.containsKey(taskId);
+    public boolean hasTask(String taskName) {
+        return RepositoryController.getToDoTaskRepository().hasTaskWithName(id, taskName);
     }
 }
