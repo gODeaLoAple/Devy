@@ -1,7 +1,7 @@
-package main.java.com.urfu.Devy.command.commands.ToDo;
+package main.java.com.urfu.Devy.command.commands.todo;
 
 import com.beust.jcommander.Parameter;
-import main.java.com.urfu.Devy.ToDo.ToDo;
+import main.java.com.urfu.Devy.todo.ToDo;
 import main.java.com.urfu.Devy.bot.GroupInfo;
 import main.java.com.urfu.Devy.bot.MessageSender;
 import main.java.com.urfu.Devy.command.Command;
@@ -11,7 +11,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
-@CommandName(name = "showUserTasks",
+@CommandName(name = "showusertasks",
         info = "Shows all user tasks from all todo-lists.",
         detailedInfo = "Shows all user tasks from all todo-lists")
 public class ShowUserTasksCommand extends Command {

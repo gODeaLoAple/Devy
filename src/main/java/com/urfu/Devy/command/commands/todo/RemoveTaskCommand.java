@@ -1,4 +1,4 @@
-package main.java.com.urfu.Devy.command.commands.ToDo;
+package main.java.com.urfu.Devy.command.commands.todo;
 
 import com.beust.jcommander.Parameter;
 import main.java.com.urfu.Devy.bot.GroupInfo;
@@ -10,7 +10,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-@CommandName(name = "rmTask", info="Remove task from todo-list.")
+@CommandName(name = "rmtask", info="Remove task from todo-list.")
 public class RemoveTaskCommand extends Command {
 
     @Parameter(description = "[todoName] [taskName]")

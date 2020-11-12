@@ -18,14 +18,16 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
-@CommandName(name = "commits", detailedInfo = "$commits [userName] [repositoryName] [-n]commits count(defaul - 10)")
+@CommandName(name = "commits",
+        info="Show last commits of person",
+        detailedInfo = "$commits [userName] [repositoryName] [-n]")
 public class RepositoryCommitsCommand extends Command {
 
     private final int maxCommits = 25;
     @Parameter(names = "-n", description = "commits count", required = false)
     protected int commitsToShow;
 
-    @Parameter(description = "userName, reposName")
+    @Parameter(description = "[userName] [repositoryName] [-n]")
     private List<String> arguments;
 
     public RepositoryCommitsCommand(GroupInfo group, MessageSender sender, @NotNull String[] args) {

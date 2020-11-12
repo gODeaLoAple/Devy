@@ -1,11 +1,11 @@
 package test.java.com.urfu.Devy.Commands.ToDo;
 
-import main.java.com.urfu.Devy.ToDo.ToDo;
-import main.java.com.urfu.Devy.ToDo.ToDoTask;
+import main.java.com.urfu.Devy.todo.ToDo;
+import main.java.com.urfu.Devy.todo.ToDoTask;
 import main.java.com.urfu.Devy.bot.GroupInfo;
 import main.java.com.urfu.Devy.command.Command;
 import main.java.com.urfu.Devy.command.CommandException;
-import main.java.com.urfu.Devy.command.commands.ToDo.RemoveTaskCommand;
+import main.java.com.urfu.Devy.command.commands.todo.RemoveTaskCommand;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

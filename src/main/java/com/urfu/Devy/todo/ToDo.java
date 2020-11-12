@@ -1,4 +1,4 @@
-package main.java.com.urfu.Devy.ToDo;
+package main.java.com.urfu.Devy.todo;
 
 import main.java.com.urfu.Devy.database.RepositoryController;
 import java.util.ArrayList;

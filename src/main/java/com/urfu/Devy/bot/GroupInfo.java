@@ -1,16 +1,12 @@
 package main.java.com.urfu.Devy.bot;
-import main.java.com.urfu.Devy.ToDo.ToDo;
-import main.java.com.urfu.Devy.ToDo.ToDoTask;
+import main.java.com.urfu.Devy.todo.ToDo;
 import main.java.com.urfu.Devy.command.CommandData;
 import main.java.com.urfu.Devy.command.CommandException;
 import main.java.com.urfu.Devy.command.CommandsController;
 import main.java.com.urfu.Devy.database.RepositoryController;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class GroupInfo {
     protected final String id;

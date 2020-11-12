@@ -1,4 +1,4 @@
-package main.java.com.urfu.Devy.ToDo;
+package main.java.com.urfu.Devy.todo;
 
 public class ToDoTask {
     private final int id;

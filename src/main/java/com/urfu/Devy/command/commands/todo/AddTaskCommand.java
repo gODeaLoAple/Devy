@@ -1,22 +1,18 @@
-package main.java.com.urfu.Devy.command.commands.ToDo;
+package main.java.com.urfu.Devy.command.commands.todo;
 
 import com.beust.jcommander.Parameter;
-import main.java.com.urfu.Devy.ToDo.ToDoTask;
+import main.java.com.urfu.Devy.todo.ToDoTask;
 import main.java.com.urfu.Devy.bot.GroupInfo;
 import main.java.com.urfu.Devy.bot.MessageSender;
 import main.java.com.urfu.Devy.command.Command;
-import main.java.com.urfu.Devy.command.CommandData;
 import main.java.com.urfu.Devy.command.CommandException;
 import main.java.com.urfu.Devy.command.CommandName;
-import main.java.com.urfu.Devy.command.parser.ParseCommandException;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Objects;
 
 @CommandName(
-        name="addTask",
+        name="addtask",
         info="Add new task to todo-list.",
         detailedInfo = "\nUsage todoName taskName author executor content")
 public class AddTaskCommand extends Command {

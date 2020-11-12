@@ -35,7 +35,6 @@ public class CommandsController {
                 | InvocationTargetException
                 | IllegalArgumentException
                 | NoSuchMethodException e) {
-            e.printStackTrace();
             return new UnknownCommand(group, sender, data.getArgs());
         }
     }

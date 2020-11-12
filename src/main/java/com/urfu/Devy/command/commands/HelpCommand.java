@@ -7,7 +7,7 @@ import main.java.com.urfu.Devy.command.Command;
 import main.java.com.urfu.Devy.command.CommandName;
 import main.java.com.urfu.Devy.command.CommandsController;
 
-@CommandName(name = "help")
+@CommandName(name = "help", info="show all commands")
 public class HelpCommand extends Command{
     public HelpCommand(GroupInfo group, MessageSender sender, String[] args) {
         super(group, sender, args);

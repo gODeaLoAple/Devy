@@ -1,6 +1,6 @@
 package main.java.com.urfu.Devy.database.repositories;
 
-import main.java.com.urfu.Devy.ToDo.ToDoTask;
+import main.java.com.urfu.Devy.todo.ToDoTask;
 import org.apache.log4j.Logger;
 
 import java.sql.SQLException;
