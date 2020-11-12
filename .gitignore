@@ -1,6 +1,8 @@
 # IntelliJ IDEA
 .idea/
 
+
+usbwebserver/
 # Compiled class file
 *.class
 
