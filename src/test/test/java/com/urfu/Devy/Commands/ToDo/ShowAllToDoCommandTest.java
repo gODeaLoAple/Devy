@@ -32,8 +32,8 @@ public class ShowAllToDoCommandTest extends ToDoCommandTest {
         addToDo(group, new ToDo("test1"));
         addToDo(group, new ToDo("test2"));
         assertHandle(new String[0], """
-                test2
-                test1""");
+                test1
+                test2""");
     }
 
     @Override

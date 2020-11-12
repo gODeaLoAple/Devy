@@ -16,7 +16,7 @@ public class ToDoTaskTest {
 
     @Test
     public void testId() {
-        Assertions.assertEquals("id", task.getId());
+        Assertions.assertEquals("id", task.getName());
     }
 
     @Test

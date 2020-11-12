@@ -5,6 +5,7 @@ import main.java.com.urfu.Devy.command.CommandException;
 import main.java.com.urfu.Devy.command.parser.CommandParser;
 import main.java.com.urfu.Devy.command.parser.ParseCommandException;
 import main.java.com.urfu.Devy.bot.GroupInfo;
+import main.java.com.urfu.Devy.database.DataBase;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.events.channel.text.TextChannelCreateEvent;
 import net.dv8tion.jda.api.events.guild.GuildReadyEvent;
@@ -18,9 +19,9 @@ import org.apache.log4j.Logger;
 
 public class DiscordBot extends ListenerAdapter implements Bot {
     private static final Logger log = Logger.getLogger(DiscordBot.class);
-    private final HashMap<String, GroupInfo> groups = new HashMap<>();
     private final CommandParser parser;
     private final String token;
+    private final HashMap<String, GroupInfo> groups = new HashMap<>();
 
     public DiscordBot(String discordToken) {
         token = discordToken;
@@ -57,7 +58,7 @@ public class DiscordBot extends ListenerAdapter implements Bot {
 
     @Override
     public void handleMessage(String groupId, String senderId, String message)
-            throws ParseCommandException, CommandException {
+            throws ParseCommandException {
         if(!groups.containsKey(groupId))
             throw new IllegalArgumentException("The group had not been added.");
         groups.get(groupId).execute(parser.parse(message), senderId);
@@ -72,7 +73,7 @@ public class DiscordBot extends ListenerAdapter implements Bot {
             if (message.startsWith(parser.getPrefix()) && !event.getAuthor().isBot())
                 handleMessage(group.getId(), channel.getId(), message);
         }
-        catch (ParseCommandException | IllegalArgumentException | CommandException e) {
+        catch (ParseCommandException | IllegalArgumentException e) {
             channel.sendMessage(e.getMessage()).queue();
         }
     }
@@ -105,4 +106,5 @@ public class DiscordBot extends ListenerAdapter implements Bot {
             log.error(e.getMessage());
         }
     }
+
 }

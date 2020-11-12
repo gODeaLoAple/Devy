@@ -50,8 +50,8 @@ public class CommandsController {
         return commands.get(commandName);
     }
 
-    public static Collection<Class<? extends Command>> getAllCommands(){
-        return commands.values();
+    public static Collection<String> getAllCommands(){
+        return commands.keySet();
     }
 
     public static String getCommandNameAndShortInfo(String commandName) throws IllegalArgumentException{

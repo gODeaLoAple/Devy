@@ -28,7 +28,6 @@ public class ShowTasksCommand extends Command {
             var toDo = group.getToDo(text.get(0));
             var message = toDo
                     .getTasks()
-                    .values()
                     .stream()
                     .map(ToDoTask::getInfo)
                     .collect(Collectors.joining("\n\n"));

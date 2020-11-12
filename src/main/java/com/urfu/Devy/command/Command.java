@@ -49,7 +49,7 @@ public abstract class Command {
             .newBuilder()
             .addObject(this)
             .build();
-        jc.setProgramName("<%s>".formatted(getName()));
+        jc.setProgramName("%s".formatted(getName()));
         jc.getUsageFormatter().usage(sb);
         return sb.toString();
     }

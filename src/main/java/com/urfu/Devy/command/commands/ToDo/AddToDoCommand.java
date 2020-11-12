@@ -8,7 +8,6 @@ import main.java.com.urfu.Devy.bot.MessageSender;
 import main.java.com.urfu.Devy.command.Command;
 import main.java.com.urfu.Devy.command.CommandException;
 import main.java.com.urfu.Devy.command.CommandName;
-import main.java.com.urfu.Devy.command.parser.ParseCommandException;
 
 import java.util.ArrayList;
 

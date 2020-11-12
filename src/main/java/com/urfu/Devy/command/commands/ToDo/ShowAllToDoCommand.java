@@ -33,7 +33,7 @@ public class ShowAllToDoCommand extends Command {
     private String extractLists(Collection<ToDo> lists) {
         return lists
                 .stream()
-                .map(ToDo::getId)
+                .map(ToDo::getName)
                 .reduce((x,y) -> x.concat("\n").concat(y))
                 .orElse("");
     }

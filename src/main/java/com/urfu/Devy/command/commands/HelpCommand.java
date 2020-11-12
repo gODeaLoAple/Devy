@@ -6,15 +6,14 @@ import main.java.com.urfu.Devy.bot.MessageSender;
 import main.java.com.urfu.Devy.command.Command;
 import main.java.com.urfu.Devy.command.CommandName;
 import main.java.com.urfu.Devy.command.CommandsController;
-import main.java.com.urfu.Devy.command.parser.ParseCommandException;
 
 @CommandName(name = "help")
 public class HelpCommand extends Command{
-    public HelpCommand(GroupInfo group, MessageSender sender, String[] args) throws ParseCommandException {
+    public HelpCommand(GroupInfo group, MessageSender sender, String[] args) {
         super(group, sender, args);
     }
 
-    @Parameter(description = "Enter command name to get info about it")
+    @Parameter(description = "Command name to get info about it")
     private String targetCommand;
 
     @Override
@@ -26,7 +25,7 @@ public class HelpCommand extends Command{
         if (targetCommand == null || targetCommand.isEmpty()) {
             var result = new StringBuilder();
             for (var cmd : CommandsController.getAllCommands()) {
-                result.append(CommandsController.getCommandNameAndShortInfo(cmd.getName()));
+                result.append(CommandsController.getCommandNameAndShortInfo(cmd));
                 result.append(System.lineSeparator());
             }
             return result.substring(0, result.length() - 1);
