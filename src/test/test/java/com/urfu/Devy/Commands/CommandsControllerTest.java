@@ -1,7 +1,7 @@
 package test.java.com.urfu.Devy.Commands;
 
-import main.java.com.urfu.Devy.bot.EmptyGroup;
-import main.java.com.urfu.Devy.bot.EmptySender;
+import main.java.com.urfu.Devy.group.EmptyGroup;
+import main.java.com.urfu.Devy.sender.EmptySender;
 import main.java.com.urfu.Devy.command.CommandData;
 import main.java.com.urfu.Devy.command.CommandsController;
 import org.junit.jupiter.api.Assertions;

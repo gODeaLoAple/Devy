@@ -1,7 +1,7 @@
 package test.java.com.urfu.Devy.Commands.ToDo;
 
 import main.java.com.urfu.Devy.todo.ToDo;
-import main.java.com.urfu.Devy.bot.GroupInfo;
+import main.java.com.urfu.Devy.group.GroupInfo;
 import main.java.com.urfu.Devy.command.CommandException;
 import test.java.com.urfu.Devy.Commands.CommandTester;
 

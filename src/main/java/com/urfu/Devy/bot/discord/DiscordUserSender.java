@@ -1,25 +1,23 @@
 package main.java.com.urfu.Devy.bot.discord;
 
 import main.java.com.urfu.Devy.sender.MessageSender;
+import net.dv8tion.jda.api.entities.User;
 
-public class DiscordNotificationSender implements MessageSender {
+public class DiscordUserSender implements MessageSender {
 
-    private final String id;
-    private final DiscordMessageSender[] senders;
-
-    public DiscordNotificationSender(String id, DiscordMessageSender[] senders) {
-        this.id = id;
-        this.senders = senders;
+    private User user;
+    public DiscordUserSender(User user) {
+        this.user = user;
     }
 
     @Override
     public void send(String message) {
-        for (var sender : senders)
-            sender.send(message);
+        user.openPrivateChannel().queue((channel) -> channel.sendMessage(message).queue());
     }
 
     @Override
     public String getId() {
-        return id;
+        return user.getId();
     }
+
 }

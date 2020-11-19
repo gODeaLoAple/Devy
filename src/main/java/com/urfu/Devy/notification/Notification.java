@@ -1,2 +1,5 @@
-package main.java.com.urfu.Devy.notification;public class Notification {
+package main.java.com.urfu.Devy.notification;
+
+public class Notification {
+
 }

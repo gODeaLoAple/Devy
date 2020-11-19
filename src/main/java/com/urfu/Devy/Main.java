@@ -20,10 +20,11 @@ public class Main {
 
     private static final String PATH_TO_TOKEN = "src/config.properties";
     private static final String PATH_TO_DATABASE = "src/database.properties";
+
     public static void main(String[] args) {
         try {
-            var database = createDataBase();
-            var bot = createBot();
+            var database = createDataBase(loadProperties(Main.PATH_TO_DATABASE));
+            var bot = createBot(loadProperties(Main.PATH_TO_TOKEN));
             Repository.setDatabase(database);
             initRepositories();
             CommandsController.constructCommandsDictionary();
@@ -34,13 +35,11 @@ public class Main {
         }
     }
 
-    private static DiscordBot createBot() {
-        var config = loadProperties(Main.PATH_TO_TOKEN);
+    private static DiscordBot createBot(Properties config) {
         return new DiscordBot(config.getProperty("token"));
     }
 
-    private static DataBase createDataBase() throws Exception {
-        var config = loadProperties(Main.PATH_TO_DATABASE);
+    private static DataBase createDataBase(Properties config) throws Exception {
         return new DataBase(config.getProperty("url"),
                 config.getProperty("username"),
                 config.getProperty("password"));

@@ -4,9 +4,9 @@ import main.java.com.urfu.Devy.bot.Bot;
 import main.java.com.urfu.Devy.command.CommandException;
 import main.java.com.urfu.Devy.command.parser.CommandParser;
 import main.java.com.urfu.Devy.command.parser.ParseCommandException;
-import main.java.com.urfu.Devy.bot.GroupInfo;
-import main.java.com.urfu.Devy.database.DataBase;
+import main.java.com.urfu.Devy.group.GroupInfo;
 import net.dv8tion.jda.api.JDABuilder;
+import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.channel.text.TextChannelCreateEvent;
 import net.dv8tion.jda.api.events.guild.GuildReadyEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
@@ -18,14 +18,16 @@ import java.util.HashMap;
 import org.apache.log4j.Logger;
 
 public class DiscordBot extends ListenerAdapter implements Bot {
-    private static final Logger log = Logger.getLogger(DiscordBot.class);
+    private final Logger log;
     private final CommandParser parser;
     private final String token;
-    private final HashMap<String, GroupInfo> groups = new HashMap<>();
+    private final HashMap<String, GroupInfo> groups;
 
     public DiscordBot(String discordToken) {
         token = discordToken;
         parser = new CommandParser("$");
+        groups = new HashMap<>();
+        log = Logger.getLogger(DiscordBot.class);
     }
 
     public void start() {
@@ -66,16 +68,33 @@ public class DiscordBot extends ListenerAdapter implements Bot {
 
     @Override
     public void onMessageReceived(MessageReceivedEvent event) {
+        if (event.isFromGuild())
+            onMessageReceivedFromGuild(event);
+        else
+            onMessageReceivedFromPerson(event);
+    }
+
+    private void onMessageReceivedFromGuild(MessageReceivedEvent event) {
         var group = event.getGuild();
         var channel = event.getTextChannel();
         var message = event.getMessage().getContentRaw();
         try {
-            if (message.startsWith(parser.getPrefix()) && !event.getAuthor().isBot())
+            if (parser.isCommand(message) && !event.getAuthor().isBot())
                 handleMessage(group.getId(), channel.getId(), message);
         }
         catch (ParseCommandException | IllegalArgumentException e) {
             channel.sendMessage(e.getMessage()).queue();
         }
+    }
+
+    private void onMessageReceivedFromPerson(MessageReceivedEvent event) {
+        final String message = """
+                    Hello, I'm Devy - bot for development. 
+                    I'm sorry, but I work only in text-channels now.
+                    You can create your own text-channel and call me there!""";
+        var author = event.getAuthor();
+        if (!author.isBot())
+            new DiscordUserSender(author).send(message);
     }
 
     @Override

@@ -1,9 +1,9 @@
 package main.java.com.urfu.Devy.command;
 
-import main.java.com.urfu.Devy.bot.EmptyGroup;
-import main.java.com.urfu.Devy.bot.EmptySender;
-import main.java.com.urfu.Devy.bot.GroupInfo;
-import main.java.com.urfu.Devy.bot.MessageSender;
+import main.java.com.urfu.Devy.group.EmptyGroup;
+import main.java.com.urfu.Devy.sender.EmptySender;
+import main.java.com.urfu.Devy.group.GroupInfo;
+import main.java.com.urfu.Devy.sender.MessageSender;
 import main.java.com.urfu.Devy.command.commands.UnknownCommand;
 import org.reflections.Reflections;
 

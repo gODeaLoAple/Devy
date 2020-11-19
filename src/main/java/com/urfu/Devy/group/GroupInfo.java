@@ -1,4 +1,4 @@
-package main.java.com.urfu.Devy.bot;
+package main.java.com.urfu.Devy.group;
 import main.java.com.urfu.Devy.sender.MessageSender;
 import main.java.com.urfu.Devy.todo.ToDo;
 import main.java.com.urfu.Devy.command.CommandData;
