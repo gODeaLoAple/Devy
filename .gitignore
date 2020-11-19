@@ -32,3 +32,6 @@ hs_err_pid*
 *.properties
 local.properties
 project.properties
+
+# database
+usbwebserver/
