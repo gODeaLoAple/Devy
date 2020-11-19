@@ -26,7 +26,7 @@
 hs_err_pid*
 
 # Libraries
-!lib/*.jar
+lib/
 
 # Config files
 *.properties
