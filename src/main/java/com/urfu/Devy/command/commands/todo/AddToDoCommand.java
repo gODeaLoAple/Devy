@@ -1,18 +1,16 @@
-package main.java.com.urfu.Devy.command.commands.ToDo;
+package main.java.com.urfu.Devy.command.commands.todo;
 
 import com.beust.jcommander.Parameter;
-import com.beust.jcommander.Parameters;
-import main.java.com.urfu.Devy.ToDo.ToDo;
-import main.java.com.urfu.Devy.bot.GroupInfo;
-import main.java.com.urfu.Devy.bot.MessageSender;
+import main.java.com.urfu.Devy.todo.ToDo;
+import main.java.com.urfu.Devy.group.GroupInfo;
+import main.java.com.urfu.Devy.sender.MessageSender;
 import main.java.com.urfu.Devy.command.Command;
 import main.java.com.urfu.Devy.command.CommandException;
 import main.java.com.urfu.Devy.command.CommandName;
-import main.java.com.urfu.Devy.command.parser.ParseCommandException;
 
 import java.util.ArrayList;
 
-@CommandName(name="addToDo", info="Add new todo-list to the group.")
+@CommandName(name="addtodo", info="Add new todo-list to the group.")
 public class AddToDoCommand extends Command {
 
     @Parameter(description = "[todoName]")

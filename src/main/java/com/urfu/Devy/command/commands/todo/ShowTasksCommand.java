@@ -1,9 +1,9 @@
-package main.java.com.urfu.Devy.command.commands.ToDo;
+package main.java.com.urfu.Devy.command.commands.todo;
 
 import com.beust.jcommander.Parameter;
-import main.java.com.urfu.Devy.ToDo.ToDoTask;
-import main.java.com.urfu.Devy.bot.GroupInfo;
-import main.java.com.urfu.Devy.bot.MessageSender;
+import main.java.com.urfu.Devy.todo.ToDoTask;
+import main.java.com.urfu.Devy.group.GroupInfo;
+import main.java.com.urfu.Devy.sender.MessageSender;
 import main.java.com.urfu.Devy.command.Command;
 import main.java.com.urfu.Devy.command.CommandException;
 import main.java.com.urfu.Devy.command.CommandName;
@@ -11,7 +11,7 @@ import main.java.com.urfu.Devy.command.CommandName;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
-@CommandName(name="showTasks", info="Shows all tasks in todo-list.")
+@CommandName(name="showtasks", info="Shows all tasks in todo-list.")
 public class ShowTasksCommand extends Command {
 
     @Parameter
@@ -28,7 +28,6 @@ public class ShowTasksCommand extends Command {
             var toDo = group.getToDo(text.get(0));
             var message = toDo
                     .getTasks()
-                    .values()
                     .stream()
                     .map(ToDoTask::getInfo)
                     .collect(Collectors.joining("\n\n"));

@@ -1,9 +1,9 @@
-package main.java.com.urfu.Devy.command.commands.ToDo;
+package main.java.com.urfu.Devy.command.commands.todo;
 
 import com.beust.jcommander.Parameter;
-import main.java.com.urfu.Devy.ToDo.ToDo;
-import main.java.com.urfu.Devy.bot.GroupInfo;
-import main.java.com.urfu.Devy.bot.MessageSender;
+import main.java.com.urfu.Devy.todo.ToDo;
+import main.java.com.urfu.Devy.group.GroupInfo;
+import main.java.com.urfu.Devy.sender.MessageSender;
 import main.java.com.urfu.Devy.command.Command;
 import main.java.com.urfu.Devy.command.CommandName;
 import org.jetbrains.annotations.NotNull;
@@ -11,7 +11,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Collection;
 import java.util.List;
 
-@CommandName(name="showAllToDo", info="Show all todo-lists' names.")
+@CommandName(name="showalltodo", info="Show all todo-lists' names.")
 public class ShowAllToDoCommand extends Command {
 
     @Parameter
@@ -33,7 +33,7 @@ public class ShowAllToDoCommand extends Command {
     private String extractLists(Collection<ToDo> lists) {
         return lists
                 .stream()
-                .map(ToDo::getId)
+                .map(ToDo::getName)
                 .reduce((x,y) -> x.concat("\n").concat(y))
                 .orElse("");
     }

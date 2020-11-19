@@ -1,25 +1,21 @@
-package main.java.com.urfu.Devy.bot;
-import main.java.com.urfu.Devy.ToDo.ToDo;
-import main.java.com.urfu.Devy.ToDo.ToDoTask;
+package main.java.com.urfu.Devy.group;
+import main.java.com.urfu.Devy.sender.MessageSender;
+import main.java.com.urfu.Devy.todo.ToDo;
 import main.java.com.urfu.Devy.command.CommandData;
 import main.java.com.urfu.Devy.command.CommandException;
 import main.java.com.urfu.Devy.command.CommandsController;
-import main.java.com.urfu.Devy.command.parser.ParseCommandException;
+import main.java.com.urfu.Devy.database.RepositoryController;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.Map;
 
 public class GroupInfo {
     protected final String id;
     protected final HashMap<String, MessageSender> senders;
-    protected final Map<String, ToDo> toDoLists;
 
     public GroupInfo(String id) {
         this.id = id;
         senders = new HashMap<>();
-        toDoLists = new HashMap<>();
     }
 
     public void addSender(MessageSender sender) throws CommandException {
@@ -37,33 +33,37 @@ public class GroupInfo {
     }
 
     public void addToDo(ToDo toDo) throws CommandException {
-        if (toDoLists.containsKey(toDo.getId()))
+        if (!RepositoryController.getTodoRepository().addToDoList(id, toDo))
             throw new CommandException("The ToDo list was already added.");
-        toDoLists.put(toDo.getId(), toDo);
     }
 
     public Boolean removeToDo(ToDo toDo) throws CommandException {
-        return removeToDo(toDo.getId());
+        return removeToDo(toDo.getName());
     }
 
     public Boolean removeToDo(String toDoId) throws CommandException {
-        if (!toDoLists.containsKey(toDoId))
+        if (!RepositoryController.getTodoRepository().removeToDoList(id, toDoId))
             throw new CommandException("The ToDo list %s was not founded.".formatted(toDoId));
-        return toDoLists.remove(toDoId) != null;
+        return false;
     }
 
     public ToDo getToDo(String toDoId) throws CommandException {
-        if (!toDoLists.containsKey(toDoId))
+        var toDo = RepositoryController.getTodoRepository().getToDoByName(id, toDoId);
+        if (toDo == null)
             throw new CommandException("The ToDo list \"%s\" was not founded.".formatted(toDoId));
-        return toDoLists.get(toDoId);
+        return toDo;
     }
 
-    public Collection<ToDo> getAllToDo() { return toDoLists.values(); }
+    public Collection<ToDo> getAllToDo() {
+        return RepositoryController
+                .getTodoRepository()
+                .getAllToDo(getId());
+    }
     public String getId() {
         return id;
     }
 
-    public void execute(CommandData data, String senderId) throws CommandException, ParseCommandException {
+    public void execute(CommandData data, String senderId) {
         CommandsController
                 .createCommand(this, senders.get(senderId), data)
                 .execute();
@@ -73,17 +73,6 @@ public class GroupInfo {
         if (!senders.containsKey(senderId))
             throw new IllegalArgumentException("The channel was not founded.");
         senders.get(senderId).send(message);
-    }
-
-    public ArrayList<ToDoTask> getAllUserTasks(String target){
-        var result = new ArrayList<ToDoTask>();
-        for(var todo : toDoLists.values())
-            for(var task : todo.getTasks().values())
-                if(task.getExecutor().equals(target))
-                    result.add(task);
-        if(result.size() == 0)
-            throw new IllegalArgumentException("No user with this name: \"%s\"".formatted(target));
-        return result;
     }
 
     public Boolean isNull() {

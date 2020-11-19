@@ -1,9 +1,9 @@
 package main.java.com.urfu.Devy.command;
 
-import main.java.com.urfu.Devy.bot.EmptyGroup;
-import main.java.com.urfu.Devy.bot.EmptySender;
-import main.java.com.urfu.Devy.bot.GroupInfo;
-import main.java.com.urfu.Devy.bot.MessageSender;
+import main.java.com.urfu.Devy.group.EmptyGroup;
+import main.java.com.urfu.Devy.sender.EmptySender;
+import main.java.com.urfu.Devy.group.GroupInfo;
+import main.java.com.urfu.Devy.sender.MessageSender;
 import main.java.com.urfu.Devy.command.commands.UnknownCommand;
 import org.reflections.Reflections;
 
@@ -35,7 +35,6 @@ public class CommandsController {
                 | InvocationTargetException
                 | IllegalArgumentException
                 | NoSuchMethodException e) {
-            e.printStackTrace();
             return new UnknownCommand(group, sender, data.getArgs());
         }
     }
@@ -50,8 +49,8 @@ public class CommandsController {
         return commands.get(commandName);
     }
 
-    public static Collection<Class<? extends Command>> getAllCommands(){
-        return commands.values();
+    public static Collection<String> getAllCommands(){
+        return commands.keySet();
     }
 
     public static String getCommandNameAndShortInfo(String commandName) throws IllegalArgumentException{

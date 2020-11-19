@@ -16,6 +16,9 @@ public class CommandParser {
         partsExtractionPattern = Pattern.compile("\"[^\"]*\"|\\S+", Pattern.CASE_INSENSITIVE);
     }
 
+    public boolean isCommand(String line) {
+        return line.startsWith(prefix);
+    }
 
     public String getPrefix() {
         return prefix;

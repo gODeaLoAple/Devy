@@ -1,12 +1,12 @@
 package test.java.com.urfu.Devy.Commands.ToDo;
 
-import main.java.com.urfu.Devy.ToDo.ToDo;
-import main.java.com.urfu.Devy.bot.GroupInfo;
+import main.java.com.urfu.Devy.todo.ToDo;
+import main.java.com.urfu.Devy.group.GroupInfo;
 import main.java.com.urfu.Devy.command.Command;
-import main.java.com.urfu.Devy.command.commands.ToDo.ShowAllToDoCommand;
+import main.java.com.urfu.Devy.command.commands.todo.ShowAllToDoCommand;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import main.java.com.urfu.Devy.bot.EmptySender;
+import main.java.com.urfu.Devy.sender.EmptySender;
 
 public class ShowAllToDoCommandTest extends ToDoCommandTest {
 
@@ -32,8 +32,8 @@ public class ShowAllToDoCommandTest extends ToDoCommandTest {
         addToDo(group, new ToDo("test1"));
         addToDo(group, new ToDo("test2"));
         assertHandle(new String[0], """
-                test2
-                test1""");
+                test1
+                test2""");
     }
 
     @Override

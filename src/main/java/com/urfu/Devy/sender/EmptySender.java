@@ -1,4 +1,4 @@
-package main.java.com.urfu.Devy.bot;
+package main.java.com.urfu.Devy.sender;
 
 import org.junit.jupiter.api.Assertions;
 

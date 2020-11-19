@@ -1,6 +1,6 @@
 package test.java.com.urfu.Devy.ToDo;
 
-import main.java.com.urfu.Devy.ToDo.ToDoTask;
+import main.java.com.urfu.Devy.todo.ToDoTask;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,7 +16,7 @@ public class ToDoTaskTest {
 
     @Test
     public void testId() {
-        Assertions.assertEquals("id", task.getId());
+        Assertions.assertEquals("id", task.getName());
     }
 
     @Test
