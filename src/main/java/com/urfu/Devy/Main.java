@@ -1,6 +1,8 @@
 package main.java.com.urfu.Devy;
 
+import main.java.com.urfu.Devy.bot.Bot;
 import main.java.com.urfu.Devy.bot.discord.DiscordBot;
+import main.java.com.urfu.Devy.bot.telegram.TelegramBot;
 import main.java.com.urfu.Devy.command.CommandsController;
 
 import main.java.com.urfu.Devy.database.DataBase;
@@ -8,7 +10,8 @@ import main.java.com.urfu.Devy.database.RepositoryController;
 import main.java.com.urfu.Devy.database.repositories.Repository;
 import main.java.com.urfu.Devy.database.repositories.ToDoRepository;
 import main.java.com.urfu.Devy.database.repositories.ToDoTaskRepository;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -16,27 +19,31 @@ import java.util.Properties;
 
 public class Main {
 
-    private static final Logger log = Logger.getLogger(Main.class);
+    private static final Logger log = LogManager.getLogger(Main.class);
 
-    private static final String PATH_TO_TOKEN = "src/config.properties";
+    private static final String путьКТокенам = "src/config.properties";
     private static final String PATH_TO_DATABASE = "src/database.properties";
 
     public static void main(String[] args) {
         try {
             var database = createDataBase(loadProperties(Main.PATH_TO_DATABASE));
-            var bot = createBot(loadProperties(Main.PATH_TO_TOKEN));
             Repository.setDatabase(database);
             initRepositories();
             CommandsController.constructCommandsDictionary();
-            bot.start();
+            createBots(loadProperties(Main.путьКТокенам));
         }
         catch (Exception e) {
             log.error(e);
         }
     }
 
-    private static DiscordBot createBot(Properties config) {
-        return new DiscordBot(config.getProperty("token"));
+    private static void createBots(Properties config) {
+        var bots = new Bot[] {
+                new DiscordBot(config.getProperty("discord_token")),
+                new TelegramBot(config.getProperty("telegram_token")),
+        };
+        for (var bot : bots)
+            bot.start();
     }
 
     private static DataBase createDataBase(Properties config) throws Exception {

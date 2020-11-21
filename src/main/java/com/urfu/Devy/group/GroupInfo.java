@@ -7,29 +7,12 @@ import main.java.com.urfu.Devy.command.CommandsController;
 import main.java.com.urfu.Devy.database.RepositoryController;
 
 import java.util.Collection;
-import java.util.HashMap;
 
 public class GroupInfo {
     protected final String id;
-    protected final HashMap<String, MessageSender> senders;
 
     public GroupInfo(String id) {
         this.id = id;
-        senders = new HashMap<>();
-    }
-
-    public void addSender(MessageSender sender) throws CommandException {
-        var senderId = sender.getId();
-        if (senders.containsKey(senderId))
-            throw new CommandException("The channel had already been added.");
-        senders.put(sender.getId(), sender);
-    }
-
-    public void removeSender(MessageSender sender) throws CommandException {
-        var senderId = sender.getId();
-        if (!senders.containsKey(senderId))
-            throw new CommandException("The channel was not found.");
-        senders.remove(senderId);
     }
 
     public void addToDo(ToDo toDo) throws CommandException {
@@ -63,16 +46,14 @@ public class GroupInfo {
         return id;
     }
 
-    public void execute(CommandData data, String senderId) {
+    public void execute(CommandData data, MessageSender sender) {
         CommandsController
-                .createCommand(this, senders.get(senderId), data)
+                .createCommand(this, sender, data)
                 .execute();
     }
 
-    public void sendMessage(String message, String senderId) {
-        if (!senders.containsKey(senderId))
-            throw new IllegalArgumentException("The channel was not founded.");
-        senders.get(senderId).send(message);
+    public void sendMessage(String message, MessageSender sender) {
+        sender.send(message);
     }
 
     public Boolean isNull() {

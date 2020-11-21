@@ -45,7 +45,7 @@
       </library>
     </orderEntry>
     <orderEntry type="library" name="mysql-connector-java-8.0.22" level="project" />
-    <orderEntry type="library" name="org.dbunit:dbunit:2.7.0" level="project" />
     <orderEntry type="library" name="com.github.github:org.eclipse.egit.github.core.shaded:1.1.2" level="project" />
+    <orderEntry type="library" name="org.telegram:telegrambots:4.4.0.1" level="project" />
   </component>
 </module>
