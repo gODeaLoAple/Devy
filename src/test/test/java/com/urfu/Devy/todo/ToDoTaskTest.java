@@ -1,4 +1,4 @@
-package test.java.com.urfu.Devy.ToDo;
+package test.java.com.urfu.Devy.todo;
 
 import main.java.com.urfu.Devy.todo.ToDoTask;
 import org.junit.jupiter.api.Assertions;

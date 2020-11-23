@@ -42,4 +42,12 @@ public class Group extends GroupInfo {
     public String getPassword() {
         return password;
     }
+
+    public boolean hasDiscord() {
+        return getDiscordId() != null;
+    }
+
+    public boolean hasTelegramId() {
+        return getTelegramId() != null;
+    }
 }

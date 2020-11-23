@@ -51,17 +51,34 @@ public class MergeGroupCommand extends GroupCommand {
     @Override
     protected void validate() throws CommandException {
         super.validate();
-        if (text.size() != 2)
+        if (text == null || text.size() < 2)
             throw new CommandException("Incorrect count of arguments.");
         if (!telegram && !discord)
-            throw new CommandException("Use one of platforms.");
+            throw new CommandException("Option not found.");
         if (telegram && discord)
             throw new CommandException("Use only one platform.");
+        if (telegram && !isLong(text.get(0)))
+            throw new CommandException("Incorrect chat id.");
+        var group = getGroup();
+        if (telegram && group.hasTelegramId()
+            || discord && group.hasDiscord())
+            throw new CommandException("You cannot merge on this platform.");
     }
 
     protected void validatePassword(String password) throws CommandException {
         var originalPassword = getGroup().getPassword();
         if (originalPassword != null && !originalPassword.equals(password))
             throw new CommandException("Access denied. Wrong password.");
+    }
+
+    private boolean isLong(String str) {
+        if (str == null)
+            return false;
+        try {
+            Long.parseLong(str);
+        } catch (NumberFormatException e) {
+            return false;
+        }
+        return true;
     }
 }
