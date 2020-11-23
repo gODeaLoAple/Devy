@@ -1,4 +1,5 @@
 package main.java.com.urfu.Devy.bot;
+import main.java.com.urfu.Devy.github.RepositoryInfo;
 import main.java.com.urfu.Devy.todo.ToDo;
 import main.java.com.urfu.Devy.command.CommandData;
 import main.java.com.urfu.Devy.command.CommandException;
@@ -72,6 +73,26 @@ public class GroupInfo {
         if (!senders.containsKey(senderId))
             throw new IllegalArgumentException("The channel was not founded.");
         senders.get(senderId).send(message);
+    }
+
+    public void addRepository(String name, String repository) throws CommandException {
+        if (!RepositoryController.getGitHubRepository().addRepository(id, new RepositoryInfo(name, repository)))
+            throw new CommandException("Repository was already added.");
+    }
+
+    public void removeRepository() throws CommandException{
+        if(!RepositoryController.getGitHubRepository().removeRepository(id))
+            throw new CommandException("No such repository");
+    }
+
+    public Boolean hasRepository(){
+        return RepositoryController.getGitHubRepository().hasRepository(id);
+    }
+
+    public RepositoryInfo getRepository() throws CommandException{
+        if(hasRepository())
+            return RepositoryController.getGitHubRepository().getRepository(id);
+        throw new CommandException("No such repository");
     }
 
     public Boolean isNull() {

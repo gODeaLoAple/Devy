@@ -5,6 +5,8 @@ import main.java.com.urfu.Devy.bot.GroupInfo;
 import main.java.com.urfu.Devy.bot.MessageSender;
 import main.java.com.urfu.Devy.command.Command;
 import main.java.com.urfu.Devy.command.CommandName;
+import org.eclipse.egit.github.core.Repository;
+import org.eclipse.egit.github.core.service.CommitService;
 import org.eclipse.egit.github.core.service.RepositoryService;
 import org.jetbrains.annotations.NotNull;
 
@@ -29,6 +31,10 @@ public class RepositoriesCommand extends Command {
 
         var count = 1;
         var service = new RepositoryService();
+        //var a = new CommitService();
+        //var c = service.getRepository("dsad", "dasdsa");
+        //c.getLanguage();
+        //service.getRepository(userName.get(0), "sdasa");
         try {
             for (var repo : service.getRepositories(userName.get(0)))
                 sender.send(MessageFormat.format("{0}) {1} - created on {2}", count++,
@@ -38,3 +44,6 @@ public class RepositoriesCommand extends Command {
         }
     }
 }
+//ToDo
+// подписка на коммиты (оповещение приходит раз в N времени, чтоб не загружать github)
+//

@@ -1,11 +1,13 @@
 package main.java.com.urfu.Devy.database;
 
+import main.java.com.urfu.Devy.database.repositories.GitHubRepository;
 import main.java.com.urfu.Devy.database.repositories.ToDoRepository;
 import main.java.com.urfu.Devy.database.repositories.ToDoTaskRepository;
 
 public class RepositoryController {
     private static ToDoRepository todoRepository;
     private static ToDoTaskRepository toDoTaskRepository;
+    private static GitHubRepository gitHubRepository;
 
     public static void setTodoRepository(ToDoRepository todoRepository) {
         RepositoryController.todoRepository = todoRepository;
@@ -23,4 +25,11 @@ public class RepositoryController {
         return toDoTaskRepository;
     }
 
+    public static GitHubRepository getGitHubRepository() {
+        return gitHubRepository;
+    }
+
+    public static void setGitHubRepository(GitHubRepository gitHubRepository) {
+        RepositoryController.gitHubRepository = gitHubRepository;
+    }
 }

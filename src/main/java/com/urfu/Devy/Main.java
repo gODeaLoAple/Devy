@@ -5,6 +5,7 @@ import main.java.com.urfu.Devy.command.CommandsController;
 
 import main.java.com.urfu.Devy.database.DataBase;
 import main.java.com.urfu.Devy.database.RepositoryController;
+import main.java.com.urfu.Devy.database.repositories.GitHubRepository;
 import main.java.com.urfu.Devy.database.repositories.Repository;
 import main.java.com.urfu.Devy.database.repositories.ToDoRepository;
 import main.java.com.urfu.Devy.database.repositories.ToDoTaskRepository;
@@ -59,5 +60,6 @@ public class Main {
     private static void initRepositories() {
         RepositoryController.setTodoRepository(new ToDoRepository());
         RepositoryController.setToDoTaskRepository(new ToDoTaskRepository());
+        RepositoryController.setGitHubRepository(new GitHubRepository());
     }
 }
