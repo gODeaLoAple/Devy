@@ -3,42 +3,41 @@ package main.java.com.urfu.Devy.bot;
 
 import main.java.com.urfu.Devy.command.parser.CommandParser;
 import main.java.com.urfu.Devy.command.parser.ParseCommandException;
-import main.java.com.urfu.Devy.group.GroupInfo;
+import main.java.com.urfu.Devy.database.RepositoryController;
+import main.java.com.urfu.Devy.group.Group;
 import main.java.com.urfu.Devy.sender.MessageSender;
 import org.apache.log4j.Logger;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public abstract class Bot {
-    private final Map<String, GroupInfo> groups;
     private final CommandParser parser;
     protected final Logger log;
 
     public Bot(String commandPrefix) {
-        groups = new HashMap<>();
         parser = new CommandParser(commandPrefix);
         log = Logger.getLogger(getClass().getSimpleName());
     }
 
-    public void removeGroup(GroupInfo group) {
-        if (!groups.containsKey(group.getId()))
-            throw new IllegalArgumentException("The group had not been added.");
-        groups.remove(group.getId());
+    public void removeGroup(Group group) {
+        if (!hasGroup(group))
+            throw new IllegalArgumentException("The group was not found");
+        RepositoryController.getGroupRepository().removeGroup(group);
+        log.info("Group was removed: " + group.getId());
     }
 
-    public void addGroup(GroupInfo group) {
-        if (groups.containsKey(group.getId()))
-            throw new IllegalArgumentException("The group had been added.");
-        groups.put(group.getId(), group);
+    public void addGroup(Group group) {
+        if (hasGroup(group))
+            throw new IllegalArgumentException("The group have been added already");
+        RepositoryController.getGroupRepository().addGroup(group);
         log.info("Group was added: " + group.getId());
     }
 
-    public void handleMessage(String groupId, MessageSender sender, String message)
+    public boolean hasGroup(Group group) {
+        return RepositoryController.getGroupRepository().hasGroup(group.getId());
+    }
+
+    public void handleMessage(Group group, MessageSender sender, String message)
             throws ParseCommandException {
-        if(!groups.containsKey(groupId))
-            groups.put(groupId, new GroupInfo(groupId));
-        groups.get(groupId).execute(parser.parse(message), sender);
+        group.execute(parser.parse(message), sender);
     }
 
     public boolean isCommand(String message) {

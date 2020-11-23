@@ -1,6 +1,8 @@
 package main.java.com.urfu.Devy.bot.discord;
 
 import main.java.com.urfu.Devy.bot.Bot;
+import main.java.com.urfu.Devy.database.RepositoryController;
+import main.java.com.urfu.Devy.group.Group;
 import net.dv8tion.jda.api.JDABuilder;
 
 import javax.security.auth.login.LoginException;
@@ -26,6 +28,12 @@ public class DiscordBot extends Bot {
         } catch (InterruptedException | LoginException e) {
             log.error("Error on start: " + e.getMessage());
         }
+    }
+
+    public Group getGroup(String guildId) {
+        return RepositoryController
+                .getGroupRepository()
+                .getGroupByDiscordChatId(guildId);
     }
 
 }

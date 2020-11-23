@@ -1,6 +1,7 @@
 package main.java.com.urfu.Devy.bot.discord;
 
 import main.java.com.urfu.Devy.command.parser.ParseCommandException;
+import main.java.com.urfu.Devy.group.Group;
 import main.java.com.urfu.Devy.group.GroupInfo;
 import net.dv8tion.jda.api.events.guild.GuildReadyEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
@@ -18,7 +19,9 @@ public class DiscordBotListener extends ListenerAdapter {
     @Override
     public void onGuildReady(@NotNull GuildReadyEvent event) {
         super.onGuildReady(event);
-        var group = new GroupInfo(event.getGuild().getId());
+        var guildId = event.getGuild().getId();
+        var group = new Group()
+                .setDiscord(guildId);
         bot.addGroup(group);
     }
 
@@ -34,10 +37,10 @@ public class DiscordBotListener extends ListenerAdapter {
         var channel = event.getTextChannel();
         var sender = new DiscordMessageSender(channel);
         try {
-            var group = event.getGuild();
+            var guild = event.getGuild();
             var message = event.getMessage().getContentRaw();
             if (bot.isCommand(message) && !event.getAuthor().isBot())
-                bot.handleMessage(group.getId(), sender, message);
+                bot.handleMessage(bot.getGroup(guild.getId()), sender, message);
         }
         catch (ParseCommandException | IllegalArgumentException e) {
             sender.send(e.getMessage());

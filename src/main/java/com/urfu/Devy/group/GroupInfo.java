@@ -9,9 +9,9 @@ import main.java.com.urfu.Devy.database.RepositoryController;
 import java.util.Collection;
 
 public class GroupInfo {
-    protected final String id;
+    protected final int id;
 
-    public GroupInfo(String id) {
+    public GroupInfo(int id) {
         this.id = id;
     }
 
@@ -24,9 +24,9 @@ public class GroupInfo {
         return removeToDo(toDo.getName());
     }
 
-    public Boolean removeToDo(String toDoId) throws CommandException {
-        if (!RepositoryController.getTodoRepository().removeToDoList(id, toDoId))
-            throw new CommandException("The ToDo list %s was not founded.".formatted(toDoId));
+    public Boolean removeToDo(String todoName) throws CommandException {
+        if (!RepositoryController.getTodoRepository().removeToDoList(id, todoName))
+            throw new CommandException("The ToDo list %s was not founded.".formatted(todoName));
         return false;
     }
 
@@ -42,7 +42,7 @@ public class GroupInfo {
                 .getTodoRepository()
                 .getAllToDo(getId());
     }
-    public String getId() {
+    public int getId() {
         return id;
     }
 

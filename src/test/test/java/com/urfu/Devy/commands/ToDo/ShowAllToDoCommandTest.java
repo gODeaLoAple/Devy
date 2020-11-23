@@ -1,4 +1,4 @@
-package test.java.com.urfu.Devy.Commands.ToDo;
+package test.java.com.urfu.Devy.commands.ToDo;
 
 import main.java.com.urfu.Devy.todo.ToDo;
 import main.java.com.urfu.Devy.group.GroupInfo;
@@ -12,7 +12,7 @@ public class ShowAllToDoCommandTest extends ToDoCommandTest {
 
     @BeforeEach
     public void setUp() {
-        group = new GroupInfo("");
+        group = new GroupInfo(0);
         sender = new EmptySender();
     }
 

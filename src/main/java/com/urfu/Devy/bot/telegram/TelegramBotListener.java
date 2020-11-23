@@ -4,6 +4,7 @@ import main.java.com.urfu.Devy.command.parser.ParseCommandException;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
+
 public class TelegramBotListener extends TelegramLongPollingBot {
 
     private final TelegramBot bot;
@@ -22,8 +23,8 @@ public class TelegramBotListener extends TelegramLongPollingBot {
        if (update.hasMessage()) {
            var message = update.getMessage();
            if (message.hasText()) {
-               var chatId = message.getChatId().toString();
-               var sender = new TelegramMessageSender(chatId, this);
+               var chatId = message.getChatId();
+               var sender = new TelegramMessageSender(chatId.toString(), this);
                try {
                    bot.handleMessage(chatId, sender, message.getText());
                } catch (ParseCommandException e) {

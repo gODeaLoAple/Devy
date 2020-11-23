@@ -26,7 +26,7 @@ public class ShowUserTasksCommand extends Command {
     @Override
     public void execute() {
         var result = new StringBuilder();
-        var tasks = group
+        var tasks = groupInfo
                 .getAllToDo()
                 .stream()
                 .map(ToDo::getTasks)

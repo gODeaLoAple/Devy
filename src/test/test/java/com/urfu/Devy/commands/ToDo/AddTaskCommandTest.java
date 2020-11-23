@@ -1,4 +1,4 @@
-package test.java.com.urfu.Devy.Commands.ToDo;
+package test.java.com.urfu.Devy.commands.ToDo;
 
 import main.java.com.urfu.Devy.todo.ToDo;
 import main.java.com.urfu.Devy.todo.ToDoTask;
@@ -14,7 +14,7 @@ public class AddTaskCommandTest extends ToDoCommandTest {
 
     @BeforeEach
     public void SetUp() {
-        group = new GroupInfo("1");
+        group = new GroupInfo(0);
         addToDo(group, new ToDo("1"));
         sender = new EmptySender();
     }

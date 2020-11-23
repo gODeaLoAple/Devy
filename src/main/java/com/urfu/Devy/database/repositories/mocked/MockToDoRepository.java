@@ -1,17 +1,17 @@
 package main.java.com.urfu.Devy.database.repositories.mocked;
 
 import main.java.com.urfu.Devy.todo.ToDo;
-import main.java.com.urfu.Devy.database.repositories.ToDoRepository;
+import main.java.com.urfu.Devy.database.repositories.implemented.ToDoRepository;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 
 public class MockToDoRepository extends ToDoRepository {
-    private final HashMap<String, ArrayList<ToDo>> todoList = new HashMap<>();
+    private final HashMap<Integer, ArrayList<ToDo>> todoList = new HashMap<>();
 
     @Override
-    public boolean addToDoList(String groupId, ToDo todo) {
+    public boolean addToDoList(int groupId, ToDo todo) {
         if (!todoList.containsKey(groupId))
             todoList.put(groupId, new ArrayList<>());
         if (isToDoExists(groupId, todo.getName()))
@@ -21,7 +21,7 @@ public class MockToDoRepository extends ToDoRepository {
     }
 
     @Override
-    public boolean removeToDoList(String groupId, String todoName) {
+    public boolean removeToDoList(int groupId, String todoName) {
         if (!isToDoExists(groupId, todoName))
             return false;
         todoList.get(groupId).removeIf(x -> x.getName().equals(todoName));
@@ -29,7 +29,7 @@ public class MockToDoRepository extends ToDoRepository {
     }
 
     @Override
-    public ToDo getToDoByName(String groupId, String todoName) {
+    public ToDo getToDoByName(int groupId, String todoName) {
         return todoList
                 .getOrDefault(groupId, new ArrayList<>())
                 .stream()
@@ -39,11 +39,11 @@ public class MockToDoRepository extends ToDoRepository {
     }
 
     @Override
-    public Collection<ToDo> getAllToDo(String groupId) {
+    public Collection<ToDo> getAllToDo(int groupId) {
         return todoList.getOrDefault(groupId, new ArrayList<>());
     }
 
-    private boolean isToDoExists(String groupId, String todoName) {
+    private boolean isToDoExists(int groupId, String todoName) {
         return todoList.containsKey(groupId)
                 && todoList.get(groupId).stream().anyMatch(x -> x.getName().equals(todoName));
     }

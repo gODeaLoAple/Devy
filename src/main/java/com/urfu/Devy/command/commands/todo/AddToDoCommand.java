@@ -23,10 +23,16 @@ public class AddToDoCommand extends Command {
     @Override
     public void execute() {
         try {
-            group.addToDo(new ToDo(arguments.get(0)));
+            validate();
+            groupInfo.addToDo(new ToDo(arguments.get(0)));
             sender.send("The board has been added.");
         } catch (CommandException e) {
             sender.send(e.getMessage());
         }
+    }
+
+    protected void validate() throws CommandException {
+        if (arguments == null)
+            throw new CommandException("Incorrect data.");
     }
 }

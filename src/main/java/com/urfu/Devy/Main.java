@@ -8,8 +8,9 @@ import main.java.com.urfu.Devy.command.CommandsController;
 import main.java.com.urfu.Devy.database.DataBase;
 import main.java.com.urfu.Devy.database.RepositoryController;
 import main.java.com.urfu.Devy.database.repositories.Repository;
-import main.java.com.urfu.Devy.database.repositories.ToDoRepository;
-import main.java.com.urfu.Devy.database.repositories.ToDoTaskRepository;
+import main.java.com.urfu.Devy.database.repositories.implemented.ToDoRepository;
+import main.java.com.urfu.Devy.database.repositories.implemented.ToDoTaskRepository;
+import main.java.com.urfu.Devy.database.repositories.mocked.MockGroupRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -65,5 +66,6 @@ public class Main {
     private static void initRepositories() {
         RepositoryController.setTodoRepository(new ToDoRepository());
         RepositoryController.setToDoTaskRepository(new ToDoTaskRepository());
+        RepositoryController.setGroupRepository(new MockGroupRepository());
     }
 }

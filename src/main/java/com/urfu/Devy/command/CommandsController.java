@@ -1,10 +1,11 @@
 package main.java.com.urfu.Devy.command;
 
+import main.java.com.urfu.Devy.command.commands.groups.GroupCommand;
 import main.java.com.urfu.Devy.group.EmptyGroup;
 import main.java.com.urfu.Devy.sender.EmptySender;
 import main.java.com.urfu.Devy.group.GroupInfo;
 import main.java.com.urfu.Devy.sender.MessageSender;
-import main.java.com.urfu.Devy.command.commands.UnknownCommand;
+import main.java.com.urfu.Devy.command.commands.common.UnknownCommand;
 import org.apache.log4j.Logger;
 import org.reflections.Reflections;
 
@@ -22,6 +23,7 @@ public class CommandsController {
     public static void constructCommandsDictionary() {
         log.info("Configuring commands...");
         var commandClasses = new Reflections(Command.class).getSubTypesOf(Command.class);
+        commandClasses.addAll(new Reflections(GroupCommand.class).getSubTypesOf(GroupCommand.class));
         for (var command : commandClasses)
             if (command.isAnnotationPresent(CommandName.class)) {
                 log.info("Configuring \"" + command.getSimpleName() + "\"...");

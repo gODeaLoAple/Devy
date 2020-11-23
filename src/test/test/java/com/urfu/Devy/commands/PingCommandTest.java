@@ -1,8 +1,8 @@
-package test.java.com.urfu.Devy.Commands;
+package test.java.com.urfu.Devy.commands;
 
 import main.java.com.urfu.Devy.sender.EmptySender;
 import main.java.com.urfu.Devy.group.GroupInfo;
-import main.java.com.urfu.Devy.command.commands.PingCommand;
+import main.java.com.urfu.Devy.command.commands.common.PingCommand;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -35,7 +35,7 @@ public class PingCommandTest {
     }
 
     private void createCommandAndExecute(String[] args){
-        var command = new PingCommand(new GroupInfo("1"), sender, args);
+        var command = new PingCommand(new GroupInfo(1), sender, args);
         command.execute();
     }
 

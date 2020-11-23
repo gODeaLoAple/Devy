@@ -1,4 +1,4 @@
-package test.java.com.urfu.Devy.Commands;
+package test.java.com.urfu.Devy.commands;
 
 import main.java.com.urfu.Devy.command.CommandData;
 import main.java.com.urfu.Devy.command.parser.CommandParser;

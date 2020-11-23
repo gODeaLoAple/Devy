@@ -1,7 +1,7 @@
 package main.java.com.urfu.Devy.database.repositories.mocked;
 
 import main.java.com.urfu.Devy.todo.ToDoTask;
-import main.java.com.urfu.Devy.database.repositories.ToDoTaskRepository;
+import main.java.com.urfu.Devy.database.repositories.implemented.ToDoTaskRepository;
 
 import java.util.ArrayList;
 import java.util.HashMap;

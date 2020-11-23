@@ -7,12 +7,12 @@ import org.jetbrains.annotations.NotNull;
 
 public abstract class Command {
 
-    protected final GroupInfo group;
+    protected final GroupInfo groupInfo;
     protected final MessageSender sender;
     protected final String[] args;
 
-    public Command(GroupInfo group, MessageSender sender, @NotNull String[] args) {
-        this.group = group;
+    public Command(GroupInfo groupInfo, MessageSender sender, @NotNull String[] args) {
+        this.groupInfo = groupInfo;
         this.sender = sender;
         this.args = args;
         parseArgs();

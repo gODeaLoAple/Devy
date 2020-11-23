@@ -29,7 +29,7 @@ public class AddTaskCommand extends Command {
         try {
             validate();
             var name = text.get(0);
-            var toDo = group.getToDo(name);
+            var toDo = groupInfo.getToDo(name);
             toDo.addTask(new ToDoTask(text.get(1), text.get(2), text.get(3), text.get(4)));
             sender.send("The task has been added.");
         }

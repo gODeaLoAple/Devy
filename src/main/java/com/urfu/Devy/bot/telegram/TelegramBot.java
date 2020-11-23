@@ -1,9 +1,15 @@
 package main.java.com.urfu.Devy.bot.telegram;
 
 import main.java.com.urfu.Devy.bot.Bot;
+import main.java.com.urfu.Devy.command.parser.ParseCommandException;
+import main.java.com.urfu.Devy.database.RepositoryController;
+import main.java.com.urfu.Devy.group.Group;
+import main.java.com.urfu.Devy.sender.MessageSender;
 import org.telegram.telegrambots.ApiContextInitializer;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+
+import java.util.NoSuchElementException;
 
 
 public class TelegramBot extends Bot {
@@ -29,6 +35,27 @@ public class TelegramBot extends Bot {
 
     public String getToken() {
         return token;
+    }
+
+    public void handleMessage(Long chatId, MessageSender sender, String message) throws ParseCommandException {
+        super.handleMessage(getGroupOrCreate(chatId), sender, message);
+    }
+
+    public Group getGroupOrCreate(Long chatId) {
+        try {
+            return getGroup(chatId);
+        } catch (NoSuchElementException e) {
+            var group = new Group()
+                    .setTelegram(chatId);
+            addGroup(group);
+            return group;
+        }
+    }
+
+    public Group getGroup(Long chatId) {
+        return RepositoryController
+                .getGroupRepository()
+                .getGroupByTelegramChatId(chatId);
     }
 
 }

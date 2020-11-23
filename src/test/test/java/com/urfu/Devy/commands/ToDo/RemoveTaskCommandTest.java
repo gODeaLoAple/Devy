@@ -1,4 +1,4 @@
-package test.java.com.urfu.Devy.Commands.ToDo;
+package test.java.com.urfu.Devy.commands.ToDo;
 
 import main.java.com.urfu.Devy.todo.ToDo;
 import main.java.com.urfu.Devy.todo.ToDoTask;
@@ -16,7 +16,7 @@ public class RemoveTaskCommandTest extends ToDoCommandTest {
     @BeforeEach
     public void setUp() {
         sender = new EmptySender();
-        group = new GroupInfo("");
+        group = new GroupInfo(0);
     }
 
     @Test
