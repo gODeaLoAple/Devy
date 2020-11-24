@@ -1,7 +1,6 @@
 package main.java.com.urfu.Devy.database.repositories;
 
 import main.java.com.urfu.Devy.github.RepositoryInfo;
-import main.java.com.urfu.Devy.todo.ToDo;
 import org.apache.log4j.Logger;
 
 import java.sql.SQLException;
@@ -17,9 +16,9 @@ public class GitHubRepository extends Repository{
                 return false;
             System.out.println(repository.getRepositoryName());
             return statement.executeUpdate("""
-                    INSERT INTO `github` (`repository`, `name`, `groupId`)
-                    VALUES ('%s','%s','%s')
-                    """.formatted(repository.getRepositoryName(), repository.getName(), groupId)
+                    INSERT INTO `github` (`repository`, `name`, `tracking`, `groupId`)
+                    VALUES ('%s','%s','%s','%s')
+                    """.formatted(repository.getRepositoryName(), repository.getName(), 0, groupId)
             ) > 0;
         } catch (SQLException throwables) {
             log.error("On 'addRepositoryList'", throwables);
@@ -42,29 +41,28 @@ public class GitHubRepository extends Repository{
     public RepositoryInfo getRepository(String groupId) {
         try (var statement = database.getConnection().createStatement()) {
             var data = statement.executeQuery("""
-                    SELECT `name`, `repository`
+                    SELECT `name`, `repository`, `tracking`
                     FROM `github`
                     WHERE `groupId`='%s'
                     """.formatted(groupId));
             if (!data.next())
                 return null;
-            return new RepositoryInfo(data.getString("name"), data.getString("repository"));
+            return new RepositoryInfo(data.getString("name"), data.getString("repository"), data.getBoolean("tracking"));
         } catch (SQLException throwables) {
             log.error("On 'getRepository'", throwables);
             return null;
         }
     }
 
-    public Collection<RepositoryInfo> getAllRepositories(String groupId) {
+    public Collection<RepositoryInfo> getAllRepositories() {
         var result = new ArrayList<RepositoryInfo>();
         try  (var statement = database.getConnection().createStatement()){
             var data = statement.executeQuery("""
-                SELECT `repository`, `name`
-                FROM `github`
-                WHERE `groupId`='%s';
-                """.formatted(groupId));
+                SELECT * `repository`, `name`, `tracking`
+                FROM `github`;
+                """);
             while(data.next()) {
-                result.add(new RepositoryInfo(data.getString("name"), data.getString("repository")));
+                result.add(new RepositoryInfo(data.getString("name"), data.getString("repository"), data.getBoolean("tracking")));
             }
         } catch (SQLException throwables) {
             log.error("On 'getAllRepositories'", throwables);
@@ -87,4 +85,34 @@ public class GitHubRepository extends Repository{
             return false;
         }
     }
-}d
+
+    public String getLastCommitDate(String groupId){
+        try  (var statement = database.getConnection().createStatement()){
+            var data = statement.executeQuery("""
+                SELECT `lastCommit`
+                FROM `github`
+                WHERE `groupId`='%s';
+                """.formatted(groupId));
+            if (!data.next())
+                return null;
+            return data.getString("lastCommit");
+
+        } catch (SQLException throwables) {
+            log.error("On 'getAllRepositories'", throwables);
+            return null;
+        }
+    }
+
+    public boolean setLastCommitDate(String groupId, String date){
+        try (var statement = database.getConnection().createStatement()) {
+            return statement.executeUpdate("""
+                    UPDATE `github`
+                    SET `lastCommit`='%s'
+                    WHERE `groupId`='%s'
+                    """.formatted(date, groupId)) > 0;
+        } catch (SQLException throwables) {
+            log.error("On 'addRepositoryList'", throwables);
+            return false;
+        }
+    }
+}

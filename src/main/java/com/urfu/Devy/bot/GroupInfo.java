@@ -6,12 +6,12 @@ import main.java.com.urfu.Devy.command.CommandException;
 import main.java.com.urfu.Devy.command.CommandsController;
 import main.java.com.urfu.Devy.database.RepositoryController;
 
-import java.util.Collection;
-import java.util.HashMap;
+import java.util.*;
 
 public class GroupInfo {
     protected final String id;
     protected final HashMap<String, MessageSender> senders;
+    private Timer repositoryTimer;
 
     public GroupInfo(String id) {
         this.id = id;
@@ -93,6 +93,20 @@ public class GroupInfo {
         if(hasRepository())
             return RepositoryController.getGitHubRepository().getRepository(id);
         throw new CommandException("No such repository");
+    }
+
+    public String getLastCommitDate(){
+        return RepositoryController.getGitHubRepository().getLastCommitDate(id);
+    }
+
+    public void startTrack(Timer timer){
+        this.repositoryTimer = timer;
+    }
+
+    public void stopTrack() throws CommandException{
+        if(repositoryTimer == null)
+            throw new CommandException("you haven't tracking repository");
+        repositoryTimer.cancel();
     }
 
     public Boolean isNull() {

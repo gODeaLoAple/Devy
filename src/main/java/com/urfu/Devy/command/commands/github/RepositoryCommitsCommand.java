@@ -5,17 +5,12 @@ import main.java.com.urfu.Devy.bot.GroupInfo;
 import main.java.com.urfu.Devy.bot.MessageSender;
 import main.java.com.urfu.Devy.command.Command;
 import main.java.com.urfu.Devy.command.CommandName;
-import org.eclipse.egit.github.core.Repository;
-import org.eclipse.egit.github.core.RepositoryBranch;
-import org.eclipse.egit.github.core.RepositoryCommit;
+import main.java.com.urfu.Devy.github.GitHubController;
 import org.eclipse.egit.github.core.RepositoryId;
 import org.eclipse.egit.github.core.service.CommitService;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.IOException;
 import java.text.MessageFormat;
-import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 
 @CommandName(name = "commits",
@@ -24,7 +19,7 @@ import java.util.List;
 public class RepositoryCommitsCommand extends Command {
 
     private final int maxCommits = 25;
-    @Parameter(names = "-n", description = "commits count", required = false)
+    @Parameter(names = "-n", description = "commits count")
     protected int commitsToShow;
 
     @Parameter(description = "[userName] [repositoryName] [-n]")
@@ -47,13 +42,8 @@ public class RepositoryCommitsCommand extends Command {
         final var service = new CommitService();
         for (var commits : service.pageCommits(repo, commitsToShow)) {
             for (var commit : commits) {
-                var commitData = commit.getCommit();
-                var text = commitData.getMessage();
-                var author = commitData.getAuthor().getName();
-                var date = commitData.getAuthor().getDate();
-                var message = "**\"{0}\"** by *{1}* on *{2}*";
-                sender.send(MessageFormat.format(message, text, author,
-                        date));
+                sender.send(GitHubController.getCommitInfo(commit.getCommit()) + "\n==================================");
+
             }
         }
     }

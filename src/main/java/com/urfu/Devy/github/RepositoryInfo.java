@@ -3,12 +3,18 @@ package main.java.com.urfu.Devy.github;
 public class RepositoryInfo {
     private String name;
     private String repository;
+    private boolean tracking = false;
 
     public RepositoryInfo(String name, String repository){
         this.name = name;
         this.repository = repository;
     }
 
+    public RepositoryInfo(String name, String repository, Boolean tracking){
+        this.name = name;
+        this.repository = repository;
+        this.tracking = tracking;
+    }
 
     public String getName() {
         return name;
@@ -24,5 +30,13 @@ public class RepositoryInfo {
 
     public void setRepositoryName(String repository) {
         this.repository = repository;
+    }
+
+    public Boolean getTracking() {
+        return tracking;
+    }
+
+    public void setTracking(Boolean tracking) {
+        this.tracking = tracking;
     }
 }

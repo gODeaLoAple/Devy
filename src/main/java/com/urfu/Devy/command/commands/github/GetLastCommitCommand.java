@@ -5,7 +5,7 @@ import main.java.com.urfu.Devy.bot.MessageSender;
 import main.java.com.urfu.Devy.command.Command;
 import main.java.com.urfu.Devy.command.CommandException;
 import main.java.com.urfu.Devy.command.CommandName;
-import org.eclipse.egit.github.core.service.CommitService;
+import main.java.com.urfu.Devy.github.GitHubController;
 import org.eclipse.egit.github.core.service.RepositoryService;
 import org.jetbrains.annotations.NotNull;
 
@@ -23,20 +23,13 @@ public class GetLastCommitCommand extends Command{
         if(!group.hasRepository())
             throw new IllegalArgumentException("Your group doesn't have a repository.\nFirstly add it by \"addrepos\" command");
         var service = new RepositoryService();
-        var result = new StringBuilder();
         try {
             var data = group.getRepository();
             var repo = service.getRepository(data.getName(), data.getRepositoryName());
-            var commit = new CommitService().getCommits(repo).get(0).getCommit();
-
-            result.append("author: ").append(commit.getCommitter().getName()).append("\n");
-            result.append("message: ").append(commit.getMessage()).append("\n");
-            result.append("sha: ").append(commit.getSha()).append("\n");
-            result.append("date: ").append(commit.getCommitter().getDate());
-            sender.send(result.toString());
+            sender.send(GitHubController.getCommitInfo(GitHubController.getLastCommit(repo)));
 
         } catch (IOException e) {
-            throw new IllegalArgumentException("something going wrong at \"RepositoryInfoCommand\"");
+            throw new IllegalArgumentException("something went wrong at \"GetLastCommitCommand\"");
         } catch (CommandException e) {
             sender.send(e.getMessage());
         }
