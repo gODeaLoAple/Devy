@@ -1,8 +1,8 @@
 package main.java.com.urfu.Devy.command.commands.github;
 
 import com.beust.jcommander.Parameter;
-import main.java.com.urfu.Devy.bot.GroupInfo;
-import main.java.com.urfu.Devy.bot.MessageSender;
+import main.java.com.urfu.Devy.group.GroupInfo;
+import main.java.com.urfu.Devy.sender.MessageSender;
 import main.java.com.urfu.Devy.command.Command;
 import main.java.com.urfu.Devy.command.CommandName;
 import org.eclipse.egit.github.core.service.RepositoryService;

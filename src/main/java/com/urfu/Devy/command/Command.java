@@ -1,8 +1,8 @@
 package main.java.com.urfu.Devy.command;
 
 import com.beust.jcommander.JCommander;
-import main.java.com.urfu.Devy.bot.GroupInfo;
-import main.java.com.urfu.Devy.bot.MessageSender;
+import main.java.com.urfu.Devy.group.GroupInfo;
+import main.java.com.urfu.Devy.sender.MessageSender;
 import org.jetbrains.annotations.NotNull;
 
 public abstract class Command {

@@ -2,14 +2,14 @@ package test.java.com.urfu.Devy.Commands.ToDo;
 
 import main.java.com.urfu.Devy.todo.ToDo;
 import main.java.com.urfu.Devy.todo.ToDoTask;
-import main.java.com.urfu.Devy.bot.GroupInfo;
+import main.java.com.urfu.Devy.group.GroupInfo;
 import main.java.com.urfu.Devy.command.Command;
 import main.java.com.urfu.Devy.command.CommandException;
 import main.java.com.urfu.Devy.command.commands.todo.AddTaskCommand;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import main.java.com.urfu.Devy.bot.EmptySender;
+import main.java.com.urfu.Devy.sender.EmptySender;
 public class AddTaskCommandTest extends ToDoCommandTest {
 
     @BeforeEach

@@ -2,8 +2,8 @@ package main.java.com.urfu.Devy.command.commands.todo;
 
 import com.beust.jcommander.Parameter;
 import main.java.com.urfu.Devy.todo.ToDoTask;
-import main.java.com.urfu.Devy.bot.GroupInfo;
-import main.java.com.urfu.Devy.bot.MessageSender;
+import main.java.com.urfu.Devy.group.GroupInfo;
+import main.java.com.urfu.Devy.sender.MessageSender;
 import main.java.com.urfu.Devy.command.Command;
 import main.java.com.urfu.Devy.command.CommandException;
 import main.java.com.urfu.Devy.command.CommandName;
