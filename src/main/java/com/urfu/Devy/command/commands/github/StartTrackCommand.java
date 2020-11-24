@@ -1,10 +1,10 @@
 package main.java.com.urfu.Devy.command.commands.github;
 
-import main.java.com.urfu.Devy.bot.GroupInfo;
-import main.java.com.urfu.Devy.bot.MessageSender;
 import main.java.com.urfu.Devy.command.Command;
 import main.java.com.urfu.Devy.command.CommandName;
 import main.java.com.urfu.Devy.github.GitHubController;
+import main.java.com.urfu.Devy.group.GroupInfo;
+import main.java.com.urfu.Devy.sender.MessageSender;
 import org.jetbrains.annotations.NotNull;
 
 @CommandName(name = "track", info = "start track your repository")
