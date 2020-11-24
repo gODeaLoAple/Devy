@@ -21,10 +21,14 @@ public class GetChatsCommand extends GroupCommand {
         try {
             validate();
             var group = getGroup();
+            var sb = new StringBuilder();
             if (group.getTelegramId() != null)
-                sender.send("Telegram: " + group.getTelegramId());
+                sb.append("Telegram: %d\n".formatted(group.getTelegramId()));
             if (group.getDiscordId() != null)
-                sender.send("Discord: " + group.getDiscordId());
+                sb.append("Discord: %s\n".formatted(group.getDiscordId()));
+            if (sb.length() == 0)
+                sb.append("Hmm... Strangely, you has no chats.");
+            sender.send(sb.toString().stripTrailing());
         } catch (CommandException e) {
             sender.send(e.getMessage());
         }

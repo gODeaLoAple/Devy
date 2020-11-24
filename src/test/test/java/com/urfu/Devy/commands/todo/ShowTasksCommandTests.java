@@ -12,11 +12,6 @@ import main.java.com.urfu.Devy.sender.EmptySender;
 
 public class ShowTasksCommandTests extends ToDoCommandTest {
 
-    @BeforeEach
-    public void setUp() {
-        sender = new EmptySender();
-        group = new GroupInfo(0);
-    }
 
     @Test
     public void handleWhenIncorrectCountOfArgs() {

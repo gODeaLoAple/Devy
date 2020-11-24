@@ -13,12 +13,6 @@ import main.java.com.urfu.Devy.sender.EmptySender;
 
 public class RemoveTaskCommandTest extends ToDoCommandTest {
 
-    @BeforeEach
-    public void setUp() {
-        group = new GroupInfo(0);
-        sender = new EmptySender();
-    }
-
     @Test
     public void handleWhenIncorrectArgsCount() {
         assertHandle(new String[0], "Incorrect count of arguments.");

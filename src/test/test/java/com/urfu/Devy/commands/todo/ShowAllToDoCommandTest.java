@@ -10,12 +10,6 @@ import main.java.com.urfu.Devy.sender.EmptySender;
 
 public class ShowAllToDoCommandTest extends ToDoCommandTest {
 
-    @BeforeEach
-    public void setUp() {
-        group = new GroupInfo(0);
-        sender = new EmptySender();
-    }
-
     @Test
     public void handleWhenToDoDoesNotExist() {
         assertHandle(new String[0], "There is no any todo-list.");

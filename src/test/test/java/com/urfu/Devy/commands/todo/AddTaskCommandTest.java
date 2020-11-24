@@ -13,7 +13,7 @@ import main.java.com.urfu.Devy.sender.EmptySender;
 public class AddTaskCommandTest extends ToDoCommandTest {
 
     @BeforeEach
-    public void SetUp() {
+    public void setUp() {
         group = new GroupInfo(0);
         addToDo(group, new ToDo("1"));
         sender = new EmptySender();
