@@ -9,13 +9,13 @@ import main.java.com.urfu.Devy.command.CommandName;
 import java.util.List;
 
 @CommandName(name = "ping",
-        info = "c# one love",
-        detailedInfo = "$ping [-f] someText. just pong on your message.")
+        info = "Just pong on your message.",
+        detailedInfo = "Just pong on your message.")
 public class PingCommand extends Command {
-    @Parameter(names = "-f", description = "don't press f")
-    protected boolean fuck;
+    @Parameter(names = "-h", description = "Will say hello!")
+    protected boolean sayHello;
 
-    @Parameter(description = "some text if you want")
+    @Parameter(description = "[[ text ]]")
     protected List<String> text;
 
     public PingCommand(GroupInfo group, MessageSender sender, String[] args) {
@@ -27,11 +27,8 @@ public class PingCommand extends Command {
         var result = new StringBuilder("Pong");
         if (text != null && text.size() != 0)
             result.append(" ").append(String.join(" ", text));
-        if (!fuck) {
-            sender.send(result.toString());
-            return;
-        }
-        result.append(" Hello");
+        if (sayHello)
+            result.append(" Hello");
         sender.send(result.toString());
     }
 }

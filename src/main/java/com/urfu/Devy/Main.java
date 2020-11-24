@@ -11,6 +11,8 @@ import main.java.com.urfu.Devy.database.repositories.Repository;
 import main.java.com.urfu.Devy.database.repositories.implemented.ToDoRepository;
 import main.java.com.urfu.Devy.database.repositories.implemented.ToDoTaskRepository;
 import main.java.com.urfu.Devy.database.repositories.mocked.MockGroupRepository;
+import main.java.com.urfu.Devy.database.repositories.mocked.MockToDoRepository;
+import main.java.com.urfu.Devy.database.repositories.mocked.MockToDoTaskRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -22,7 +24,7 @@ public class Main {
 
     private static final Logger log = LogManager.getLogger(Main.class);
 
-    private static final String путьКТокенам = "src/config.properties";
+    private static final String PATH_TO_TOKENS = "src/config.properties";
     private static final String PATH_TO_DATABASE = "src/database.properties";
 
     public static void main(String[] args) {
@@ -31,7 +33,7 @@ public class Main {
             Repository.setDatabase(database);
             initRepositories();
             CommandsController.constructCommandsDictionary();
-            createBots(loadProperties(Main.путьКТокенам));
+            createBots(loadProperties(Main.PATH_TO_TOKENS));
         }
         catch (Exception e) {
             log.error(e);
@@ -64,8 +66,8 @@ public class Main {
     }
 
     private static void initRepositories() {
-        RepositoryController.setTodoRepository(new ToDoRepository());
-        RepositoryController.setToDoTaskRepository(new ToDoTaskRepository());
+        RepositoryController.setTodoRepository(new MockToDoRepository());
+        RepositoryController.setToDoTaskRepository(new MockToDoTaskRepository());
         RepositoryController.setGroupRepository(new MockGroupRepository());
     }
 }
