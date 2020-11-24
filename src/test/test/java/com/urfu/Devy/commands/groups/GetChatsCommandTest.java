@@ -47,9 +47,9 @@ public class GetChatsCommandTest extends CommandTester {
         group = new Group()
                 .setTelegram(0L)
                 .setDiscord("0");
-        assertHandle(new String[0], """
-                Telegram: 0
-                Discord: 0""");
+        assertHandle(new String[0],
+                        "Telegram: 0" + System.lineSeparator() +
+                        "Discord: 0");
     }
 
 }

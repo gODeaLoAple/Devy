@@ -23,9 +23,9 @@ public class GetChatsCommand extends GroupCommand {
             var group = getGroup();
             var sb = new StringBuilder();
             if (group.getTelegramId() != null)
-                sb.append("Telegram: %d\n".formatted(group.getTelegramId()));
+                sb.append("Telegram: %d".formatted(group.getTelegramId())).append(System.lineSeparator());
             if (group.getDiscordId() != null)
-                sb.append("Discord: %s\n".formatted(group.getDiscordId()));
+                sb.append("Discord: %s".formatted(group.getDiscordId())).append(System.lineSeparator());
             if (sb.length() == 0)
                 sb.append("Hmm... Strangely, you has no chats.");
             sender.send(sb.toString().stripTrailing());
