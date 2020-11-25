@@ -2,13 +2,14 @@ package main.java.com.urfu.Devy.database.repositories.implemented;
 
 import main.java.com.urfu.Devy.database.repositories.Repository;
 import main.java.com.urfu.Devy.todo.ToDoTask;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class ToDoTaskRepository extends Repository {
-    private final Logger log = Logger.getLogger("ToDoTaskRepository");
+    private final Logger log = LogManager.getLogger("ToDoTaskRepository");
 
     public boolean addTask(int todoId, ToDoTask task) {
         try (var statement = database.getConnection().createStatement()) {

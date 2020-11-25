@@ -6,7 +6,7 @@
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/test" isTestSource="true" />
     </content>
-    <orderEntry type="inheritedJdk" />
+    <orderEntry type="jdk" jdkName="openjdk-15" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="com.beust:jcommander:1.78" level="project" />
     <orderEntry type="module-library">
@@ -29,15 +29,6 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib/log4j-1.2.17.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
           <root url="jar://$MODULE_DIR$/lib/JDA-4.2.0_168-withDependencies.jar!/" />
         </CLASSES>
         <JAVADOC />
@@ -47,5 +38,20 @@
     <orderEntry type="library" name="mysql-connector-java-8.0.22" level="project" />
     <orderEntry type="library" name="com.github.github:org.eclipse.egit.github.core.shaded:1.1.2" level="project" />
     <orderEntry type="library" name="org.telegram:telegrambots:4.4.0.1" level="project" />
+    <orderEntry type="library" name="JDA-4.2.0_168-withDependencies" level="project" />
+    <orderEntry type="library" name="java" level="project" />
+    <orderEntry type="library" name="reflections-0.9.12" level="project" />
+    <orderEntry type="library" name="org.dbunit:dbunit:2.7.0" level="project" />
+    <orderEntry type="library" name="annotations-19.0.0" level="project" />
+    <orderEntry type="library" name="mysql:mysql-connector-java:8.0.22" level="project" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/log4j-1.2.17.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>

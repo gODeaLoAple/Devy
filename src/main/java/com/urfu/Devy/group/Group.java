@@ -2,7 +2,6 @@ package main.java.com.urfu.Devy.group;
 
 public class Group extends GroupInfo {
 
-    private String name;
     private Long telegramId;
     private String discordId;
     private String password;
@@ -48,6 +47,10 @@ public class Group extends GroupInfo {
     }
 
     public boolean hasTelegramId() {
-        return getTelegramId() != null;
+        return getTelegramId() != null && getTelegramId() != 0L;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

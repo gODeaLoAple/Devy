@@ -8,13 +8,13 @@ import main.java.com.urfu.Devy.command.CommandsController;
 import main.java.com.urfu.Devy.database.DataBase;
 import main.java.com.urfu.Devy.database.RepositoryController;
 import main.java.com.urfu.Devy.database.repositories.Repository;
+import main.java.com.urfu.Devy.database.repositories.implemented.GroupRepository;
 import main.java.com.urfu.Devy.database.repositories.implemented.ToDoRepository;
 import main.java.com.urfu.Devy.database.repositories.implemented.ToDoTaskRepository;
 import main.java.com.urfu.Devy.database.repositories.mocked.MockGroupRepository;
 import main.java.com.urfu.Devy.database.repositories.mocked.MockToDoRepository;
 import main.java.com.urfu.Devy.database.repositories.mocked.MockToDoTaskRepository;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.Logger;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -22,15 +22,13 @@ import java.util.Properties;
 
 public class Main {
 
-    private static final Logger log = LogManager.getLogger(Main.class);
+    private static final Logger log = Logger.getLogger(Main.class);
 
     private static final String PATH_TO_TOKENS = "src/config.properties";
     private static final String PATH_TO_DATABASE = "src/database.properties";
 
     public static void main(String[] args) {
         try {
-            var database = createDataBase(loadProperties(Main.PATH_TO_DATABASE));
-            Repository.setDatabase(database);
             initRepositories();
             CommandsController.constructCommandsDictionary();
             createBots(loadProperties(Main.PATH_TO_TOKENS));
@@ -66,6 +64,24 @@ public class Main {
     }
 
     private static void initRepositories() {
+
+        try {
+            Repository.setDatabase(createDataBase(loadProperties(Main.PATH_TO_DATABASE)));
+            initImplementedRepositories();
+        } catch (Exception e) {
+            log.error("Exception when initRepositories: " + e.getMessage());
+            initMockedRepositories();
+        }
+
+    }
+
+    private static void initImplementedRepositories() {
+        RepositoryController.setTodoRepository(new ToDoRepository());
+        RepositoryController.setToDoTaskRepository(new ToDoTaskRepository());
+        RepositoryController.setGroupRepository(new GroupRepository());
+    }
+
+    private static void initMockedRepositories() {
         RepositoryController.setTodoRepository(new MockToDoRepository());
         RepositoryController.setToDoTaskRepository(new MockToDoTaskRepository());
         RepositoryController.setGroupRepository(new MockGroupRepository());

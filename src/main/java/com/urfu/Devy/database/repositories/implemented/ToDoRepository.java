@@ -2,7 +2,8 @@ package main.java.com.urfu.Devy.database.repositories.implemented;
 
 import main.java.com.urfu.Devy.database.repositories.Repository;
 import main.java.com.urfu.Devy.todo.ToDo;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -10,7 +11,7 @@ import java.util.Collection;
 
 public class ToDoRepository extends Repository {
 
-    private final Logger log = Logger.getLogger("ToDoRepository");
+    private final Logger log = LogManager.getLogger("ToDoRepository");
 
     public boolean addToDoList(int groupId, ToDo todo) {
         try (var statement = database.getConnection().createStatement()) {

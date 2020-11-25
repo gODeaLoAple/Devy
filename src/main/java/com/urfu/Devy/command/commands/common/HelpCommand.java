@@ -12,13 +12,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@CommandName(name = "help", info="show all commands")
+@CommandName(name = "help", info="Show all commands")
 public class HelpCommand extends Command{
     public HelpCommand(GroupInfo group, MessageSender sender, String[] args) {
         super(group, sender, args);
     }
 
-    @Parameter(description = "Command name to get info about it")
+    @Parameter(description = "[commandName]")
     private String targetCommand;
 
     @Override

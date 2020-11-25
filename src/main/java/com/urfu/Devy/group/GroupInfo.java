@@ -9,7 +9,7 @@ import main.java.com.urfu.Devy.database.RepositoryController;
 import java.util.Collection;
 
 public class GroupInfo {
-    protected final int id;
+    protected int id;
 
     public GroupInfo(int id) {
         this.id = id;

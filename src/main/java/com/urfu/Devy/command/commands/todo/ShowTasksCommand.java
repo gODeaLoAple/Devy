@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 @CommandName(name="showtasks", info="Shows all tasks in todo-list.")
 public class ShowTasksCommand extends Command {
 
-    @Parameter
+    @Parameter(description = "[todo]")
     protected ArrayList<String> text;
 
     public ShowTasksCommand(GroupInfo info, MessageSender sender, String[] args) {
@@ -41,7 +41,7 @@ public class ShowTasksCommand extends Command {
 
     private void validate() throws CommandException {
         if (text == null || text.size() != 1)
-            throw new CommandException("Incorrect count of arguments.");
+            throw new CommandException("Incorrect count of arguments. Todo name not found.");
     }
 
 }

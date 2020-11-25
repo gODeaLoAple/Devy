@@ -13,12 +13,12 @@ public class MockGroupRepository extends GroupRepository {
 
 
     @Override
-    public void addGroup(Group group) {
-        if (hasGroup(group.getId()))
-            updateGroup(group);
-        else {
-            groups.put(groups.size() + 1, group);
-        }
+    public boolean addGroup(Group group) {
+        if (group.getId() != 0)
+            return false;
+        groups.put(groups.size() + 1, group);
+        group.setId(groups.size());
+        return  false;
     }
 
     @Override
@@ -27,13 +27,15 @@ public class MockGroupRepository extends GroupRepository {
     }
 
     @Override
-    public void removeGroup(Group group) {
+    public boolean removeGroup(Group group) {
         groups.remove(group.getId());
+        return true;
     }
 
     @Override
-    public void updateGroup(Group group) {
+    public boolean updateGroup(Group group) {
         groups.replace(group.getId(), group);
+        return false;
     }
 
     @Override

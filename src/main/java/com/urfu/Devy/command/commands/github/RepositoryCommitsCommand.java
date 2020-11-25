@@ -18,7 +18,7 @@ import java.util.List;
 public class RepositoryCommitsCommand extends Command {
 
     private final int maxCommits = 25;
-    @Parameter(names = "-n", description = "commits count", required = false)
+    @Parameter(names = "-n", description = "commits count")
     protected int commitsToShow;
 
     @Parameter(description = "[userName] [repositoryName] [-n]")
@@ -39,6 +39,7 @@ public class RepositoryCommitsCommand extends Command {
 
         final var repo = new RepositoryId(arguments.get(0), arguments.get(1));
         final var service = new CommitService();
+        final var sb = new StringBuilder();
         for (var commits : service.pageCommits(repo, commitsToShow)) {
             for (var commit : commits) {
                 var commitData = commit.getCommit();
@@ -46,9 +47,10 @@ public class RepositoryCommitsCommand extends Command {
                 var author = commitData.getAuthor().getName();
                 var date = commitData.getAuthor().getDate();
                 var message = "**\"{0}\"** by *{1}* on *{2}*";
-                sender.send(MessageFormat.format(message, text, author,
-                        date));
+                sb.append(MessageFormat.format(message, text, author,
+                        date)).append(System.lineSeparator());
             }
         }
+        sender.send(sb.toString());
     }
 }

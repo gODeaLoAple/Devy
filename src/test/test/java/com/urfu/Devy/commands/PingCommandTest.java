@@ -30,7 +30,7 @@ public class PingCommandTest {
 
     @Test
     public void testWIthFlag(){
-        createCommandAndExecute(new String[] {"-f"});
+        createCommandAndExecute(new String[] {"-h"});
         sender.assertMessage("Pong Hello");
     }
 

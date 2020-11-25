@@ -39,8 +39,16 @@ public class AddTaskCommand extends Command {
     }
 
     private void validate() throws CommandException {
-        if (text == null || text.size() != 5)
-            throw new CommandException("Incorrect count of arguments.");
+        if (text == null || text.size() == 0)
+            throw new CommandException("Incorrect count of arguments. Todo name not found.");
+        if (text.size() == 1)
+            throw new CommandException("Incorrect count of arguments. Task name not found.");
+        if (text.size() == 2)
+            throw new CommandException("Incorrect count of arguments. Author not found.");
+        if (text.size() == 3)
+            throw new CommandException("Incorrect count of arguments. Executor name not found.");
+        if (text.size() == 4)
+            throw new CommandException("Incorrect count of arguments. Content name not found.");
         if (text.stream().anyMatch(Objects::isNull))
             throw new CommandException("Incorrect arguments!");
     }

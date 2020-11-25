@@ -33,6 +33,6 @@ public class AddToDoCommand extends Command {
 
     protected void validate() throws CommandException {
         if (arguments == null)
-            throw new CommandException("Incorrect data.");
+            throw new CommandException("Incorrect data. Todo name not found.");
     }
 }

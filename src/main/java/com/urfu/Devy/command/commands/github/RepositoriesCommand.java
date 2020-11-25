@@ -1,6 +1,7 @@
 package main.java.com.urfu.Devy.command.commands.github;
 
 import com.beust.jcommander.Parameter;
+import main.java.com.urfu.Devy.command.CommandException;
 import main.java.com.urfu.Devy.group.GroupInfo;
 import main.java.com.urfu.Devy.sender.MessageSender;
 import main.java.com.urfu.Devy.command.Command;
@@ -24,17 +25,22 @@ public class RepositoriesCommand extends Command {
 
     @Override
     public void execute() {
-        if(userName == null || userName.size() != 1)
-            throw new IllegalArgumentException("enter user name");
 
-        var count = 1;
-        var service = new RepositoryService();
+
         try {
-            for (var repo : service.getRepositories(userName.get(0)))
-                sender.send(MessageFormat.format("{0}) {1} - created on {2}", count++,
-                        repo.getName(), repo.getCreatedAt()));
-        } catch (IOException e) {
-            sender.send("No such github user");
+            throw new CommandException("Command not available");
+            //if(userName == null || userName.size() != 1)
+            //    throw new IllegalArgumentException("enter user name");
+
+            //var count = 1;
+            //var service = new RepositoryService();
+            //for (var repo : service.getRepositories(userName.get(0)))
+            //    sender.send(MessageFormat.format("{0}) {1} - created on {2}", count++,
+            //            repo.getName(), repo.getCreatedAt()));
+        //} catch (IOException e) {
+        //    sender.send("No such github user");
+        } catch (CommandException e) {
+           sender.send(e.getMessage());
         }
     }
 }

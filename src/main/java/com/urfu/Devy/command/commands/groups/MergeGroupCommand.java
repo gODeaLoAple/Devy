@@ -32,16 +32,17 @@ public class MergeGroupCommand extends GroupCommand {
     @Override
     public void execute() {
         try {
-            validate();
-            var group = getGroup();
-            var id = text.get(0);
-            validatePassword(text.get(1));
-            if (telegram)
-                group.setTelegram(Long.valueOf(id));
-            if (discord)
-                group.setDiscord(id);
-            RepositoryController.getGroupRepository().updateGroup(group);
-            sender.send("Groups merged!");
+            throw new CommandException("Command not available now, sorry...");
+            //validate();
+            //var group = getGroup();
+            //var id = text.get(0);
+            //validatePassword(text.get(1));
+            //if (telegram)
+            //    group.setTelegram(Long.valueOf(id));
+            //if (discord)
+            //    group.setDiscord(id);
+            //RepositoryController.getGroupRepository().updateGroup(group);
+            //sender.send("Groups merged!");
         } catch (CommandException e) {
             sender.send(e.getMessage());
         }
