@@ -76,8 +76,8 @@ public class GroupInfo {
         senders.get(senderId).send(message);
     }
 
-    public void addRepository(String name, String repository) throws CommandException {
-        if (!RepositoryController.getGitHubRepository().addRepository(id, new RepositoryInfo(name, repository)))
+    public void addRepository(String name, String repository, String chatId) throws CommandException {
+        if (!RepositoryController.getGitHubRepository().addRepository(id, chatId, new RepositoryInfo(name, repository)))
             throw new CommandException("Repository was already added.");
     }
 
@@ -102,12 +102,14 @@ public class GroupInfo {
 
     public void startTrack(Timer timer){
         this.repositoryTimer = timer;
+        RepositoryController.getGitHubRepository().setTracking(id, true);
     }
 
     public void stopTrack() throws CommandException{
         if(repositoryTimer == null)
             throw new CommandException("you haven't tracking repository");
         repositoryTimer.cancel();
+        RepositoryController.getGitHubRepository().setTracking(id, false);
     }
 
     public Boolean isNull() {

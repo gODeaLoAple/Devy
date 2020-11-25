@@ -1,20 +1,27 @@
 package main.java.com.urfu.Devy.bot.discord;
 
+import main.java.com.urfu.Devy.Main;
 import main.java.com.urfu.Devy.bot.Bot;
 import main.java.com.urfu.Devy.command.CommandException;
 import main.java.com.urfu.Devy.command.parser.CommandParser;
 import main.java.com.urfu.Devy.command.parser.ParseCommandException;
+import main.java.com.urfu.Devy.database.RepositoryController;
+import main.java.com.urfu.Devy.github.GitHubController;
 import main.java.com.urfu.Devy.group.GroupInfo;
+import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.channel.text.TextChannelCreateEvent;
 import net.dv8tion.jda.api.events.guild.GuildReadyEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import org.eclipse.egit.github.core.client.GitHubClient;
 import org.jetbrains.annotations.NotNull;
 
 import javax.security.auth.login.LoginException;
 import java.util.HashMap;
+import java.util.Objects;
+
 import org.apache.log4j.Logger;
 
 public class DiscordBot extends ListenerAdapter implements Bot {
@@ -31,12 +38,15 @@ public class DiscordBot extends ListenerAdapter implements Bot {
     }
 
     public void start() {
-        try {
-            JDABuilder
+        try { //5k requests per hour is enough?
+            var jda = JDABuilder
                     .createDefault(token)
                     .addEventListeners(this)
                     .build()
                     .awaitReady();
+            GitHubClient client = new GitHubClient();
+            client.setOAuth2Token(Main.getGitHubToken());
+            startTrackingOnLoad(jda);
             log.info("Bot started successfully!");
         } catch (InterruptedException | LoginException e) {
             log.error("Error on start: " + e.getMessage());
@@ -126,4 +136,12 @@ public class DiscordBot extends ListenerAdapter implements Bot {
         }
     }
 
+    public static void startTrackingOnLoad(JDA jda){
+        var groups = RepositoryController.getGitHubRepository().getAllTrackingGroups();
+        for(var group : groups){
+            var guild = jda.getGuildById(group.getGroupId());
+            var channel = Objects.requireNonNull(guild).getTextChannelById(group.getChatId());
+            GitHubController.startTrackRepository(new GroupInfo(group.getGroupId()), new DiscordMessageSender(channel));
+        }
+    }
 }

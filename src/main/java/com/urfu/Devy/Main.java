@@ -61,4 +61,8 @@ public class Main {
         RepositoryController.setToDoTaskRepository(new ToDoTaskRepository());
         RepositoryController.setGitHubRepository(new GitHubRepository());
     }
+
+    public static String getGitHubToken(){
+        return loadProperties(PATH_TO_TOKEN).getProperty("githubToken");
+    }
 }

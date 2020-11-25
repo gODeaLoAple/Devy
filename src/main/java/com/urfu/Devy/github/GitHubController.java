@@ -1,9 +1,11 @@
 package main.java.com.urfu.Devy.github;
 
+import main.java.com.urfu.Devy.bot.discord.DiscordMessageSender;
 import main.java.com.urfu.Devy.command.CommandException;
 import main.java.com.urfu.Devy.database.RepositoryController;
 import main.java.com.urfu.Devy.group.GroupInfo;
 import main.java.com.urfu.Devy.sender.MessageSender;
+import net.dv8tion.jda.api.JDA;
 import org.apache.log4j.Logger;
 import org.eclipse.egit.github.core.Commit;
 import org.eclipse.egit.github.core.Contributor;
@@ -46,7 +48,7 @@ public class GitHubController {
         };
         Timer timer = new Timer("Timer");
         long delay  = 1_000L;
-        long period = 20_000L;//216_000L;
+        long period = 216_000L;
         timer.scheduleAtFixedRate(repeatedTask, delay, period);
         group.startTrack(timer);
     }
@@ -81,15 +83,16 @@ public class GitHubController {
     public static String getRepositoryInfo(Repository repository) {
         var result = new StringBuilder();
         try {
-            result.append("name: ").append(repository.getName()).append("\n");
-            result.append("created at: ").append(repository.getCreatedAt().toString()).append("\n");
-            result.append("forks: ").append(repository.getForks()).append("\n");
+            result.append(getSeparatedString("name", repository.getName()));
+            result.append(getSeparatedString("created at", repository.getCreatedAt().toString()));
+            result.append(getSeparatedString("forks", Integer.toString(repository.getForks())));
             if (repository.getDescription() != null && !repository.getDescription().isEmpty())
-                result.append("description: ").append(repository.getDescription()).append("\n");
-            result.append("languages: ").append(repository.getLanguage()).append("\n");
-            result.append("size: ").append(repository.getSize()).append("\n");
-            result.append("last commit at: ").append(GitHubController.getLastCommitDate(repository)).append("\n");
-            result.append("contributors: ").append(getContributors(new RepositoryService().getContributors(repository, true)));
+                result.append(getSeparatedString("description", repository.getDescription()));
+            result.append(getSeparatedString("languages", repository.getLanguage()));
+            result.append(getSeparatedString("size", Integer.toString(repository.getSize())));
+            result.append(getSeparatedString("last commit at", getLastCommitDate(repository).toString()));
+            result.append(getSeparatedString("contributors",
+                    getContributors(new RepositoryService().getContributors(repository, true))));
 
             return result.toString();
         } catch (IOException e) {
@@ -97,8 +100,11 @@ public class GitHubController {
         }
     }
 
+    private static String getSeparatedString(String name, String data){
+        return "%s: %s\n".formatted(name, data);
+    }
+
     private static String getContributors(List<Contributor> contributors){
         return contributors.stream().map(Contributor::getLogin).collect(Collectors.joining(", "));
     }
-
 }

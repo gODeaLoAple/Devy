@@ -3,6 +3,7 @@ package main.java.com.urfu.Devy.github;
 public class RepositoryInfo {
     private String name;
     private String repository;
+    private String groupId;
     private boolean tracking = false;
 
     public RepositoryInfo(String name, String repository){
@@ -38,5 +39,13 @@ public class RepositoryInfo {
 
     public void setTracking(Boolean tracking) {
         this.tracking = tracking;
+    }
+
+    public String getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(String groupId) {
+        this.groupId = groupId;
     }
 }
