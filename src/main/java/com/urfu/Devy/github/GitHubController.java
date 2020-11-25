@@ -1,11 +1,9 @@
 package main.java.com.urfu.Devy.github;
 
-import main.java.com.urfu.Devy.bot.discord.DiscordMessageSender;
 import main.java.com.urfu.Devy.command.CommandException;
 import main.java.com.urfu.Devy.database.RepositoryController;
 import main.java.com.urfu.Devy.group.GroupInfo;
 import main.java.com.urfu.Devy.sender.MessageSender;
-import net.dv8tion.jda.api.JDA;
 import org.apache.log4j.Logger;
 import org.eclipse.egit.github.core.Commit;
 import org.eclipse.egit.github.core.Contributor;
