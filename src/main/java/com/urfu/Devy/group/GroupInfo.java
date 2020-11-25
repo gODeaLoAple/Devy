@@ -33,6 +33,10 @@ public class GroupInfo {
         senders.remove(senderId);
     }
 
+    public MessageSender getSender(String id){
+        return senders.get(id);
+    }
+
     public void addToDo(ToDo toDo) throws CommandException {
         if (!RepositoryController.getTodoRepository().addToDoList(id, toDo))
             throw new CommandException("The ToDo list was already added.");
@@ -90,18 +94,12 @@ public class GroupInfo {
         return RepositoryController.getGitHubRepository().hasRepository(id);
     }
 
-    public RepositoryInfo getRepository() throws CommandException{
-        if(hasRepository())
-            return RepositoryController.getGitHubRepository().getRepository(id);
-        throw new CommandException("No such repository");
-    }
-
     public String getLastCommitDate(){
         return RepositoryController.getGitHubRepository().getLastCommitDate(id);
     }
 
     public void startTrack(Timer timer){
-        this.repositoryTimer = timer;
+        repositoryTimer = timer;
         RepositoryController.getGitHubRepository().setTracking(id, true);
     }
 
@@ -110,9 +108,5 @@ public class GroupInfo {
             throw new CommandException("you haven't tracking repository");
         repositoryTimer.cancel();
         RepositoryController.getGitHubRepository().setTracking(id, false);
-    }
-
-    public Boolean isNull() {
-        return false;
     }
 }

@@ -1,12 +1,11 @@
 package main.java.com.urfu.Devy.github;
 
-import main.java.com.urfu.Devy.bot.discord.DiscordMessageSender;
 import main.java.com.urfu.Devy.command.CommandException;
 import main.java.com.urfu.Devy.database.RepositoryController;
 import main.java.com.urfu.Devy.group.GroupInfo;
 import main.java.com.urfu.Devy.sender.MessageSender;
-import net.dv8tion.jda.api.JDA;
 import org.apache.log4j.Logger;
+import org.dbunit.DatabaseUnitException;
 import org.eclipse.egit.github.core.Commit;
 import org.eclipse.egit.github.core.Contributor;
 import org.eclipse.egit.github.core.IRepositoryIdProvider;
@@ -15,10 +14,7 @@ import org.eclipse.egit.github.core.service.CommitService;
 import org.eclipse.egit.github.core.service.RepositoryService;
 
 import java.io.IOException;
-import java.util.Date;
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class GitHubController {
@@ -26,6 +22,12 @@ public class GitHubController {
 
     public static IRepositoryIdProvider getRepository(RepositoryInfo repos) throws IOException{
         return new RepositoryService().getRepository(repos.getName(), repos.getRepositoryName());
+    }
+
+    public static RepositoryInfo getRepositoryInfoFromDataBase(String groupId) throws DatabaseUnitException {
+        if(RepositoryController.getGitHubRepository().hasRepository(groupId))
+            return RepositoryController.getGitHubRepository().getRepository(groupId);
+        throw new DatabaseUnitException("no such repository");
     }
 
     public static Commit getLastCommit(IRepositoryIdProvider repos) throws IOException{
@@ -55,7 +57,7 @@ public class GitHubController {
 
     public static void taskToRun(GroupInfo group, MessageSender sender) throws IOException{
         try {
-            var info = group.getRepository();
+            var info = getRepositoryInfoFromDataBase(group.getId());
             var repos = getRepository(info);
             var lastCommit = getLastCommitDate(repos);
             var groupLastCommit = group.getLastCommitDate();
@@ -68,7 +70,7 @@ public class GitHubController {
             else {
                 sender.send("no changes");
             }
-        } catch (CommandException e) {
+        } catch (DatabaseUnitException e) {
             log.error("On \"taskToRun\"", e);
         }
     }
@@ -76,7 +78,6 @@ public class GitHubController {
     public static String getCommitInfo(Commit commit){
         return "author: " + commit.getCommitter().getName() + "\n" +
                 "message: " + commit.getMessage() + "\n" +
-                "sha: " + commit.getSha() + "\n" +
                 "date: " + commit.getCommitter().getDate();
     }
 
@@ -96,7 +97,7 @@ public class GitHubController {
 
             return result.toString();
         } catch (IOException e) {
-            throw new IllegalArgumentException("something going wrong at \"getRepositoryInfo\"");
+            throw new IllegalArgumentException("something went wrong at \"getRepositoryInfo\"");
         }
     }
 
@@ -105,6 +106,6 @@ public class GitHubController {
     }
 
     private static String getContributors(List<Contributor> contributors){
-        return contributors.stream().map(Contributor::getLogin).collect(Collectors.joining(", "));
+        return contributors.stream().map(Contributor::getLogin).filter(Objects::nonNull).collect(Collectors.joining(", "));
     }
 }

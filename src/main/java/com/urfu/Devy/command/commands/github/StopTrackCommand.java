@@ -7,7 +7,7 @@ import main.java.com.urfu.Devy.group.GroupInfo;
 import main.java.com.urfu.Devy.sender.MessageSender;
 import org.jetbrains.annotations.NotNull;
 
-@CommandName(name = "stoptrack")
+@CommandName(name = "stoptrack", info = "stop track repository")
 public class StopTrackCommand extends Command {
 
     public StopTrackCommand(GroupInfo group, MessageSender sender, @NotNull String[] args) {

@@ -38,14 +38,12 @@ public class DiscordBot extends ListenerAdapter implements Bot {
     }
 
     public void start() {
-        try { //5k requests per hour is enough?
+        try {
             var jda = JDABuilder
                     .createDefault(token)
                     .addEventListeners(this)
                     .build()
                     .awaitReady();
-            GitHubClient client = new GitHubClient();
-            client.setOAuth2Token(Main.getGitHubToken());
             startTrackingOnLoad(jda);
             log.info("Bot started successfully!");
         } catch (InterruptedException | LoginException e) {
@@ -136,12 +134,11 @@ public class DiscordBot extends ListenerAdapter implements Bot {
         }
     }
 
-    public static void startTrackingOnLoad(JDA jda){
-        var groups = RepositoryController.getGitHubRepository().getAllTrackingGroups();
-        for(var group : groups){
-            var guild = jda.getGuildById(group.getGroupId());
-            var channel = Objects.requireNonNull(guild).getTextChannelById(group.getChatId());
-            GitHubController.startTrackRepository(new GroupInfo(group.getGroupId()), new DiscordMessageSender(channel));
+    public void startTrackingOnLoad(JDA jda){
+        var trackingGroupsData = RepositoryController.getGitHubRepository().getAllTrackingGroups();
+        for(var groupData : trackingGroupsData){
+            var group = this.groups.get(groupData.getGroupId());
+            GitHubController.startTrackRepository(group, group.getSender(groupData.getChatId()));
         }
     }
 }
