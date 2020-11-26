@@ -18,7 +18,7 @@ public class GitHubRepository extends Repository{
             return statement.executeUpdate("""
                     INSERT INTO `github` (`repository`, `name`, `tracking`, `chatId`, `groupId`)
                     VALUES ('%s','%s','%s','%s', %s)
-                    """.formatted(repository.getRepositoryName(), repository.getName(), repository.getTracking() ? 1 : 0, chatId, groupId)
+                    """.formatted(repository.getRepositoryName(), repository.getName(), repository.isTracking() ? 1 : 0, chatId, groupId)
             ) > 0;
         } catch (SQLException throwables) {
             log.error("On 'addRepositoryList'", throwables);
@@ -52,22 +52,6 @@ public class GitHubRepository extends Repository{
             log.error("On 'getRepository'", throwables);
             return null;
         }
-    }
-
-    public Collection<RepositoryInfo> getAllRepositories() {
-        var result = new ArrayList<RepositoryInfo>();
-        try  (var statement = database.getConnection().createStatement()){
-            var data = statement.executeQuery("""
-                SELECT * `repository`, `name`, `tracking`
-                FROM `github`;
-                """);
-            while(data.next()) {
-                result.add(new RepositoryInfo(data.getString("name"), data.getString("repository"), data.getBoolean("tracking")));
-            }
-        } catch (SQLException throwables) {
-            log.error("On 'getAllRepositories'", throwables);
-        }
-        return result;
     }
 
     public boolean hasRepository(String groupId) {

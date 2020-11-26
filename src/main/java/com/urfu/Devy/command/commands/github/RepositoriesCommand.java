@@ -28,9 +28,8 @@ public class RepositoriesCommand extends Command {
             throw new IllegalArgumentException("enter user name");
 
         var count = 1;
-        var service = new RepositoryService();
         try {
-            for (var repo : service.getRepositories(userName.get(0)))
+            for (var repo : new RepositoryService().getRepositories(userName.get(0)))
                 sender.send(MessageFormat.format("{0}) {1} - created on {2}", count++,
                         repo.getName(), repo.getCreatedAt()));
         } catch (IOException e) {

@@ -10,6 +10,7 @@ import main.java.com.urfu.Devy.database.repositories.Repository;
 import main.java.com.urfu.Devy.database.repositories.ToDoRepository;
 import main.java.com.urfu.Devy.database.repositories.ToDoTaskRepository;
 import org.apache.log4j.Logger;
+import org.eclipse.egit.github.core.client.GitHubClient;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -26,6 +27,7 @@ public class Main {
         try {
             var database = createDataBase(loadProperties(Main.PATH_TO_DATABASE));
             var bot = createBot(loadProperties(Main.PATH_TO_TOKEN));
+            new GitHubClient().setOAuth2Token(loadProperties(Main.PATH_TO_TOKEN).getProperty("githubToken"));
             Repository.setDatabase(database);
             initRepositories();
             CommandsController.constructCommandsDictionary();
@@ -60,9 +62,5 @@ public class Main {
         RepositoryController.setTodoRepository(new ToDoRepository());
         RepositoryController.setToDoTaskRepository(new ToDoTaskRepository());
         RepositoryController.setGitHubRepository(new GitHubRepository());
-    }
-
-    public static String getGitHubToken(){
-        return loadProperties(PATH_TO_TOKEN).getProperty("githubToken");
     }
 }
