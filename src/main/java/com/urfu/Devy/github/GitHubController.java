@@ -50,8 +50,8 @@ public class GitHubController {
         };
         Timer timer = new Timer("Timer");
         long delay  = 1_000L;
-        long period = 216_000L;
-        timer.scheduleAtFixedRate(repeatedTask, delay, period);
+        long oneHour = 216_000L;
+        timer.scheduleAtFixedRate(repeatedTask, delay, oneHour);
         group.startTrack(timer);
     }
 
