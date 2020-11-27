@@ -27,6 +27,7 @@ public class ShowUserTasksCommand extends Command {
     public void execute() {
         var result = new StringBuilder();
         var tasks = groupInfo
+                .asTodo()
                 .getAllToDo()
                 .stream()
                 .map(ToDo::getTasks)

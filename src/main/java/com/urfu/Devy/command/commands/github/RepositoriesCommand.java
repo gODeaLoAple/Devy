@@ -25,22 +25,13 @@ public class RepositoriesCommand extends Command {
 
     @Override
     public void execute() {
-
-
+        var count = 1;
         try {
-            throw new CommandException("Command not available");
-            //if(userName == null || userName.size() != 1)
-            //    throw new IllegalArgumentException("enter user name");
-
-            //var count = 1;
-            //var service = new RepositoryService();
-            //for (var repo : service.getRepositories(userName.get(0)))
-            //    sender.send(MessageFormat.format("{0}) {1} - created on {2}", count++,
-            //            repo.getName(), repo.getCreatedAt()));
-        //} catch (IOException e) {
-        //    sender.send("No such github user");
-        } catch (CommandException e) {
-           sender.send(e.getMessage());
+            for (var repo : new RepositoryService().getRepositories(userName.get(0)))
+                sender.send(MessageFormat.format("{0}) {1} - created on {2}", count++,
+                        repo.getName(), repo.getCreatedAt()));
+        } catch (IOException e) {
+            sender.send("No such github user");
         }
     }
 }

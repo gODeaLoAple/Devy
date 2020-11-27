@@ -1,47 +1,56 @@
 package main.java.com.urfu.Devy.group;
+import main.java.com.urfu.Devy.group.modules.GroupChats;
+import main.java.com.urfu.Devy.group.modules.GroupGithub;
+import main.java.com.urfu.Devy.group.modules.GroupModule;
+import main.java.com.urfu.Devy.group.modules.GroupTodo;
 import main.java.com.urfu.Devy.sender.MessageSender;
-import main.java.com.urfu.Devy.todo.ToDo;
 import main.java.com.urfu.Devy.command.CommandData;
-import main.java.com.urfu.Devy.command.CommandException;
 import main.java.com.urfu.Devy.command.CommandsController;
-import main.java.com.urfu.Devy.database.RepositoryController;
-
-import java.util.Collection;
 
 public class GroupInfo {
     protected int id;
+    protected GroupChats chats;
+    protected GroupTodo todo;
+    protected GroupGithub github;
 
     public GroupInfo(int id) {
         this.id = id;
+
     }
 
-    public void addToDo(ToDo toDo) throws CommandException {
-        if (!RepositoryController.getTodoRepository().addToDoList(id, toDo))
-            throw new CommandException("The ToDo list was already added.");
+    public GroupInfo() {
+        this(0);
     }
 
-    public Boolean removeToDo(ToDo toDo) throws CommandException {
-        return removeToDo(toDo.getName());
+    public GroupInfo setChats(GroupChats chats) {
+        this.chats = chats;
+        return setModule(chats);
+    }
+    public GroupChats asChats() {
+        return chats;
     }
 
-    public Boolean removeToDo(String todoName) throws CommandException {
-        if (!RepositoryController.getTodoRepository().removeToDoList(id, todoName))
-            throw new CommandException("The ToDo list %s was not founded.".formatted(todoName));
-        return false;
+    public GroupInfo setTodo(GroupTodo todo) {
+        this.todo = todo;
+        return setModule(todo);
+    }
+    public GroupTodo asTodo() {
+        return todo;
     }
 
-    public ToDo getToDo(String toDoId) throws CommandException {
-        var toDo = RepositoryController.getTodoRepository().getToDoByName(id, toDoId);
-        if (toDo == null)
-            throw new CommandException("The ToDo list \"%s\" was not founded.".formatted(toDoId));
-        return toDo;
+    public GroupInfo setGithub(GroupGithub github) {
+        this.github = github;
+        return setModule(github);
+    }
+    public GroupGithub asGithub() {
+        return github;
     }
 
-    public Collection<ToDo> getAllToDo() {
-        return RepositoryController
-                .getTodoRepository()
-                .getAllToDo(getId());
+    private GroupInfo setModule(GroupModule module) {
+        module.setGroupId(id);
+        return this;
     }
+
     public int getId() {
         return id;
     }
@@ -56,7 +65,4 @@ public class GroupInfo {
         sender.send(message);
     }
 
-    public Boolean isNull() {
-        return false;
-    }
 }

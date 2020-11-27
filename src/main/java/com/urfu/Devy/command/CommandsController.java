@@ -1,6 +1,5 @@
 package main.java.com.urfu.Devy.command;
 
-import main.java.com.urfu.Devy.command.commands.groups.GroupCommand;
 import main.java.com.urfu.Devy.group.EmptyGroup;
 import main.java.com.urfu.Devy.sender.EmptySender;
 import main.java.com.urfu.Devy.group.GroupInfo;
@@ -21,15 +20,12 @@ public class CommandsController {
     private static final Map<String, Class<? extends  Command>> commands = new HashMap<>(){};
 
     public static void constructCommandsDictionary() {
-        log.info("Configuring commands...");
         var commandClasses = new Reflections(Command.class).getSubTypesOf(Command.class);
-        commandClasses.addAll(new Reflections(GroupCommand.class).getSubTypesOf(GroupCommand.class));
         for (var command : commandClasses)
             if (command.isAnnotationPresent(CommandName.class)) {
                 log.info("Configuring \"" + command.getSimpleName() + "\"...");
                 commands.put(command.getDeclaredAnnotation(CommandName.class).name(), command);
             }
-        log.info("Commands configuring successfully!");
     }
 
     public static Command createCommand(GroupInfo group, MessageSender sender, CommandData data) {

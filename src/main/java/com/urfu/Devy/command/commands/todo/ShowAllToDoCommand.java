@@ -23,7 +23,7 @@ public class ShowAllToDoCommand extends Command {
 
     @Override
     public void execute() {
-        var toDoLists = groupInfo.getAllToDo();
+        var toDoLists = groupInfo.asTodo().getAllToDo();
         if (toDoLists.size() > 0)
             sender.send(extractLists(toDoLists));
         else

@@ -3,7 +3,7 @@ package main.java.com.urfu.Devy.bot.telegram;
 import main.java.com.urfu.Devy.bot.Bot;
 import main.java.com.urfu.Devy.command.parser.ParseCommandException;
 import main.java.com.urfu.Devy.database.RepositoryController;
-import main.java.com.urfu.Devy.group.Group;
+import main.java.com.urfu.Devy.group.GroupInfo;
 import main.java.com.urfu.Devy.sender.MessageSender;
 import org.telegram.telegrambots.ApiContextInitializer;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
@@ -41,21 +41,25 @@ public class TelegramBot extends Bot {
         super.handleMessage(getGroupOrCreate(chatId), sender, message);
     }
 
-    public Group getGroupOrCreate(Long chatId) {
+    public GroupInfo getGroupOrCreate(Long chatId) {
         try {
             return getGroup(chatId);
         } catch (NoSuchElementException e) {
-            var group = new Group()
-                    .setTelegram(chatId);
+            var group = new GroupInfo();
+            group.asChats().setTelegram(chatId);
             addGroup(group);
             return group;
         }
     }
 
-    public Group getGroup(Long chatId) {
+    public GroupInfo getGroup(Long chatId) {
+        var groupId = RepositoryController
+                .getChatsRepository()
+                .getGroupChatsByTelegramId(chatId)
+                .getGroupId();
         return RepositoryController
                 .getGroupRepository()
-                .getGroupByTelegramChatId(chatId);
+                .getGroupById(groupId);
     }
 
 }

@@ -20,19 +20,9 @@ public class AddTaskCommandTest extends ToDoCommandTest {
     }
 
     @Test
-    public void assertWhenNoArguments() {
-        assertHandle(new String[0], "Incorrect count of arguments.");
-    }
-
-    @Test
-    public void handleWhenIncorrectArgumentsAmount() {
-        assertHandle(new String[] { "1", "2", "3" }, "Incorrect count of arguments.");
-    }
-
-    @Test
     public void handleWhenTaskWithTheSameIdAlreadyExists() {
         try {
-            group.getToDo("1").addTask(new ToDoTask("1", "", "", "hello"));
+            group.asTodo().getToDo("1").addTask(new ToDoTask("1", "", "", "hello"));
         } catch (CommandException e) {
             throw new AssertionError(e.getMessage());
         }
@@ -46,15 +36,18 @@ public class AddTaskCommandTest extends ToDoCommandTest {
 
     @Test
     public void throwExceptionWhenWrongCountOfArguments() {
-        assertHandle(new String[] { "1" }, "Incorrect count of arguments.");
-        assertHandle(new String[] { "1", "2" }, "Incorrect count of arguments.");
+        assertHandle(new String[0], "Incorrect count of arguments. Todo name not found.");
+        assertHandle(new String[] { "1" }, "Incorrect count of arguments. Task name not found.");
+        assertHandle(new String[] { "1", "2" }, "Incorrect count of arguments. Author not found.");
+        assertHandle(new String[] { "1", "2", "3" }, "Incorrect count of arguments. Executor name not found.");
+        assertHandle(new String[] { "1", "2", "3", "4" }, "Incorrect count of arguments. Content not found.");
     }
 
     @Test
     public void addTaskWhenDoesNotExist() {
         Assertions.assertDoesNotThrow(() -> {
             createCommandWithArgs(new String[] {"1", "1", "", "", "hello"}).execute();
-            Assertions.assertTrue(group.getToDo("1").hasTask("1"));
+            Assertions.assertTrue(group.asTodo().getToDo("1").hasTask("1"));
         });
     }
 

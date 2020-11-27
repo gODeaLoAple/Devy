@@ -24,7 +24,7 @@ public class AddToDoCommand extends Command {
     public void execute() {
         try {
             validate();
-            groupInfo.addToDo(new ToDo(arguments.get(0)));
+            groupInfo.asTodo().addToDo(new ToDo(arguments.get(0)));
             sender.send("The board has been added.");
         } catch (CommandException e) {
             sender.send(e.getMessage());

@@ -1,5 +1,6 @@
 package test.java.com.urfu.Devy.commands.todo;
 
+import main.java.com.urfu.Devy.group.modules.GroupTodo;
 import main.java.com.urfu.Devy.todo.ToDo;
 import main.java.com.urfu.Devy.todo.ToDoTask;
 import main.java.com.urfu.Devy.group.GroupInfo;
@@ -11,7 +12,16 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import main.java.com.urfu.Devy.sender.EmptySender;
 
+import javax.swing.*;
+
 public class RemoveTaskCommandTest extends ToDoCommandTest {
+
+    @BeforeEach
+    public void setUp() {
+        group = new GroupInfo(0);
+        group.setTodo(new GroupTodo());
+        sender = new EmptySender();
+    }
 
     @Test
     public void handleWhenIncorrectArgsCount() {
@@ -37,7 +47,7 @@ public class RemoveTaskCommandTest extends ToDoCommandTest {
         addToDo(group, todo);
         assertHandle(new String[] {"test", "test"}, "The task \"test\" has been removed from \"test\".");
         try {
-            Assertions.assertFalse(group.getToDo("test").hasTask("test"));
+            Assertions.assertFalse(group.asTodo().getToDo("test").hasTask("test"));
         } catch (CommandException e) {
             throw new AssertionError(e.getMessage());
         }

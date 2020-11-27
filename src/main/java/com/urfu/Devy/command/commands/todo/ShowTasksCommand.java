@@ -25,7 +25,7 @@ public class ShowTasksCommand extends Command {
     public void execute() {
         try {
             validate();
-            var toDo = groupInfo.getToDo(text.get(0));
+            var toDo = groupInfo.asTodo().getToDo(text.get(0));
             var message = toDo
                     .getTasks()
                     .stream()

@@ -26,7 +26,7 @@ public class RemoveTaskCommand extends Command {
             validate();
             var todoId = text.get(0);
             var taskId = text.get(1);
-            var todo= groupInfo.getToDo(todoId);
+            var todo= groupInfo.asTodo().getToDo(todoId);
             if (todo.removeTask(taskId))
                 sender.send("The task \"%s\" has been removed from \"%s\".".formatted(taskId, todoId));
             else

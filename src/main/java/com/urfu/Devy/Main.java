@@ -7,14 +7,17 @@ import main.java.com.urfu.Devy.command.CommandsController;
 
 import main.java.com.urfu.Devy.database.DataBase;
 import main.java.com.urfu.Devy.database.RepositoryController;
+import main.java.com.urfu.Devy.database.repositories.implemented.GitHubRepository;
 import main.java.com.urfu.Devy.database.repositories.Repository;
 import main.java.com.urfu.Devy.database.repositories.implemented.GroupRepository;
 import main.java.com.urfu.Devy.database.repositories.implemented.ToDoRepository;
 import main.java.com.urfu.Devy.database.repositories.implemented.ToDoTaskRepository;
+import main.java.com.urfu.Devy.database.repositories.mocked.MockGithubRepository;
 import main.java.com.urfu.Devy.database.repositories.mocked.MockGroupRepository;
 import main.java.com.urfu.Devy.database.repositories.mocked.MockToDoRepository;
 import main.java.com.urfu.Devy.database.repositories.mocked.MockToDoTaskRepository;
 import org.apache.log4j.Logger;
+import org.eclipse.egit.github.core.client.GitHubClient;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -27,24 +30,51 @@ public class Main {
     private static final String PATH_TO_TOKENS = "src/config.properties";
     private static final String PATH_TO_DATABASE = "src/database.properties";
 
+    private static GitHubClient github;
+    private static Bot[] bots;
+
     public static void main(String[] args) {
         try {
-            initRepositories();
+            log.info("Configuring commands...");
             CommandsController.constructCommandsDictionary();
-            createBots(loadProperties(Main.PATH_TO_TOKENS));
+            log.info("Commands configuring successfully!");
+
+            log.info("Configuring database...");
+            var database = createDataBase(loadProperties(Main.PATH_TO_DATABASE));
+            Repository.setDatabase(database);
+            log.info("Database created!");
+
+            log.info("Configuring repositories...");
+            initRepositories();
+            log.info("Repositories created!");
+
+
+            var tokens = loadProperties(Main.PATH_TO_TOKENS);
+            log.info("Configuring github...");
+            initGithub(tokens);
+            log.info("Github authorized!");
+
+            log.info("Configuring bots...");
+            initBots(tokens);
+            log.info("Bots created!");
+
         }
         catch (Exception e) {
             log.error(e);
         }
     }
 
-    private static void createBots(Properties config) {
-        var bots = new Bot[] {
+    private static void initBots(Properties config) {
+        bots = new Bot[] {
                 new DiscordBot(config.getProperty("discord_token")),
                 new TelegramBot(config.getProperty("telegram_token")),
         };
         for (var bot : bots)
             bot.start();
+    }
+
+    private static void initGithub(Properties config) {
+        github = new GitHubClient().setOAuth2Token(config.getProperty("githubToken"));
     }
 
     private static DataBase createDataBase(Properties config) throws Exception {
@@ -79,11 +109,13 @@ public class Main {
         RepositoryController.setTodoRepository(new ToDoRepository());
         RepositoryController.setToDoTaskRepository(new ToDoTaskRepository());
         RepositoryController.setGroupRepository(new GroupRepository());
+        RepositoryController.setGitHubRepository(new GitHubRepository());
     }
 
     private static void initMockedRepositories() {
         RepositoryController.setTodoRepository(new MockToDoRepository());
         RepositoryController.setToDoTaskRepository(new MockToDoTaskRepository());
         RepositoryController.setGroupRepository(new MockGroupRepository());
+        RepositoryController.setGitHubRepository(new MockGithubRepository());
     }
 }

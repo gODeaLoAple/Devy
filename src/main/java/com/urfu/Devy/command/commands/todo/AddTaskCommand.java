@@ -29,8 +29,8 @@ public class AddTaskCommand extends Command {
         try {
             validate();
             var name = text.get(0);
-            var toDo = groupInfo.getToDo(name);
-            toDo.addTask(new ToDoTask(text.get(1), text.get(2), text.get(3), text.get(4)));
+            var todo = groupInfo.asTodo().getToDo(name);
+            todo.addTask(new ToDoTask(text.get(1), text.get(2), text.get(3), text.get(4)));
             sender.send("The task has been added.");
         }
         catch (IllegalArgumentException | CommandException e) {
@@ -48,7 +48,7 @@ public class AddTaskCommand extends Command {
         if (text.size() == 3)
             throw new CommandException("Incorrect count of arguments. Executor name not found.");
         if (text.size() == 4)
-            throw new CommandException("Incorrect count of arguments. Content name not found.");
+            throw new CommandException("Incorrect count of arguments. Content not found.");
         if (text.stream().anyMatch(Objects::isNull))
             throw new CommandException("Incorrect arguments!");
     }

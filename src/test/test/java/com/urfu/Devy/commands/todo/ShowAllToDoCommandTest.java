@@ -1,5 +1,6 @@
 package test.java.com.urfu.Devy.commands.todo;
 
+import main.java.com.urfu.Devy.group.modules.GroupTodo;
 import main.java.com.urfu.Devy.todo.ToDo;
 import main.java.com.urfu.Devy.group.GroupInfo;
 import main.java.com.urfu.Devy.command.Command;
@@ -12,6 +13,7 @@ public class ShowAllToDoCommandTest extends ToDoCommandTest {
 
     @Test
     public void handleWhenToDoDoesNotExist() {
+        group.setTodo(new GroupTodo());
         assertHandle(new String[0], "There is no any todo-list.");
     }
 

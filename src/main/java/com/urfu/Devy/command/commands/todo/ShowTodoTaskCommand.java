@@ -23,7 +23,7 @@ public class ShowTodoTaskCommand extends Command {
     @Override
     public void execute() {
         try {
-            var todo = groupInfo.getToDo(text.get(0));
+            var todo = groupInfo.asTodo().getToDo(text.get(0));
             var task = todo.getTask(text.get(1));
             sender.send(task.getInfo());
         } catch (CommandException e) {
