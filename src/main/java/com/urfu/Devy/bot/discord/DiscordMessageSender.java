@@ -15,9 +15,4 @@ public class DiscordMessageSender implements MessageSender {
         channel.sendMessage(message).queue();
     }
 
-    @Override
-    public String getId() {
-        return channel.getId();
-    }
-
 }

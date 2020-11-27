@@ -1,6 +1,7 @@
 package main.java.com.urfu.Devy.command.commands.common;
 
 import com.beust.jcommander.Parameter;
+import main.java.com.urfu.Devy.command.CommandException;
 import main.java.com.urfu.Devy.group.GroupInfo;
 import main.java.com.urfu.Devy.sender.MessageSender;
 import main.java.com.urfu.Devy.command.Command;
@@ -19,14 +20,26 @@ public class HelpCommand extends Command{
     }
 
     @Parameter(description = "[commandName]")
-    private String targetCommand;
+    private List<String> targetCommand;
 
     @Override
     public void execute() {
-        var info =  targetCommand == null || targetCommand.isEmpty()
-                ? getAllCommandsInfo()
-                : getInfoAboutCommand(targetCommand);
-        sender.send(info);
+        try {
+            validate();
+
+            var info =  targetCommand == null || targetCommand.isEmpty()
+                    ? getAllCommandsInfo()
+                    : getInfoAboutCommand(targetCommand.get(0));
+            sender.send(info);
+        } catch (CommandException e) {
+            sender.send(e.getMessage());
+        }
+
+    }
+
+    private void validate() throws CommandException {
+        if (targetCommand != null && targetCommand.size() > 1)
+            throw new CommandException("Incorrect count of arguments. Less or equals than 1 expected.");
     }
 
     private String getInfoAboutCommand(String commandName) {

@@ -17,7 +17,7 @@ public class DiscordBotListener extends ListenerAdapter {
     @Override
     public void onGuildReady(@NotNull GuildReadyEvent event) {
         super.onGuildReady(event);
-        bot.onGuildReady(event.getGuild().getId());
+        bot.getGroupOrCreate(event.getGuild().getId());
     }
 
     @Override

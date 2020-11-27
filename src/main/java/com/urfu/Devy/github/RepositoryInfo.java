@@ -5,7 +5,7 @@ public class RepositoryInfo {
     private String repository;
     private boolean tracking = false;
 
-    public RepositoryInfo(String name, String repository){
+    public RepositoryInfo(String name, String repository) {
         this.name = name;
         this.repository = repository;
     }

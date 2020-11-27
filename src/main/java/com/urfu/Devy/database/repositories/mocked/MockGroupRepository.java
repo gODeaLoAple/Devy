@@ -1,5 +1,6 @@
 package main.java.com.urfu.Devy.database.repositories.mocked;
 
+import main.java.com.urfu.Devy.database.RepositoryController;
 import main.java.com.urfu.Devy.database.repositories.implemented.GroupRepository;
 import main.java.com.urfu.Devy.group.GroupInfo;
 import main.java.com.urfu.Devy.group.modules.GroupChats;
@@ -21,11 +22,13 @@ public class MockGroupRepository extends GroupRepository {
     @Override
     public void removeGroup(GroupInfo group) {
         groups.remove(group.getId());
+        RepositoryController.getChatsRepository().removeChats(group.asChats());
     }
 
     @Override
     public void addGroup(GroupInfo group) {
         groups.put(group.getId(), group);
+        RepositoryController.getChatsRepository().addChats(group.asChats());
     }
 
     @Override

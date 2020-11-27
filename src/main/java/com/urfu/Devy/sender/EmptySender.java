@@ -11,13 +11,12 @@ public class EmptySender implements MessageSender {
         lastMessage = message;
     }
 
-    @Override
-    public String getId() {
-        return "";
-    }
-
     public void assertMessage(String message) {
         Assertions.assertEquals(message, lastMessage);
+    }
+
+    public String getLastMessage() {
+        return lastMessage;
     }
 
 }

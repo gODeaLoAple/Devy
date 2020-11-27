@@ -34,4 +34,8 @@ public class ToDoTaskTest {
         Assertions.assertEquals("text", task.getText());
     }
 
+    @Test
+    public void testGetId() {
+        Assertions.assertEquals(0, task.getId());
+    }
 }

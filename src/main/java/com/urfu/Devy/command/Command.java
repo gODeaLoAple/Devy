@@ -29,19 +29,9 @@ public abstract class Command {
 
     public boolean isNull() { return false; }
 
-    public String[] getArgs() {
-        return args.clone();
-    }
-
-    public MessageSender getSender() {
-        return sender;
-    }
-
     public String getName() {
-        if (getClass().isAnnotationPresent(CommandName.class))
-            return getClass().getAnnotation(CommandName.class).name();
-        return "";
-    };
+        return getClass().getAnnotation(CommandName.class).name();
+    }
 
     public String extractParametersInfo() {
         var sb = new StringBuilder();

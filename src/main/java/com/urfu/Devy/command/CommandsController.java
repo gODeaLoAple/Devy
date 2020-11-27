@@ -22,10 +22,8 @@ public class CommandsController {
     public static void constructCommandsDictionary() {
         var commandClasses = new Reflections(Command.class).getSubTypesOf(Command.class);
         for (var command : commandClasses)
-            if (command.isAnnotationPresent(CommandName.class)) {
-                log.info("Configuring \"" + command.getSimpleName() + "\"...");
+            if (command.isAnnotationPresent(CommandName.class))
                 commands.put(command.getDeclaredAnnotation(CommandName.class).name(), command);
-            }
     }
 
     public static Command createCommand(GroupInfo group, MessageSender sender, CommandData data) {

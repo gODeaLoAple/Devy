@@ -22,4 +22,18 @@ public class ToDoTest extends DatabaseIncludeTest {
         Assertions.assertTrue(toDo.hasTask("test"));
     }
 
+    @Test
+    public void testThrowsExceptionOnGetTaskWhenDoesNotExist() {
+        var todo = new ToDo("help");
+        Assertions.assertThrows(IllegalArgumentException.class, () -> todo.getTask("task"));
+    }
+
+    @Test
+    public void testGetTaskWhenExists() {
+        var todo = new ToDo("help");
+        var task = new ToDoTask("task", "", "", "");
+        todo.addTask(task);
+        Assertions.assertEquals(task, todo.getTask("task"));
+    }
+
 }

@@ -1,16 +1,13 @@
 package main.java.com.urfu.Devy.bot.discord;
 
-import com.mysql.cj.x.protobuf.MysqlxNotice;
 import main.java.com.urfu.Devy.bot.Bot;
+import main.java.com.urfu.Devy.bot.BotBuildException;
+import main.java.com.urfu.Devy.bot.BotBuilder;
 import main.java.com.urfu.Devy.command.parser.ParseCommandException;
 import main.java.com.urfu.Devy.database.RepositoryController;
 import main.java.com.urfu.Devy.group.GroupInfo;
 import main.java.com.urfu.Devy.sender.MessageSender;
-import net.dv8tion.jda.api.JDABuilder;
-
-import javax.security.auth.login.LoginException;
 import java.util.NoSuchElementException;
-import main.java.com.urfu.Devy.github.GitHubController;
 
 public class DiscordBot extends Bot {
     private final String token;
@@ -21,17 +18,12 @@ public class DiscordBot extends Bot {
     }
 
     @Override
-    public void start() {
+    public void start(BotBuilder builder) {
         log.info("Start bot...");
         try {
-            var jda = JDABuilder
-                    .createDefault(token)
-                    .addEventListeners(new DiscordBotListener(this))
-                    .build()
-                    .awaitReady();
-            //startTrackingOnLoad();
+            builder.build(this, token);
             log.info("Bot started successfully!");
-        } catch (InterruptedException | LoginException e) {
+        } catch (BotBuildException e) {
             log.error("Error on start: " + e.getMessage());
         }
     }
@@ -40,7 +32,7 @@ public class DiscordBot extends Bot {
         handleMessage(getGroupOrCreate(guildId), sender, message);
     }
 
-    private GroupInfo getGroupOrCreate(String guildId) {
+    public GroupInfo getGroupOrCreate(String guildId) {
         try {
             var groupId = RepositoryController
                     .getChatsRepository()
@@ -55,10 +47,6 @@ public class DiscordBot extends Bot {
             addGroup(group);
             return group;
         }
-    }
-
-    public void onGuildReady(String guildId) {
-        getGroupOrCreate(guildId);
     }
 
     //public void startTrackingOnLoad(){

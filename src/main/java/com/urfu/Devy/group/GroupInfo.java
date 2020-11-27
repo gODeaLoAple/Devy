@@ -6,6 +6,7 @@ import main.java.com.urfu.Devy.group.modules.GroupTodo;
 import main.java.com.urfu.Devy.sender.MessageSender;
 import main.java.com.urfu.Devy.command.CommandData;
 import main.java.com.urfu.Devy.command.CommandsController;
+import main.java.com.urfu.Devy.todo.ToDo;
 
 public class GroupInfo {
     protected int id;
@@ -15,7 +16,9 @@ public class GroupInfo {
 
     public GroupInfo(int id) {
         this.id = id;
-
+        setChats(new GroupChats());
+        setTodo(new GroupTodo());
+        setGithub(new GroupGithub());
     }
 
     public GroupInfo() {

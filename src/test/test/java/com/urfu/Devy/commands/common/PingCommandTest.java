@@ -1,4 +1,4 @@
-package test.java.com.urfu.Devy.commands;
+package test.java.com.urfu.Devy.commands.common;
 
 import main.java.com.urfu.Devy.sender.EmptySender;
 import main.java.com.urfu.Devy.group.GroupInfo;

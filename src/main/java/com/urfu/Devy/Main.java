@@ -2,7 +2,9 @@ package main.java.com.urfu.Devy;
 
 import main.java.com.urfu.Devy.bot.Bot;
 import main.java.com.urfu.Devy.bot.discord.DiscordBot;
+import main.java.com.urfu.Devy.bot.discord.DiscordBotBuilder;
 import main.java.com.urfu.Devy.bot.telegram.TelegramBot;
+import main.java.com.urfu.Devy.bot.telegram.TelegramBotBuilder;
 import main.java.com.urfu.Devy.command.CommandsController;
 
 import main.java.com.urfu.Devy.database.DataBase;
@@ -31,7 +33,8 @@ public class Main {
     private static final String PATH_TO_DATABASE = "src/database.properties";
 
     private static GitHubClient github;
-    private static Bot[] bots;
+    private static DiscordBot discordBot;
+    private static TelegramBot telegramBot;
 
     public static void main(String[] args) {
         try {
@@ -65,12 +68,11 @@ public class Main {
     }
 
     private static void initBots(Properties config) {
-        bots = new Bot[] {
-                new DiscordBot(config.getProperty("discord_token")),
-                new TelegramBot(config.getProperty("telegram_token")),
-        };
-        for (var bot : bots)
-            bot.start();
+        discordBot = new DiscordBot(config.getProperty("discord_token"));
+        discordBot.start(new DiscordBotBuilder());
+
+        telegramBot = new TelegramBot(config.getProperty("telegram_token"));
+        telegramBot.start(new TelegramBotBuilder());
     }
 
     private static void initGithub(Properties config) {

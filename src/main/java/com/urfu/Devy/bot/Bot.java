@@ -44,6 +44,6 @@ public abstract class Bot {
         return parser.isCommand(message);
     }
 
-    public abstract void start();
+    public abstract void start(BotBuilder builder);
 
 }

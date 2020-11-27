@@ -26,7 +26,7 @@ public class GitHubRepository extends Repository {
                     groupId)
             ) > 0;
         } catch (SQLException throwables) {
-            log.error("On 'addRepositoryList'", throwables);
+            log.error("On 'addRepository'", throwables);
             return false;
         }
     }

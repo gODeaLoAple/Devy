@@ -15,9 +15,4 @@ public class DiscordUserSender implements MessageSender {
         user.openPrivateChannel().queue((channel) -> channel.sendMessage(message).queue());
     }
 
-    @Override
-    public String getId() {
-        return user.getId();
-    }
-
 }
