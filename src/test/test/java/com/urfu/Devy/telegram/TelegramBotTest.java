@@ -24,7 +24,7 @@ public class TelegramBotTest extends DatabaseIncludeTest {
 
     @Test
     public void testStartFail() throws BotBuildException {
-        Mockito.doThrow(new BotBuildException("")).when(builder).build(bot, "");
+        Mockito.doThrow(new BotBuildException("")).when(builder).build(bot);
         bot.start(builder);
     }
 

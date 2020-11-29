@@ -9,7 +9,7 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiRequestException;
 
 public class TelegramBotBuilder implements BotBuilder {
     @Override
-    public void build(Bot bot, String token) throws BotBuildException {
+    public void build(Bot bot) throws BotBuildException {
         if (bot instanceof TelegramBot) {
             try {
                 ApiContextInitializer.init();

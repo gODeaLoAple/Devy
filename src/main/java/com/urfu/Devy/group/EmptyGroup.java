@@ -6,5 +6,4 @@ public class EmptyGroup extends GroupInfo {
         super(0);
     }
 
-    public Boolean isNull() { return true; }
 }

@@ -29,8 +29,8 @@ public class Main {
 
     private static final Logger log = Logger.getLogger(Main.class);
 
-    private static final String PATH_TO_TOKENS = "src/config.properties";
-    private static final String PATH_TO_DATABASE = "src/database.properties";
+    public static final String PATH_TO_TOKENS = "src/config.properties";
+    public static final String PATH_TO_DATABASE = "src/database.properties";
 
     private static GitHubClient github;
     private static DiscordBot discordBot;
@@ -85,7 +85,7 @@ public class Main {
                 config.getProperty("password"));
     }
 
-    private static Properties loadProperties(String path) {
+    public static Properties loadProperties(String path) {
         var properties = new Properties();
         try {
             properties.load(new FileInputStream(path));

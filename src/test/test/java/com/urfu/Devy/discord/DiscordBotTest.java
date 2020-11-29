@@ -5,7 +5,6 @@ import main.java.com.urfu.Devy.bot.discord.DiscordBot;
 import main.java.com.urfu.Devy.bot.discord.DiscordBotBuilder;
 import main.java.com.urfu.Devy.group.GroupInfo;
 import main.java.com.urfu.Devy.sender.EmptySender;
-import net.dv8tion.jda.api.JDABuilder;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,7 +23,7 @@ public class DiscordBotTest extends DatabaseIncludeTest {
 
     @Test
     public void testStartFail() throws BotBuildException {
-        Mockito.doThrow(new BotBuildException("")).when(builder).build(bot, "");
+        Mockito.doThrow(new BotBuildException("")).when(builder).build(bot);
         bot.start(builder);
     }
 
@@ -52,5 +51,11 @@ public class DiscordBotTest extends DatabaseIncludeTest {
         var sender = new EmptySender();
         Assertions.assertDoesNotThrow(() -> bot.handleMessage("", sender, "$help"));
         Assertions.assertFalse(sender.getLastMessage().isEmpty());
+    }
+
+    @Test
+    public void testGetToken() {
+        var bot = new DiscordBot("");
+        Assertions.assertEquals("", bot.getToken());
     }
 }

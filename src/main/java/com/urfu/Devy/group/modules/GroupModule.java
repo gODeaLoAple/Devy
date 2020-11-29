@@ -8,10 +8,6 @@ public abstract class GroupModule {
         this.groupId = groupId;
     }
 
-    public GroupModule() {
-        this(0);
-    }
-
     public int getGroupId() {
         return groupId;
     }

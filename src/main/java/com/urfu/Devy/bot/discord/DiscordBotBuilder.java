@@ -9,11 +9,11 @@ import javax.security.auth.login.LoginException;
 
 public class DiscordBotBuilder implements BotBuilder {
     @Override
-    public void build(Bot bot, String token) throws BotBuildException {
+    public void build(Bot bot) throws BotBuildException {
         if (bot instanceof DiscordBot) {
             try {
                 JDABuilder
-                        .createDefault(token)
+                        .createDefault(bot.getToken())
                         .addEventListeners(new DiscordBotListener((DiscordBot)bot))
                         .build()
                         .awaitReady();

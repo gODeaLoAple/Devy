@@ -27,18 +27,19 @@ public class TelegramBot extends Bot {
     public void start(BotBuilder builder) {
         log.info("Start bot...");
         try {
-            builder.build(this, token);
+            builder.build(this);
             log.info("Bot started successfully!");
         } catch (BotBuildException e) {
             log.error("Error on start: " + e.getMessage());
         }
     }
 
+    @Override
     public String getToken() {
         return token;
     }
 
-    public void handleMessage(Long chatId, MessageSender sender, String message) throws ParseCommandException {
+    public void handleMessage(Long chatId, MessageSender sender, String message) {
         super.handleMessage(getGroupOrCreate(chatId), sender, message);
     }
 

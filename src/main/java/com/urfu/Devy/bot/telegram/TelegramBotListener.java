@@ -25,11 +25,7 @@ public class TelegramBotListener extends TelegramLongPollingBot {
            if (message.hasText()) {
                var chatId = message.getChatId();
                var sender = new TelegramMessageSender(chatId.toString(), this);
-               try {
-                   bot.handleMessage(chatId, sender, message.getText());
-               } catch (ParseCommandException e) {
-                   sender.send(e.getMessage());
-               }
+               bot.handleMessage(chatId, sender, message.getText());
            }
        }
     }

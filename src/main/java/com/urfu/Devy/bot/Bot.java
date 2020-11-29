@@ -35,9 +35,20 @@ public abstract class Bot {
         return RepositoryController.getGroupRepository().hasGroup(group.getId());
     }
 
-    public void handleMessage(GroupInfo group, MessageSender sender, String message)
-            throws ParseCommandException {
-        group.execute(parser.parse(message), sender);
+    public void handleMessage(GroupInfo group, MessageSender sender, String message) {
+        try {
+            group.execute(parser.parse(message), sender);
+        }
+        catch (ParseCommandException e) {
+            sendMessage(sender, e.getMessage());
+        }
+        catch (Exception e){
+            log.error("On 'handleMessage': " + e.getMessage());
+        }
+    }
+
+    public void sendMessage(MessageSender sender, String message) {
+        sender.send(message);
     }
 
     public boolean isCommand(String message) {
@@ -45,5 +56,7 @@ public abstract class Bot {
     }
 
     public abstract void start(BotBuilder builder);
+
+    public abstract String getToken();
 
 }

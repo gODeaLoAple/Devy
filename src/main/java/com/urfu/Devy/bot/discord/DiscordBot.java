@@ -21,14 +21,14 @@ public class DiscordBot extends Bot {
     public void start(BotBuilder builder) {
         log.info("Start bot...");
         try {
-            builder.build(this, token);
+            builder.build(this);
             log.info("Bot started successfully!");
         } catch (BotBuildException e) {
             log.error("Error on start: " + e.getMessage());
         }
     }
 
-    public void handleMessage(String guildId, MessageSender sender, String message) throws ParseCommandException {
+    public void handleMessage(String guildId, MessageSender sender, String message) {
         handleMessage(getGroupOrCreate(guildId), sender, message);
     }
 
@@ -49,13 +49,9 @@ public class DiscordBot extends Bot {
         }
     }
 
-    //public void startTrackingOnLoad(){
-    //    var trackingGroupsData = RepositoryController
-    //            .getGitHubRepository()
-    //            .getAllTrackingGroups();
-    //    for (var groupData : trackingGroupsData){
-    //        var group = this.groups.get(groupData.getGroupId());
-    //        GitHubController.startTrackRepository(group, group.getSender(groupData.getChatId()));
-    //    }
-    //}
+    @Override
+    public String getToken() {
+        return token;
+    }
+
 }
