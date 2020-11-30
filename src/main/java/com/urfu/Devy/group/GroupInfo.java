@@ -67,4 +67,10 @@ public class GroupInfo {
         sender.send(message);
     }
 
+    public void setId(int id) {
+        this.id = id;
+        chats.setGroupId(id);
+        github.setGroupId(id);
+        todo.setGroupId(id);
+    }
 }

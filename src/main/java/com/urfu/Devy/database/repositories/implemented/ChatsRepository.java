@@ -15,8 +15,6 @@ public class ChatsRepository extends Repository {
 
     public boolean addChats(GroupChats chats) {
         try (var statement = database.getConnection().createStatement()) {
-            if (chats.getGroupId() != 0)
-                return false;
             return statement.executeUpdate("""
                     INSERT INTO `chats` (`telegramId`, `discordId`, `groupId`)
                     VALUES (%d, '%s', %d);
@@ -58,6 +56,21 @@ public class ChatsRepository extends Repository {
         }
     }
 
+    public GroupChats getGroupChatsByGroupId(int id) {
+        try (var statement = database.getConnection().createStatement()) {
+            var data = statement.executeQuery("""
+                    SELECT * FROM `chats`
+                    WHERE `groupId`=%d
+                    """.formatted(id));
+            if (!data.next())
+                throw new NoSuchElementException();
+            return extractGroupFromResultSet(data);
+        } catch (SQLException throwables) {
+            log.error("On 'getGroupByTelegramChatId'", throwables);
+            throw new NoSuchElementException();
+        }
+    }
+
     public GroupChats getGroupChatsByTelegramId(Long id) {
         try (var statement = database.getConnection().createStatement()) {
             var data = statement.executeQuery("""
@@ -89,9 +102,10 @@ public class ChatsRepository extends Repository {
     }
 
     private GroupChats extractGroupFromResultSet(ResultSet data) throws SQLException {
-        return new GroupChats(data.getInt("idkey"))
+        var telegramId = data.getLong("telegramId");
+        return new GroupChats(data.getInt("groupId"))
                 .setDiscord(data.getString("discordId"))
-                .setTelegram(data.getLong("telegramId"));
+                .setTelegram(telegramId == 0L ? null : telegramId);
     }
 
     public boolean hasChats(int groupId) {

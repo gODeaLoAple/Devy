@@ -20,15 +20,17 @@ public class MockGroupRepository extends GroupRepository {
     }
 
     @Override
-    public void removeGroup(GroupInfo group) {
+    public boolean removeGroup(GroupInfo group) {
         groups.remove(group.getId());
         RepositoryController.getChatsRepository().removeChats(group.asChats());
+        return true;
     }
 
     @Override
-    public void addGroup(GroupInfo group) {
+    public boolean addGroup(GroupInfo group) {
         groups.put(group.getId(), group);
         RepositoryController.getChatsRepository().addChats(group.asChats());
+        return true;
     }
 
     @Override

@@ -26,7 +26,7 @@ public class GroupTodo extends GroupModule{
     }
 
     public Boolean removeToDo(String todoName) throws CommandException {
-        if (!RepositoryController.getTodoRepository().removeToDoList(groupId, todoName))
+        if (!RepositoryController.getTodoRepository().removeToDoList(getToDo(todoName).getId()))
             throw new CommandException("The ToDo list %s was not founded.".formatted(todoName));
         return false;
     }

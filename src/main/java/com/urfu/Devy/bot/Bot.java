@@ -21,12 +21,15 @@ public abstract class Bot {
         if (!hasGroup(group))
             throw new IllegalArgumentException("The group was not found");
         RepositoryController.getGroupRepository().removeGroup(group);
+        RepositoryController.getGitHubRepository().removeRepository(group.getId());
+        RepositoryController.getTodoRepository().removeAllTodo(group.getId());
+        RepositoryController.getChatsRepository().removeChats(group.asChats());
         log.info("Group was removed: " + group.getId());
     }
 
     public void addGroup(GroupInfo group) {
         if (hasGroup(group))
-            throw new IllegalArgumentException("The group have been added already");
+            throw new IllegalArgumentException("The group has been added already");
         RepositoryController.getGroupRepository().addGroup(group);
         log.info("Group was added: " + group.getId());
     }

@@ -54,4 +54,7 @@ public class DiscordBot extends Bot {
         return token;
     }
 
+    public void createIfNotExists(String guildId) {
+        getGroupOrCreate(guildId);
+    }
 }

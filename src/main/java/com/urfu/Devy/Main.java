@@ -9,15 +9,9 @@ import main.java.com.urfu.Devy.command.CommandsController;
 
 import main.java.com.urfu.Devy.database.DataBase;
 import main.java.com.urfu.Devy.database.RepositoryController;
-import main.java.com.urfu.Devy.database.repositories.implemented.GitHubRepository;
+import main.java.com.urfu.Devy.database.repositories.implemented.*;
 import main.java.com.urfu.Devy.database.repositories.Repository;
-import main.java.com.urfu.Devy.database.repositories.implemented.GroupRepository;
-import main.java.com.urfu.Devy.database.repositories.implemented.ToDoRepository;
-import main.java.com.urfu.Devy.database.repositories.implemented.ToDoTaskRepository;
-import main.java.com.urfu.Devy.database.repositories.mocked.MockGithubRepository;
-import main.java.com.urfu.Devy.database.repositories.mocked.MockGroupRepository;
-import main.java.com.urfu.Devy.database.repositories.mocked.MockToDoRepository;
-import main.java.com.urfu.Devy.database.repositories.mocked.MockToDoTaskRepository;
+import main.java.com.urfu.Devy.database.repositories.mocked.*;
 import org.apache.log4j.Logger;
 import org.eclipse.egit.github.core.client.GitHubClient;
 
@@ -27,7 +21,7 @@ import java.util.Properties;
 
 public class Main {
 
-    private static final Logger log = Logger.getLogger(Main.class);
+    private static final Logger log = Logger.getLogger(Main.class.getSimpleName());
 
     public static final String PATH_TO_TOKENS = "src/config.properties";
     public static final String PATH_TO_DATABASE = "src/database.properties";
@@ -112,6 +106,7 @@ public class Main {
         RepositoryController.setToDoTaskRepository(new ToDoTaskRepository());
         RepositoryController.setGroupRepository(new GroupRepository());
         RepositoryController.setGitHubRepository(new GitHubRepository());
+        RepositoryController.setChatsRepository(new ChatsRepository());
     }
 
     private static void initMockedRepositories() {
@@ -119,5 +114,6 @@ public class Main {
         RepositoryController.setToDoTaskRepository(new MockToDoTaskRepository());
         RepositoryController.setGroupRepository(new MockGroupRepository());
         RepositoryController.setGitHubRepository(new MockGithubRepository());
+        RepositoryController.setChatsRepository(new MockChatsRepository());
     }
 }

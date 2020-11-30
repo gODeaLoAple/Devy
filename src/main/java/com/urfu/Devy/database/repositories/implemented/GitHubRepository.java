@@ -78,7 +78,7 @@ public class GitHubRepository extends Repository {
     public String getLastCommitDate(int groupId){
         try  (var statement = database.getConnection().createStatement()){
             var data = statement.executeQuery("""
-                SELECT `lastCommit`
+                SELECT `lastCommitDate`
                 FROM `github`
                 WHERE `groupId`=%d;
                 """.formatted(groupId));
@@ -96,7 +96,7 @@ public class GitHubRepository extends Repository {
         try (var statement = database.getConnection().createStatement()) {
             return statement.executeUpdate("""
                     UPDATE `github`
-                    SET `lastCommit`='%s'
+                    SET `lastCommitDate`='%s'
                     WHERE `groupId`=%d
                     """.formatted(date, groupId)) > 0;
         } catch (SQLException throwables) {
@@ -109,7 +109,7 @@ public class GitHubRepository extends Repository {
         try (var statement = database.getConnection().createStatement()) {
             return statement.executeUpdate("""
                     UPDATE `github`
-                    SET `tracking`='%d'
+                    SET `tracking`=%d
                     WHERE `groupId`=%d
                     """.formatted(tracking ? 1 : 0, groupId)) > 0;
         } catch (SQLException throwables) {
@@ -124,7 +124,7 @@ public class GitHubRepository extends Repository {
             var data = statement.executeQuery("""
                 SELECT `groupId`, `tracking`
                 FROM `github`
-                WHERE `tracking`='1';
+                WHERE `tracking`=1;
                 """);
             while(data.next())
                 result.add(RepositoryController.getGroupRepository().getGroupById(data.getInt("groupId")));

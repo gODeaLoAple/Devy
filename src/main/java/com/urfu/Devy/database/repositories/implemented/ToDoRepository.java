@@ -1,5 +1,6 @@
 package main.java.com.urfu.Devy.database.repositories.implemented;
 
+import main.java.com.urfu.Devy.database.RepositoryController;
 import main.java.com.urfu.Devy.database.repositories.Repository;
 import main.java.com.urfu.Devy.todo.ToDo;
 import org.apache.logging.log4j.LogManager;
@@ -28,12 +29,13 @@ public class ToDoRepository extends Repository {
         }
     }
 
-    public boolean removeToDoList(int groupId, String toDoId) {
+    public boolean removeToDoList(int todoId) {
         try (var statement = database.getConnection().createStatement()) {
+            RepositoryController.getToDoTaskRepository().getAllTasksInToDo(todoId);
             return statement.executeUpdate("""
                     DELETE FROM `todo` 
-                    WHERE `name`='%s' AND `groupId`=%d
-                    """.formatted(toDoId, groupId)) > 0;
+                    WHERE `idkey`=%d
+                    """.formatted(todoId)) > 0;
         } catch (SQLException throwables) {
             log.error("On 'removeToDoList'", throwables);
             return false;
@@ -89,4 +91,8 @@ public class ToDoRepository extends Repository {
         }
     }
 
+    public void removeAllTodo(int groupId) {
+        for (var todo : getAllToDo(groupId))
+            removeToDoList(todo.getId());
+    }
 }

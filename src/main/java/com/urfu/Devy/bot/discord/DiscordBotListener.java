@@ -1,8 +1,5 @@
 package main.java.com.urfu.Devy.bot.discord;
 
-import main.java.com.urfu.Devy.command.parser.ParseCommandException;
-import main.java.com.urfu.Devy.sender.MessageSender;
-import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.guild.GuildReadyEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -22,7 +19,7 @@ public class DiscordBotListener extends ListenerAdapter {
     @Override
     public void onGuildReady(@NotNull GuildReadyEvent event) {
         super.onGuildReady(event);
-        bot.getGroupOrCreate(event.getGuild().getId());
+        bot.createIfNotExists(event.getGuild().getId());
     }
 
     @Override

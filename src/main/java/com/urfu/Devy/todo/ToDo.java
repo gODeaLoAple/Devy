@@ -43,4 +43,8 @@ public class ToDo {
     public boolean hasTask(String taskName) {
         return RepositoryController.getToDoTaskRepository().hasTaskWithName(id, taskName);
     }
+
+    public int getId() {
+        return id;
+    }
 }
