@@ -13,7 +13,6 @@ public class GroupTodo extends GroupModule {
         super(groupId);
     }
 
-
     public void addToDo(ToDo toDo) throws CommandException {
         if (!RepositoryController.getTodoRepository().addToDoList(groupId, toDo))
             throw new CommandException("The ToDo list was already added.");

@@ -13,8 +13,8 @@ public class GroupChats extends GroupModule {
         return RepositoryController.getChatsRepository().getChatsByGroupId(groupId);
     }
 
-    public void addChats(Chats chats) {
-        RepositoryController.getChatsRepository().addChats(groupId, chats);
+    public void addChats() {
+        RepositoryController.getChatsRepository().addChats(groupId);
     }
 
     public boolean hasChats() {

@@ -18,8 +18,8 @@ public class MockChatsRepository extends ChatsRepository {
     private final Map<Integer, Long> telegram = new HashMap<>();
 
     @Override
-    public boolean addChats(int groupId, Chats chats) {
-        this.chats.put(groupId, chats);
+    public boolean addChats(int groupId) {
+        this.chats.put(groupId, new Chats());
         return true;
     }
 

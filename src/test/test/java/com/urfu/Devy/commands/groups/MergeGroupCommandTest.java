@@ -17,7 +17,7 @@ public class MergeGroupCommandTest extends CommandTester {
         sender = new EmptySender();
         group = new GroupInfo(0);
         group.setChats(new GroupChats(group.getId()));
-        group.asChats().addChats(new Chats(1));
+        group.asChats().addChats();
     }
 
     @Override

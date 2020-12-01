@@ -95,4 +95,16 @@ public class ToDoRepository extends Repository {
         for (var todo : getAllToDo(groupId))
             removeToDoList(todo.getId());
     }
+
+    public void updateGroupId(int newGroupId, int oldGroupId) {
+        try (var statement = database.getConnection().createStatement()) {
+            statement.execute("""
+                    UPDATE `todo`
+                    SET `groupId`=%d
+                    WHERE `groupId`=%d
+                    """.formatted(newGroupId, oldGroupId));
+        } catch (SQLException throwables) {
+            log.error("On 'getToDoByName'", throwables);
+        }
+    }
 }

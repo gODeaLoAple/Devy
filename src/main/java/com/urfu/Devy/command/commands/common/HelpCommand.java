@@ -45,7 +45,7 @@ public class HelpCommand extends Command{
     }
 
     private void validate() throws CommandException {
-        if (targetCommand == null || targetCommand.size() > 1)
+        if (targetCommand != null && targetCommand.size() > 1)
             throw new CommandException("Incorrect count of arguments. Less or equals than 1 expected.");
     }
 

@@ -6,10 +6,16 @@ import main.java.com.urfu.Devy.command.CommandException;
 import main.java.com.urfu.Devy.command.CommandName;
 import main.java.com.urfu.Devy.database.RepositoryController;
 import main.java.com.urfu.Devy.group.GroupInfo;
+import main.java.com.urfu.Devy.group.modules.chats.Chats;
+import main.java.com.urfu.Devy.group.modules.todo.GroupTodo;
+import main.java.com.urfu.Devy.group.modules.todo.ToDo;
 import main.java.com.urfu.Devy.sender.MessageSender;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @CommandName(
         name="merge",
@@ -34,17 +40,26 @@ public class MergeGroupCommand extends Command {
     public void execute() {
         try {
             validate();
-            var id = text.get(0);
-            var chats = groupInfo.asChats().getChats();
-            if (telegram)
-                chats.setTelegramId(Long.valueOf(id));
-            if (discord)
-                chats.setDiscordId(id);
+            var id = getChatId();
+            var merger = getMerger(id);
+            merger.merge();
             sender.send("Groups merged!");
         } catch (CommandException e) {
             sender.send(e.getMessage());
         }
 
+    }
+
+    private GroupMerger getMerger(String id) {
+        if (telegram)
+            return new TelegramMerger(groupInfo, Long.valueOf(id));
+        if (discord)
+            return new DiscordMerger(groupInfo, id);
+        throw new IllegalArgumentException("Merger not found");
+    }
+
+    private String getChatId() {
+        return text.get(0);
     }
 
     protected void validate() throws CommandException {
@@ -54,12 +69,8 @@ public class MergeGroupCommand extends Command {
             throw new CommandException("Option not found.");
         if (telegram && discord)
             throw new CommandException("Use only one platform.");
-        if (telegram && !isLong(text.get(0)))
-            throw new CommandException("Incorrect chat id.");
-        var chats = groupInfo.asChats().getChats();
-        if (telegram && chats.hasTelegram()
-            || discord && chats.hasDiscord())
-            throw new CommandException("You cannot merge on this platform.");
+        if (telegram && !isLong(getChatId()))
+                throw new CommandException("Incorrect chat id.");
     }
 
     private boolean isLong(String str) {
@@ -71,5 +82,118 @@ public class MergeGroupCommand extends Command {
             return false;
         }
         return true;
+    }
+
+}
+abstract class GroupMerger {
+
+    protected final GroupInfo group;
+
+    public GroupMerger(GroupInfo info) {
+        group = info;
+    }
+
+    public void merge() throws CommandException {
+        var otherGroup = getOtherGroup();
+        var chats = group.asChats().getChats();
+        validateChats(chats);
+        mergeChats(chats);
+
+        validateTodo(group.asTodo().getAllToDo(), otherGroup.asTodo().getAllToDo());
+        mergeTodo(otherGroup);
+
+        removeOtherGroup(otherGroup);
+    }
+
+    protected abstract void validateChats(Chats chats) throws CommandException;
+    protected abstract void mergeChats(Chats chats);
+
+    private void validateTodo(Collection<ToDo> todo, Collection<ToDo> otherTodo) throws CommandException {
+        var otherTodoNames = otherTodo
+                .stream()
+                .map(ToDo::getName)
+                .collect(Collectors.toSet());
+        var common = todo
+                .stream()
+                .map(ToDo::getName)
+                .distinct()
+                .filter(otherTodoNames::contains)
+                .collect(Collectors.toSet());
+        if (common.size() > 0)
+            throwCommonTodoException(common);
+    }
+
+    private void throwCommonTodoException(Set<String> common) throws CommandException {
+        var sb = new StringBuilder();
+        sb.append("Cannot merge todo. Rename or delete these todo:").append(System.lineSeparator());
+        for (var todo : common)
+            sb.append("- ").append(todo).append(System.lineSeparator());
+        throw new CommandException(sb.toString());
+    }
+
+    private void mergeTodo(GroupInfo other) {
+        RepositoryController.getTodoRepository().updateGroupId(other.getId(), group.getId());
+    }
+
+    protected void removeOtherGroup(GroupInfo group) {
+        RepositoryController.getGroupRepository().removeGroup(group);
+    }
+
+
+    protected GroupInfo getOtherGroup() {
+        return RepositoryController.getGroupRepository().getGroupById(getOtherGroupId());
+    }
+
+    protected abstract int getOtherGroupId();
+}
+
+class TelegramMerger extends GroupMerger {
+    protected final Long id;
+    TelegramMerger(GroupInfo info, Long id) {
+        super(info);
+        this.id = id;
+
+    }
+
+    @Override
+    protected void validateChats(Chats chats) throws CommandException {
+        if (chats.hasTelegram())
+            throw new CommandException("You cannot merge on the same platform.");
+    }
+
+    @Override
+    protected void mergeChats(Chats chats) {
+        chats.setTelegramId(id);
+    }
+
+    @Override
+    protected int getOtherGroupId() {
+        return RepositoryController.getChatsRepository().getGroupIdByTelegramId(id);
+    }
+
+}
+
+class DiscordMerger extends GroupMerger {
+
+    protected final String id;
+    public DiscordMerger(GroupInfo info, String id) {
+        super(info);
+        this.id = id;
+    }
+
+    @Override
+    protected void validateChats(Chats chats) throws CommandException {
+        if (chats.hasDiscord())
+            throw new CommandException("You cannot merge on the same platform.");
+    }
+
+    @Override
+    protected void mergeChats(Chats chats) {
+        chats.setDiscordId(id);
+    }
+
+    @Override
+    protected int getOtherGroupId() {
+        return RepositoryController.getChatsRepository().getGroupIdByDiscordChatId(id);
     }
 }

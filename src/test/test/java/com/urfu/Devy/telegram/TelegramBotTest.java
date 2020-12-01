@@ -44,7 +44,7 @@ public class TelegramBotTest extends DatabaseIncludeTest {
     @Test
     public void testGetGroupOrCreateWhenGroupExists() {
         var group = new GroupInfo(0);
-        group.asChats().addChats(new Chats(0));
+        group.asChats().addChats();
         group.asChats().getChats().setTelegramId(1L);
         bot.addGroup(group);
         Assertions.assertEquals(group, bot.getGroupOrCreate(1L));

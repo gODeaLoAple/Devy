@@ -43,7 +43,7 @@ public class DiscordBotTest extends DatabaseIncludeTest {
     @Test
     public void testGetGroupOrCreateWhenGroupExists() {
         var group = new GroupInfo(0);
-        group.asChats().addChats(new Chats(0));
+        group.asChats().addChats();
         group.asChats().getChats().setDiscordId("");
         bot.addGroup(group);
         Assertions.assertEquals(group, bot.getGroupOrCreate(""));

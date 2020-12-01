@@ -13,12 +13,12 @@ public class ChatsRepository extends Repository {
 
     private static final Logger log = Logger.getLogger(ChatsRepository.class.getSimpleName());
 
-    public boolean addChats(int groupId, Chats chats) {
+    public boolean addChats(int groupId) {
         try (var statement = database.getConnection().createStatement()) {
             return statement.executeUpdate("""
-                    INSERT INTO `chats` (`telegramId`, `discordId`, `groupId`)
-                    VALUES (%d, '%s', %d);
-                    """.formatted(chats.getTelegramId(), chats.getDiscordId(), groupId)
+                    INSERT INTO `chats` (`groupId`)
+                    VALUES ( %d);
+                    """.formatted(groupId)
             ) > 0;
         } catch (SQLException throwables) {
             log.error("On 'addGroup'", throwables);

@@ -16,7 +16,7 @@ public class GetChatsCommandTest extends CommandTester {
     public void setUp() {
         group = new GroupInfo();
         group.setChats(new GroupChats(group.getId()));
-        group.asChats().addChats(new Chats(1));
+        group.asChats().addChats();
         sender = new EmptySender();
     }
 

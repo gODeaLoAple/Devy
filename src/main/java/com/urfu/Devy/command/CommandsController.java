@@ -14,9 +14,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class CommandsController {
-    private static final EmptyGroup group = new EmptyGroup();
-    private static final EmptySender sender = new EmptySender();
-    private static final Logger log = Logger.getLogger(CommandsController.class.getSimpleName());
     private static final Map<String, Class<? extends  Command>> commands = new HashMap<>(){};
 
     public static void constructCommandsDictionary() {
@@ -70,6 +67,6 @@ public class CommandsController {
     public static String getCommandNameAndFullInfo(String commandName) throws CommandException {
         if(!hasCommand(commandName))
             throw new CommandException("Command was not found: " + commandName);
-        return createCommand(group, sender, new CommandData(commandName, new String[0])).extractParametersInfo();
+        return createCommand(null, null, new CommandData(commandName, new String[0])).extractParametersInfo();
     }
 }

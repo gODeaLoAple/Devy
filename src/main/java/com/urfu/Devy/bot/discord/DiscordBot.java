@@ -43,7 +43,7 @@ public class DiscordBot extends Bot {
                     .getGroupById(groupId);
         } catch (NoSuchElementException e) {
             var group = createGroup();
-            group.asChats().addChats(new Chats());
+            group.asChats().addChats();
             group.asChats().getChats().setDiscordId(guildId);
             return group;
         }

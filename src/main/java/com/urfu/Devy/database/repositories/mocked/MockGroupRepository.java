@@ -26,7 +26,6 @@ public class MockGroupRepository extends GroupRepository {
     @Override
     public boolean addGroup(GroupInfo group) {
         groups.put(group.getId(), group);
-        RepositoryController.getChatsRepository().addChats(group.getId(), group.asChats().getChats());
         return true;
     }
 

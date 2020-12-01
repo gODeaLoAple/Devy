@@ -13,6 +13,6 @@ public abstract class GroupModule {
     }
 
     public void setGroupId(int id) {
-        groupId = groupId;
+        groupId = id;
     };
 }
