@@ -1,7 +1,7 @@
 package test.java.com.urfu.Devy.todo;
 
-import main.java.com.urfu.Devy.todo.ToDo;
-import main.java.com.urfu.Devy.todo.ToDoTask;
+import main.java.com.urfu.Devy.group.modules.todo.ToDo;
+import main.java.com.urfu.Devy.group.modules.todo.ToDoTask;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import test.java.com.urfu.Devy.common.DatabaseIncludeTest;

@@ -1,8 +1,8 @@
 package test.java.com.urfu.Devy.commands.todo;
 
-import main.java.com.urfu.Devy.group.modules.GroupTodo;
-import main.java.com.urfu.Devy.todo.ToDo;
-import main.java.com.urfu.Devy.todo.ToDoTask;
+import main.java.com.urfu.Devy.group.modules.todo.GroupTodo;
+import main.java.com.urfu.Devy.group.modules.todo.ToDo;
+import main.java.com.urfu.Devy.group.modules.todo.ToDoTask;
 import main.java.com.urfu.Devy.group.GroupInfo;
 import main.java.com.urfu.Devy.command.Command;
 import main.java.com.urfu.Devy.command.CommandException;
@@ -12,14 +12,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import main.java.com.urfu.Devy.sender.EmptySender;
 
-import javax.swing.*;
-
 public class RemoveTaskCommandTest extends ToDoCommandTest {
 
     @BeforeEach
     public void setUp() {
         group = new GroupInfo(0);
-        group.setTodo(new GroupTodo());
+        group.setTodo(new GroupTodo(group.getId()));
         sender = new EmptySender();
     }
 

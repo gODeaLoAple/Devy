@@ -4,11 +4,13 @@ import main.java.com.urfu.Devy.bot.BotBuildException;
 import main.java.com.urfu.Devy.bot.telegram.TelegramBot;
 import main.java.com.urfu.Devy.bot.telegram.TelegramBotBuilder;
 import main.java.com.urfu.Devy.group.GroupInfo;
+import main.java.com.urfu.Devy.group.modules.chats.Chats;
 import main.java.com.urfu.Devy.sender.EmptySender;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import org.telegram.telegrambots.meta.api.objects.Chat;
 import test.java.com.urfu.Devy.common.DatabaseIncludeTest;
 
 public class TelegramBotTest extends DatabaseIncludeTest {
@@ -42,9 +44,10 @@ public class TelegramBotTest extends DatabaseIncludeTest {
     @Test
     public void testGetGroupOrCreateWhenGroupExists() {
         var group = new GroupInfo(0);
-        group.asChats().setTelegram(0L);
+        group.asChats().addChats(new Chats(0));
+        group.asChats().getChats().setTelegramId(1L);
         bot.addGroup(group);
-        Assertions.assertEquals(group, bot.getGroupOrCreate(0L));
+        Assertions.assertEquals(group, bot.getGroupOrCreate(1L));
     }
 
     @Test

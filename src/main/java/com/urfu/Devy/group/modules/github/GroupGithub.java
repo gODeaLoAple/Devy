@@ -1,17 +1,14 @@
-package main.java.com.urfu.Devy.group.modules;
+package main.java.com.urfu.Devy.group.modules.github;
 
 import main.java.com.urfu.Devy.command.CommandException;
 import main.java.com.urfu.Devy.database.RepositoryController;
-import main.java.com.urfu.Devy.github.RepositoryInfo;
+import main.java.com.urfu.Devy.group.modules.GroupModule;
+import main.java.com.urfu.Devy.group.modules.github.RepositoryInfo;
 
 public class GroupGithub extends GroupModule {
 
     public GroupGithub(int groupId) {
         super(groupId);
-    }
-
-    public GroupGithub() {
-        this(0);
     }
 
     public void addRepository(String name, String repository) throws CommandException {

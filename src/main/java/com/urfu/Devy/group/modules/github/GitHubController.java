@@ -1,6 +1,5 @@
-package main.java.com.urfu.Devy.github;
+package main.java.com.urfu.Devy.group.modules.github;
 
-import main.java.com.urfu.Devy.command.CommandException;
 import main.java.com.urfu.Devy.database.RepositoryController;
 import main.java.com.urfu.Devy.group.GroupInfo;
 import main.java.com.urfu.Devy.sender.MessageSender;

@@ -67,9 +67,9 @@ public class CommandsController {
         return annotation.name() + (info.isEmpty() ? "" : " :: " + info);
     }
 
-    public static String getCommandNameAndFullInfo(String commandName) {
+    public static String getCommandNameAndFullInfo(String commandName) throws CommandException {
         if(!hasCommand(commandName))
-            throw new IllegalArgumentException("Command was not found: " + commandName);
+            throw new CommandException("Command was not found: " + commandName);
         return createCommand(group, sender, new CommandData(commandName, new String[0])).extractParametersInfo();
     }
 }

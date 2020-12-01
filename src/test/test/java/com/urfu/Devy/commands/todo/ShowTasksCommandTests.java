@@ -1,8 +1,8 @@
 package test.java.com.urfu.Devy.commands.todo;
 
-import main.java.com.urfu.Devy.group.modules.GroupTodo;
-import main.java.com.urfu.Devy.todo.ToDo;
-import main.java.com.urfu.Devy.todo.ToDoTask;
+import main.java.com.urfu.Devy.group.modules.todo.GroupTodo;
+import main.java.com.urfu.Devy.group.modules.todo.ToDo;
+import main.java.com.urfu.Devy.group.modules.todo.ToDoTask;
 import main.java.com.urfu.Devy.group.GroupInfo;
 import main.java.com.urfu.Devy.command.Command;
 import main.java.com.urfu.Devy.command.CommandException;
@@ -16,9 +16,10 @@ public class ShowTasksCommandTests extends ToDoCommandTest {
     @BeforeEach
     public void setUp() {
         group = new GroupInfo(0);
-        group.setTodo(new GroupTodo());
+        group.setTodo(new GroupTodo(group.getId()));
         sender = new EmptySender();
     }
+
     @Test
     public void handleWhenIncorrectCountOfArgs() {
         assertHandle(new String[0], "Incorrect count of arguments. Todo name not found.");

@@ -1,7 +1,7 @@
 package main.java.com.urfu.Devy.database.repositories.implemented;
 
 import main.java.com.urfu.Devy.database.repositories.Repository;
-import main.java.com.urfu.Devy.todo.ToDoTask;
+import main.java.com.urfu.Devy.group.modules.todo.ToDoTask;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

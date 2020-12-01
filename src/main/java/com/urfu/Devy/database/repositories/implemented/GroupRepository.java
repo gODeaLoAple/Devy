@@ -3,9 +3,9 @@ package main.java.com.urfu.Devy.database.repositories.implemented;
 import main.java.com.urfu.Devy.database.RepositoryController;
 import main.java.com.urfu.Devy.database.repositories.Repository;
 import main.java.com.urfu.Devy.group.GroupInfo;
-import main.java.com.urfu.Devy.group.modules.GroupChats;
-import main.java.com.urfu.Devy.group.modules.GroupGithub;
-import main.java.com.urfu.Devy.group.modules.GroupTodo;
+import main.java.com.urfu.Devy.group.modules.chats.GroupChats;
+import main.java.com.urfu.Devy.group.modules.github.GroupGithub;
+import main.java.com.urfu.Devy.group.modules.todo.GroupTodo;
 import org.apache.log4j.Logger;
 
 import java.sql.SQLException;
@@ -17,7 +17,7 @@ public class GroupRepository extends Repository {
 
     public GroupInfo getGroupById(int groupId) {
         return new GroupInfo(groupId)
-                .setChats(RepositoryController.getChatsRepository().getGroupChatsByGroupId(groupId))
+                .setChats(new GroupChats(groupId))
                 .setGithub(new GroupGithub(groupId))
                 .setTodo(new GroupTodo(groupId));
     }
@@ -46,7 +46,6 @@ public class GroupRepository extends Repository {
                 return false;
             var id = keys.getInt(1);
             group.setId(id);
-            RepositoryController.getChatsRepository().addChats(group.asChats());
             return true;
         } catch (SQLException throwables) {
             log.error("On 'addGroup'", throwables);

@@ -1,6 +1,6 @@
 package main.java.com.urfu.Devy.database.repositories.mocked;
 
-import main.java.com.urfu.Devy.todo.ToDo;
+import main.java.com.urfu.Devy.group.modules.todo.ToDo;
 import main.java.com.urfu.Devy.database.repositories.implemented.ToDoRepository;
 
 import java.util.ArrayList;

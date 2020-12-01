@@ -2,7 +2,7 @@ package main.java.com.urfu.Devy.database.repositories.mocked;
 
 import main.java.com.urfu.Devy.database.RepositoryController;
 import main.java.com.urfu.Devy.database.repositories.implemented.GitHubRepository;
-import main.java.com.urfu.Devy.github.RepositoryInfo;
+import main.java.com.urfu.Devy.group.modules.github.RepositoryInfo;
 import main.java.com.urfu.Devy.group.GroupInfo;
 
 import java.util.ArrayList;

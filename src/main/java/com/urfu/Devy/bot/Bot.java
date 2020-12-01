@@ -8,6 +8,8 @@ import main.java.com.urfu.Devy.group.GroupInfo;
 import main.java.com.urfu.Devy.sender.MessageSender;
 import org.apache.log4j.Logger;
 
+import java.util.zip.GZIPOutputStream;
+
 public abstract class Bot {
     private final CommandParser parser;
     protected final Logger log;
@@ -25,6 +27,12 @@ public abstract class Bot {
         RepositoryController.getTodoRepository().removeAllTodo(group.getId());
         RepositoryController.getChatsRepository().removeChats(group.asChats());
         log.info("Group was removed: " + group.getId());
+    }
+
+    protected GroupInfo createGroup() {
+        var group = new GroupInfo();
+        addGroup(group);
+        return group;
     }
 
     public void addGroup(GroupInfo group) {

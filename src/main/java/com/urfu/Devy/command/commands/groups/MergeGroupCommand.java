@@ -35,11 +35,11 @@ public class MergeGroupCommand extends Command {
         try {
             validate();
             var id = text.get(0);
-            var chats = groupInfo.asChats();
+            var chats = groupInfo.asChats().getChats();
             if (telegram)
-                chats.setTelegram(Long.valueOf(id));
+                chats.setTelegramId(Long.valueOf(id));
             if (discord)
-                chats.setDiscord(id);
+                chats.setDiscordId(id);
             sender.send("Groups merged!");
         } catch (CommandException e) {
             sender.send(e.getMessage());
@@ -56,8 +56,8 @@ public class MergeGroupCommand extends Command {
             throw new CommandException("Use only one platform.");
         if (telegram && !isLong(text.get(0)))
             throw new CommandException("Incorrect chat id.");
-        var chats = groupInfo.asChats();
-        if (telegram && chats.hasTelegramId()
+        var chats = groupInfo.asChats().getChats();
+        if (telegram && chats.hasTelegram()
             || discord && chats.hasDiscord())
             throw new CommandException("You cannot merge on this platform.");
     }

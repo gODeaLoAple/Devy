@@ -19,8 +19,8 @@ public class GetChatsCommand extends Command {
     @Override
     public void execute() {
         var sb = new StringBuilder();
-        var chats = groupInfo.asChats();
-        if (chats.hasTelegramId())
+        var chats = groupInfo.asChats().getChats();
+        if (chats.hasTelegram())
             sb.append("Telegram: %d".formatted(chats.getTelegramId())).append(System.lineSeparator());
         if (chats.hasDiscord())
             sb.append("Discord: %s".formatted(chats.getDiscordId())).append(System.lineSeparator());

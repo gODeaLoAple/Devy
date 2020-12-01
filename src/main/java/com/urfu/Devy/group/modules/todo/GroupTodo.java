@@ -1,20 +1,18 @@
-package main.java.com.urfu.Devy.group.modules;
+package main.java.com.urfu.Devy.group.modules.todo;
 
 import main.java.com.urfu.Devy.command.CommandException;
 import main.java.com.urfu.Devy.database.RepositoryController;
-import main.java.com.urfu.Devy.todo.ToDo;
+import main.java.com.urfu.Devy.group.modules.GroupModule;
+import main.java.com.urfu.Devy.group.modules.todo.ToDo;
 
 import java.util.Collection;
 
-public class GroupTodo extends GroupModule{
+public class GroupTodo extends GroupModule {
 
     public GroupTodo(int groupId) {
         super(groupId);
     }
 
-    public GroupTodo() {
-        this(0);
-    }
 
     public void addToDo(ToDo toDo) throws CommandException {
         if (!RepositoryController.getTodoRepository().addToDoList(groupId, toDo))

@@ -34,7 +34,7 @@ public class DiscordBotListenerTest extends DatabaseIncludeTest {
         Mockito.doReturn(guild).when(event).getGuild();
         Mockito.doReturn("0").when(guild).getId();
         listener.onGuildReady(event);
-        Mockito.verify(bot, Mockito.times(1)).getGroupOrCreate("0");
+        Mockito.verify(bot, Mockito.times(1)).createIfNotExists("0");
     }
 
     @Test
