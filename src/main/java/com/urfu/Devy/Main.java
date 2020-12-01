@@ -9,11 +9,8 @@ import main.java.com.urfu.Devy.command.CommandsController;
 
 import main.java.com.urfu.Devy.database.DataBase;
 import main.java.com.urfu.Devy.database.RepositoryController;
-import main.java.com.urfu.Devy.database.repositories.implemented.GitHubRepository;
+import main.java.com.urfu.Devy.database.repositories.implemented.*;
 import main.java.com.urfu.Devy.database.repositories.Repository;
-import main.java.com.urfu.Devy.database.repositories.implemented.GroupRepository;
-import main.java.com.urfu.Devy.database.repositories.implemented.ToDoRepository;
-import main.java.com.urfu.Devy.database.repositories.implemented.ToDoTaskRepository;
 import main.java.com.urfu.Devy.database.repositories.mocked.MockGithubRepository;
 import main.java.com.urfu.Devy.database.repositories.mocked.MockGroupRepository;
 import main.java.com.urfu.Devy.database.repositories.mocked.MockToDoRepository;
@@ -32,7 +29,6 @@ public class Main {
     public static final String PATH_TO_TOKENS = "src/config.properties";
     public static final String PATH_TO_DATABASE = "src/database.properties";
 
-    private static GitHubClient github;
     private static DiscordBot discordBot;
     private static TelegramBot telegramBot;
 
@@ -76,7 +72,7 @@ public class Main {
     }
 
     private static void initGithub(Properties config) {
-        github = new GitHubClient().setOAuth2Token(config.getProperty("githubToken"));
+        new GitHubClient().setOAuth2Token(config.getProperty("githubToken"));
     }
 
     private static DataBase createDataBase(Properties config) throws Exception {
@@ -112,6 +108,7 @@ public class Main {
         RepositoryController.setToDoTaskRepository(new ToDoTaskRepository());
         RepositoryController.setGroupRepository(new GroupRepository());
         RepositoryController.setGitHubRepository(new GitHubRepository());
+        RepositoryController.setChatsRepository(new ChatsRepository());
     }
 
     private static void initMockedRepositories() {

@@ -1,4 +1,4 @@
-package test.java.com.urfu.Devy.Commands.github;
+package test.java.com.urfu.Devy.commands.github;
 
 public class RepositoryCommitsCommandTest {
 }
