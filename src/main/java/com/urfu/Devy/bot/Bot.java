@@ -8,25 +8,17 @@ import main.java.com.urfu.Devy.group.GroupInfo;
 import main.java.com.urfu.Devy.sender.MessageSender;
 import org.apache.log4j.Logger;
 
-import java.util.zip.GZIPOutputStream;
-
 public abstract class Bot {
+    public static final String UserWarningMessage = """
+                    Hello, I'm Devy - bot for development. 
+                    I'm sorry, but I work only in text-channels now.
+                    You can create your own text-channel and call me there!""";
     private final CommandParser parser;
     protected final Logger log;
 
     public Bot(String commandPrefix) {
         parser = new CommandParser(commandPrefix);
         log = Logger.getLogger(getClass().getSimpleName());
-    }
-
-    public void removeGroup(GroupInfo group) {
-        if (!hasGroup(group))
-            throw new IllegalArgumentException("The group was not found");
-        RepositoryController.getGroupRepository().removeGroup(group);
-        RepositoryController.getGitHubRepository().removeRepository(group.getId());
-        RepositoryController.getTodoRepository().removeAllTodo(group.getId());
-        RepositoryController.getChatsRepository().removeChats(group.asChats());
-        log.info("Group was removed: " + group.getId());
     }
 
     protected GroupInfo createGroup() {

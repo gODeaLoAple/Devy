@@ -1,5 +1,6 @@
 package main.java.com.urfu.Devy.bot.discord;
 
+import main.java.com.urfu.Devy.bot.Bot;
 import net.dv8tion.jda.api.events.guild.GuildReadyEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -8,10 +9,6 @@ import org.jetbrains.annotations.NotNull;
 public class DiscordBotListener extends ListenerAdapter {
 
     private final DiscordBot bot;
-    public static final String UserWarningMessage = """
-                    Hello, I'm Devy - bot for development. 
-                    I'm sorry, but I work only in text-channels now.
-                    You can create your own text-channel and call me there!""";
     public DiscordBotListener(DiscordBot discordBot) {
         bot = discordBot;
     }
@@ -40,7 +37,7 @@ public class DiscordBotListener extends ListenerAdapter {
     private void onMessageReceivedFromPerson(MessageReceivedEvent event) {
         var author = event.getAuthor();
         if (!author.isBot())
-            bot.sendMessage(new DiscordUserSender(author), UserWarningMessage);
+            bot.sendMessage(new DiscordUserSender(author), Bot.UserWarningMessage);
     }
 
 }

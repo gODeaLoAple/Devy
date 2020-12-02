@@ -14,6 +14,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -96,10 +97,11 @@ abstract class GroupMerger {
     public void merge() throws CommandException {
         var otherGroup = getOtherGroup();
         var chats = group.asChats().getChats();
-        validateChats(chats);
-        mergeChats(chats);
 
+        validateChats(chats);
         validateTodo(group.asTodo().getAllToDo(), otherGroup.asTodo().getAllToDo());
+
+        mergeChats(chats);
         mergeTodo(otherGroup);
 
         removeOtherGroup(otherGroup);
@@ -132,16 +134,20 @@ abstract class GroupMerger {
     }
 
     private void mergeTodo(GroupInfo other) {
-        RepositoryController.getTodoRepository().updateGroupId(other.getId(), group.getId());
+        RepositoryController.getTodoRepository().updateGroupId(group.getId(), other.getId());
     }
 
     protected void removeOtherGroup(GroupInfo group) {
-        RepositoryController.getGroupRepository().removeGroup(group);
+        group.remove();
     }
 
 
-    protected GroupInfo getOtherGroup() {
-        return RepositoryController.getGroupRepository().getGroupById(getOtherGroupId());
+    protected GroupInfo getOtherGroup() throws CommandException {
+        try {
+            return RepositoryController.getGroupRepository().getGroupById(getOtherGroupId());
+        } catch (NoSuchElementException e) {
+            throw new CommandException("Group not found");
+        }
     }
 
     protected abstract int getOtherGroupId();

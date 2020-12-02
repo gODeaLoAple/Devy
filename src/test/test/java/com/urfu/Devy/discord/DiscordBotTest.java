@@ -4,13 +4,11 @@ import main.java.com.urfu.Devy.bot.BotBuildException;
 import main.java.com.urfu.Devy.bot.discord.DiscordBot;
 import main.java.com.urfu.Devy.bot.discord.DiscordBotBuilder;
 import main.java.com.urfu.Devy.group.GroupInfo;
-import main.java.com.urfu.Devy.group.modules.chats.Chats;
 import main.java.com.urfu.Devy.sender.EmptySender;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import test.java.com.urfu.Devy.commands.common.HelpCommandTest;
 import test.java.com.urfu.Devy.common.DatabaseIncludeTest;
 
 public class DiscordBotTest extends DatabaseIncludeTest {
@@ -43,7 +41,7 @@ public class DiscordBotTest extends DatabaseIncludeTest {
     @Test
     public void testGetGroupOrCreateWhenGroupExists() {
         var group = new GroupInfo(0);
-        group.asChats().addChats();
+        group.asChats().create();
         group.asChats().getChats().setDiscordId("");
         bot.addGroup(group);
         Assertions.assertEquals(group, bot.getGroupOrCreate(""));

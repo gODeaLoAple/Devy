@@ -1,4 +1,5 @@
 package main.java.com.urfu.Devy.group;
+import main.java.com.urfu.Devy.database.RepositoryController;
 import main.java.com.urfu.Devy.group.modules.chats.GroupChats;
 import main.java.com.urfu.Devy.group.modules.github.GroupGithub;
 import main.java.com.urfu.Devy.group.modules.GroupModule;
@@ -63,14 +64,15 @@ public class GroupInfo {
                 .execute();
     }
 
-    public void sendMessage(String message, MessageSender sender) {
-        sender.send(message);
-    }
-
     public void setId(int id) {
         this.id = id;
         chats.setGroupId(id);
         github.setGroupId(id);
         todo.setGroupId(id);
+    }
+
+    public void remove() {
+        chats.remove();
+        RepositoryController.getGroupRepository().removeGroup(this);
     }
 }

@@ -1,5 +1,6 @@
 package test.java.com.urfu.Devy.commands;
 
+import main.java.com.urfu.Devy.command.CommandException;
 import main.java.com.urfu.Devy.group.EmptyGroup;
 import main.java.com.urfu.Devy.sender.EmptySender;
 import main.java.com.urfu.Devy.command.CommandData;
@@ -58,7 +59,7 @@ public class CommandsControllerTest {
 
     @Test
     public void handleGetCommandFullInfoIfDoesNotContainsCommand() {
-        Assertions.assertThrows(IllegalArgumentException.class, () ->
+        Assertions.assertThrows(CommandException.class, () ->
                 Assertions.assertFalse(CommandsController.getCommandNameAndFullInfo("test").isEmpty()));
     }
 

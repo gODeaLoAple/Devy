@@ -5,7 +5,6 @@ import main.java.com.urfu.Devy.bot.BotBuildException;
 import main.java.com.urfu.Devy.bot.BotBuilder;
 import main.java.com.urfu.Devy.database.RepositoryController;
 import main.java.com.urfu.Devy.group.GroupInfo;
-import main.java.com.urfu.Devy.group.modules.chats.Chats;
 import main.java.com.urfu.Devy.sender.MessageSender;
 
 import java.util.NoSuchElementException;
@@ -49,7 +48,7 @@ public class TelegramBot extends Bot {
                     .getGroupById(groupId);
         } catch (NoSuchElementException e) {
             var group = createGroup();
-            group.asChats().addChats();
+            group.asChats().create();
             group.asChats().getChats().setTelegramId(chatId);
             return group;
         }

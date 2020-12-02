@@ -3,10 +3,8 @@ package main.java.com.urfu.Devy.bot.discord;
 import main.java.com.urfu.Devy.bot.Bot;
 import main.java.com.urfu.Devy.bot.BotBuildException;
 import main.java.com.urfu.Devy.bot.BotBuilder;
-import main.java.com.urfu.Devy.command.parser.ParseCommandException;
 import main.java.com.urfu.Devy.database.RepositoryController;
 import main.java.com.urfu.Devy.group.GroupInfo;
-import main.java.com.urfu.Devy.group.modules.chats.Chats;
 import main.java.com.urfu.Devy.sender.MessageSender;
 import java.util.NoSuchElementException;
 
@@ -43,7 +41,7 @@ public class DiscordBot extends Bot {
                     .getGroupById(groupId);
         } catch (NoSuchElementException e) {
             var group = createGroup();
-            group.asChats().addChats();
+            group.asChats().create();
             group.asChats().getChats().setDiscordId(guildId);
             return group;
         }

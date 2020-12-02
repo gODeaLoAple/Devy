@@ -36,15 +36,10 @@ public class Main {
             CommandsController.constructCommandsDictionary();
             log.info("Commands configuring successfully!");
 
-            log.info("Configuring database...");
-            var database = createDataBase(loadProperties(Main.PATH_TO_DATABASE));
-            Repository.setDatabase(database);
-            log.info("Database created!");
-
+            var databaseConfig = loadProperties(Main.PATH_TO_DATABASE);
             log.info("Configuring repositories...");
-            initRepositories();
+            initRepositories(databaseConfig);
             log.info("Repositories created!");
-
 
             var tokens = loadProperties(Main.PATH_TO_TOKENS);
             log.info("Configuring github...");
@@ -89,16 +84,14 @@ public class Main {
         return properties;
     }
 
-    private static void initRepositories() {
-
+    private static void initRepositories(Properties config) {
         try {
-            Repository.setDatabase(createDataBase(loadProperties(Main.PATH_TO_DATABASE)));
+            Repository.setDatabase(createDataBase(config));
             initImplementedRepositories();
         } catch (Exception e) {
             log.error("Exception when initRepositories: " + e.getMessage());
             initMockedRepositories();
         }
-
     }
 
     private static void initImplementedRepositories() {

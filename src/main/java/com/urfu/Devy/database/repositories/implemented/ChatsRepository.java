@@ -32,7 +32,7 @@ public class ChatsRepository extends Repository {
                 return false;
             return statement.executeUpdate("""
                     DELETE FROM `chats` 
-                    WHERE `idkey`=%d
+                    WHERE `groupId`=%d
                     """.formatted(chats.getGroupId())) > 0;
         } catch (SQLException throwables) {
             log.error("On 'removeGroup'", throwables);
