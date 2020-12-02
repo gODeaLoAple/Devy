@@ -1,7 +1,8 @@
 package main.java.com.urfu.Devy.database.repositories.implemented;
 
+import main.java.com.urfu.Devy.database.RepositoryController;
 import main.java.com.urfu.Devy.database.repositories.Repository;
-import main.java.com.urfu.Devy.todo.ToDo;
+import main.java.com.urfu.Devy.group.modules.todo.ToDo;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -28,12 +29,13 @@ public class ToDoRepository extends Repository {
         }
     }
 
-    public boolean removeToDoList(int groupId, String toDoId) {
+    public boolean removeToDoList(int todoId) {
         try (var statement = database.getConnection().createStatement()) {
+            RepositoryController.getToDoTaskRepository().getAllTasksInToDo(todoId);
             return statement.executeUpdate("""
                     DELETE FROM `todo` 
-                    WHERE `name`='%s' AND `groupId`=%d
-                    """.formatted(toDoId, groupId)) > 0;
+                    WHERE `idkey`=%d
+                    """.formatted(todoId)) > 0;
         } catch (SQLException throwables) {
             log.error("On 'removeToDoList'", throwables);
             return false;
@@ -89,4 +91,20 @@ public class ToDoRepository extends Repository {
         }
     }
 
+    public void removeAllTodo(int groupId) {
+        for (var todo : getAllToDo(groupId))
+            removeToDoList(todo.getId());
+    }
+
+    public void updateGroupId(int newGroupId, int oldGroupId) {
+        try (var statement = database.getConnection().createStatement()) {
+            statement.execute("""
+                    UPDATE `todo`
+                    SET `groupId`=%d
+                    WHERE `groupId`=%d
+                    """.formatted(newGroupId, oldGroupId));
+        } catch (SQLException throwables) {
+            log.error("On 'getToDoByName'", throwables);
+        }
+    }
 }

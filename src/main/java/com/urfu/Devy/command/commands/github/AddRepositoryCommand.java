@@ -29,7 +29,7 @@ public class AddRepositoryCommand extends Command {
         if(RepositoryController.getGitHubRepository().hasRepository(groupId))
             throw new IllegalArgumentException("Your group already have repository.\nFirstly remove it by \"removerep\" command");
         try {
-            groupInfo.asGithub().addRepository(arguments.get(0), arguments.get(1));
+            groupInfo.asGithub().addRepository(arguments.get(0), arguments.get(1), sender.getId());
             sender.send("Repository added");
         } catch (CommandException e) {
             sender.send(e.getMessage());

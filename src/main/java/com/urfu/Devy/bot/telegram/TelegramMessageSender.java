@@ -22,4 +22,8 @@ public class TelegramMessageSender implements MessageSender {
         } catch (TelegramApiException ignored) { }
     }
 
+    @Override
+    public String getId(){
+        return id;
+    }
 }

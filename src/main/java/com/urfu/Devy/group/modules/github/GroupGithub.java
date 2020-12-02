@@ -1,8 +1,9 @@
-package main.java.com.urfu.Devy.group.modules;
+package main.java.com.urfu.Devy.group.modules.github;
 
 import main.java.com.urfu.Devy.command.CommandException;
 import main.java.com.urfu.Devy.database.RepositoryController;
-import main.java.com.urfu.Devy.github.RepositoryInfo;
+import main.java.com.urfu.Devy.group.modules.GroupModule;
+import main.java.com.urfu.Devy.group.modules.github.RepositoryInfo;
 
 public class GroupGithub extends GroupModule {
 
@@ -10,12 +11,8 @@ public class GroupGithub extends GroupModule {
         super(groupId);
     }
 
-    public GroupGithub() {
-        this(0);
-    }
-
-    public void addRepository(String name, String repository) throws CommandException {
-        if (!RepositoryController.getGitHubRepository().addRepository(groupId, new RepositoryInfo(name, repository)))
+    public void addRepository(String name, String repository, String chatId) throws CommandException {
+        if (!RepositoryController.getGitHubRepository().addRepository(groupId, chatId, new RepositoryInfo(name, repository)))
             throw new CommandException("Repository was already added.");
     }
 

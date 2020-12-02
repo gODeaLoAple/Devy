@@ -3,7 +3,6 @@ package test.java.com.urfu.Devy.discord;
 import main.java.com.urfu.Devy.bot.discord.DiscordBot;
 import main.java.com.urfu.Devy.bot.discord.DiscordBotListener;
 import main.java.com.urfu.Devy.bot.discord.DiscordUserSender;
-import main.java.com.urfu.Devy.group.GroupInfo;
 import main.java.com.urfu.Devy.sender.EmptySender;
 import main.java.com.urfu.Devy.sender.MessageSender;
 import net.dv8tion.jda.api.entities.*;
@@ -35,7 +34,7 @@ public class DiscordBotListenerTest extends DatabaseIncludeTest {
         Mockito.doReturn(guild).when(event).getGuild();
         Mockito.doReturn("0").when(guild).getId();
         listener.onGuildReady(event);
-        Mockito.verify(bot, Mockito.times(1)).getGroupOrCreate("0");
+        Mockito.verify(bot, Mockito.times(1)).createIfNotExists("0");
     }
 
     @Test

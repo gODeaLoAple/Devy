@@ -1,16 +1,17 @@
 package main.java.com.urfu.Devy.bot.discord;
 
-import main.java.com.urfu.Devy.command.parser.ParseCommandException;
-import main.java.com.urfu.Devy.sender.MessageSender;
-import net.dv8tion.jda.api.entities.User;
+import main.java.com.urfu.Devy.command.CommandException;
+import main.java.com.urfu.Devy.group.GroupInfo;
 import net.dv8tion.jda.api.events.guild.GuildReadyEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import org.apache.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
 
 public class DiscordBotListener extends ListenerAdapter {
 
     private final DiscordBot bot;
+    private final Logger log = Logger.getLogger(DiscordBot.class);
     public static final String UserWarningMessage = """
                     Hello, I'm Devy - bot for development. 
                     I'm sorry, but I work only in text-channels now.
@@ -22,7 +23,7 @@ public class DiscordBotListener extends ListenerAdapter {
     @Override
     public void onGuildReady(@NotNull GuildReadyEvent event) {
         super.onGuildReady(event);
-        bot.getGroupOrCreate(event.getGuild().getId());
+        bot.createIfNotExists(event.getGuild().getId());
     }
 
     @Override

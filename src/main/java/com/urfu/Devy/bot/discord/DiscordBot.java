@@ -6,7 +6,19 @@ import main.java.com.urfu.Devy.bot.BotBuilder;
 import main.java.com.urfu.Devy.command.parser.ParseCommandException;
 import main.java.com.urfu.Devy.database.RepositoryController;
 import main.java.com.urfu.Devy.group.GroupInfo;
+import main.java.com.urfu.Devy.group.modules.chats.Chats;
+import main.java.com.urfu.Devy.group.modules.github.GitHubController;
 import main.java.com.urfu.Devy.sender.MessageSender;
+import net.dv8tion.jda.api.JDA;
+import net.dv8tion.jda.api.JDABuilder;
+import net.dv8tion.jda.api.MessageBuilder;
+import net.dv8tion.jda.api.entities.ChannelType;
+import net.dv8tion.jda.api.entities.GuildChannel;
+import net.dv8tion.jda.api.entities.MessageChannel;
+import net.dv8tion.jda.api.entities.TextChannel;
+import org.jetbrains.annotations.NotNull;
+
+import javax.security.auth.login.LoginException;
 import java.util.NoSuchElementException;
 
 public class DiscordBot extends Bot {
@@ -36,15 +48,14 @@ public class DiscordBot extends Bot {
         try {
             var groupId = RepositoryController
                     .getChatsRepository()
-                    .getGroupChatsByDiscordChatId(guildId)
-                    .getGroupId();
+                    .getGroupIdByDiscordChatId(guildId);
             return RepositoryController
                     .getGroupRepository()
                     .getGroupById(groupId);
         } catch (NoSuchElementException e) {
-            var group = new GroupInfo();
-            group.asChats().setDiscord(guildId);
-            addGroup(group);
+            var group = createGroup();
+            group.asChats().addChats();
+            group.asChats().getChats().setDiscordId(guildId);
             return group;
         }
     }
@@ -54,4 +65,13 @@ public class DiscordBot extends Bot {
         return token;
     }
 
+    public void createIfNotExists(String guildId) {
+        getGroupOrCreate(guildId);
+    }
+
+
+    @Override
+    public MessageSender getSenderById(String id){
+        return new DiscordMessageSender(DiscordBotBuilder.getJda().getTextChannelById(id));
+    }
 }

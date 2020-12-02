@@ -1,4 +1,4 @@
-package main.java.com.urfu.Devy.github;
+package main.java.com.urfu.Devy.group.modules.github;
 
 public class RepositoryInfo {
     private String name;

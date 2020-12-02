@@ -2,7 +2,8 @@ package main.java.com.urfu.Devy.database.repositories.implemented;
 
 import main.java.com.urfu.Devy.database.RepositoryController;
 import main.java.com.urfu.Devy.database.repositories.Repository;
-import main.java.com.urfu.Devy.github.RepositoryInfo;
+import main.java.com.urfu.Devy.group.modules.github.GroupWithChatId;
+import main.java.com.urfu.Devy.group.modules.github.RepositoryInfo;
 import main.java.com.urfu.Devy.group.GroupInfo;
 import org.apache.log4j.Logger;
 
@@ -13,17 +14,18 @@ import java.util.Collection;
 public class GitHubRepository extends Repository {
     private final Logger log = Logger.getLogger("GitHubRepository");
 
-    public boolean addRepository(int groupId, RepositoryInfo repository) {
+    public boolean addRepository(int groupId, String chatId, RepositoryInfo repository) {
         try (var statement = database.getConnection().createStatement()) {
             if (hasRepository(groupId))
                 return false;
             return statement.executeUpdate("""
-                    INSERT INTO `github` (`repository`, `name`, `tracking`, `groupId`)
-                    VALUES ('%s','%s','%s', %d)
+                    INSERT INTO `github` (`repository`, `name`, `tracking`, `groupId`, `chatId`)
+                    VALUES ('%s','%s','%s', %d, %s)
                     """.formatted(repository.getRepositoryName(),
                     repository.getName(),
                     repository.isTracking() ? 1 : 0,
-                    groupId)
+                    groupId,
+                    chatId)
             ) > 0;
         } catch (SQLException throwables) {
             log.error("On 'addRepository'", throwables);
@@ -44,6 +46,7 @@ public class GitHubRepository extends Repository {
     }
 
     public RepositoryInfo getRepository(int groupId) {
+        System.out.println(groupId);
         try (var statement = database.getConnection().createStatement()) {
             var data = statement.executeQuery("""
                     SELECT `name`, `repository`, `tracking`
@@ -68,7 +71,7 @@ public class GitHubRepository extends Repository {
                         WHERE `groupId`=%d)
                     """.formatted(groupId)
             );
-            return result.next() && result.getInt(1) > 0;
+            return result.next() && result.getInt(1) >= 0;
         } catch (SQLException throwables) {
             log.error("On 'hasRepository'", throwables);
             return false;
@@ -78,13 +81,13 @@ public class GitHubRepository extends Repository {
     public String getLastCommitDate(int groupId){
         try  (var statement = database.getConnection().createStatement()){
             var data = statement.executeQuery("""
-                SELECT `lastCommit`
+                SELECT `lastCommitDate`
                 FROM `github`
                 WHERE `groupId`=%d;
                 """.formatted(groupId));
             if (!data.next())
                 return null;
-            return data.getString("lastCommit");
+            return data.getString("lastCommitDate");
 
         } catch (SQLException throwables) {
             log.error("On 'getAllRepositories'", throwables);
@@ -96,7 +99,7 @@ public class GitHubRepository extends Repository {
         try (var statement = database.getConnection().createStatement()) {
             return statement.executeUpdate("""
                     UPDATE `github`
-                    SET `lastCommit`='%s'
+                    SET `lastCommitDate`='%s'
                     WHERE `groupId`=%d
                     """.formatted(date, groupId)) > 0;
         } catch (SQLException throwables) {
@@ -109,7 +112,7 @@ public class GitHubRepository extends Repository {
         try (var statement = database.getConnection().createStatement()) {
             return statement.executeUpdate("""
                     UPDATE `github`
-                    SET `tracking`='%d'
+                    SET `tracking`=%d
                     WHERE `groupId`=%d
                     """.formatted(tracking ? 1 : 0, groupId)) > 0;
         } catch (SQLException throwables) {
@@ -118,16 +121,18 @@ public class GitHubRepository extends Repository {
         }
     }
 
-    public Collection<GroupInfo> getAllTrackingGroups(){
-        var result = new ArrayList<GroupInfo>();
+    public Collection<GroupWithChatId> getAllTrackingGroups(){
+        var result = new ArrayList<GroupWithChatId>();
         try  (var statement = database.getConnection().createStatement()){
             var data = statement.executeQuery("""
-                SELECT `groupId`, `tracking`
+                SELECT `groupId`,  `chatId`
                 FROM `github`
-                WHERE `tracking`='1';
+                WHERE `tracking`=1;
                 """);
             while(data.next())
-                result.add(RepositoryController.getGroupRepository().getGroupById(data.getInt("groupId")));
+                result.add(new GroupWithChatId(
+                        RepositoryController.getGroupRepository().getGroupById(data.getInt("groupId")),
+                        data.getString("chatId")));
         } catch (SQLException throwables) {
             log.error("On 'getAllTrackingGroups'", throwables);
         }

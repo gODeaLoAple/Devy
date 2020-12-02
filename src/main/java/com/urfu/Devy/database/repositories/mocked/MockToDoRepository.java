@@ -1,6 +1,6 @@
 package main.java.com.urfu.Devy.database.repositories.mocked;
 
-import main.java.com.urfu.Devy.todo.ToDo;
+import main.java.com.urfu.Devy.group.modules.todo.ToDo;
 import main.java.com.urfu.Devy.database.repositories.implemented.ToDoRepository;
 
 import java.util.ArrayList;
@@ -21,10 +21,9 @@ public class MockToDoRepository extends ToDoRepository {
     }
 
     @Override
-    public boolean removeToDoList(int groupId, String todoName) {
-        if (!isToDoExists(groupId, todoName))
-            return false;
-        todoList.get(groupId).removeIf(x -> x.getName().equals(todoName));
+    public boolean removeToDoList(int todoId) {
+        for (var groupId : todoList.keySet())
+            todoList.get(groupId).removeIf(x -> x.getId() == todoId);
         return true;
     }
 

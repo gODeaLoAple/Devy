@@ -2,7 +2,8 @@ package main.java.com.urfu.Devy.database.repositories.mocked;
 
 import main.java.com.urfu.Devy.database.RepositoryController;
 import main.java.com.urfu.Devy.database.repositories.implemented.GitHubRepository;
-import main.java.com.urfu.Devy.github.RepositoryInfo;
+import main.java.com.urfu.Devy.group.modules.github.GroupWithChatId;
+import main.java.com.urfu.Devy.group.modules.github.RepositoryInfo;
 import main.java.com.urfu.Devy.group.GroupInfo;
 
 import java.util.ArrayList;
@@ -60,10 +61,10 @@ public class MockGithubRepository extends GitHubRepository {
         return true;
     }
 
-    public Collection<GroupInfo> getAllTrackingGroups(){
-        var result = new ArrayList<GroupInfo>();
+    public Collection<GroupWithChatId> getAllTrackingGroups(){
+        var result = new ArrayList<GroupWithChatId>();
         for (var key : chats.keySet())
-            result.add(RepositoryController.getGroupRepository().getGroupById(key));
+            result.add(new GroupWithChatId(RepositoryController.getGroupRepository().getGroupById(key), "0"));
         return result;
     }
 

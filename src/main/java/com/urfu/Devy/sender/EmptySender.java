@@ -19,4 +19,8 @@ public class EmptySender implements MessageSender {
         return lastMessage;
     }
 
+    @Override
+    public String getId(){
+        return null;
+    }
 }

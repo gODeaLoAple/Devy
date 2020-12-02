@@ -15,6 +15,7 @@ public class TelegramBotBuilder implements BotBuilder {
                 ApiContextInitializer.init();
                 new TelegramBotsApi()
                         .registerBot(new TelegramBotListener((TelegramBot) bot));
+                bot.startTrackRepositoriesOnStart();
             } catch (TelegramApiRequestException e) {
                 throw new BotBuildException(e.getMessage());
             }

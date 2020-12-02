@@ -1,7 +1,7 @@
 package test.java.com.urfu.Devy.commands.todo;
 
-import main.java.com.urfu.Devy.todo.ToDo;
-import main.java.com.urfu.Devy.todo.ToDoTask;
+import main.java.com.urfu.Devy.group.modules.todo.ToDo;
+import main.java.com.urfu.Devy.group.modules.todo.ToDoTask;
 import main.java.com.urfu.Devy.group.GroupInfo;
 import main.java.com.urfu.Devy.command.Command;
 import main.java.com.urfu.Devy.command.CommandException;

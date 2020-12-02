@@ -1,7 +1,7 @@
 package main.java.com.urfu.Devy.command.commands.todo;
 
 import com.beust.jcommander.Parameter;
-import main.java.com.urfu.Devy.todo.ToDo;
+import main.java.com.urfu.Devy.group.modules.todo.ToDo;
 import main.java.com.urfu.Devy.group.GroupInfo;
 import main.java.com.urfu.Devy.sender.MessageSender;
 import main.java.com.urfu.Devy.command.Command;
@@ -34,5 +34,7 @@ public class AddToDoCommand extends Command {
     protected void validate() throws CommandException {
         if (arguments == null)
             throw new CommandException("Incorrect data. Todo name not found.");
+        if (arguments.size() > 1)
+            throw new CommandException("Incorrect data. Too many arguments");
     }
 }

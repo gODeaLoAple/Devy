@@ -1,11 +1,14 @@
 package main.java.com.urfu.Devy.group;
-import main.java.com.urfu.Devy.group.modules.GroupChats;
-import main.java.com.urfu.Devy.group.modules.GroupGithub;
+import main.java.com.urfu.Devy.command.CommandException;
+import main.java.com.urfu.Devy.group.modules.chats.GroupChats;
+import main.java.com.urfu.Devy.group.modules.github.GroupGithub;
 import main.java.com.urfu.Devy.group.modules.GroupModule;
-import main.java.com.urfu.Devy.group.modules.GroupTodo;
+import main.java.com.urfu.Devy.group.modules.todo.GroupTodo;
 import main.java.com.urfu.Devy.sender.MessageSender;
 import main.java.com.urfu.Devy.command.CommandData;
 import main.java.com.urfu.Devy.command.CommandsController;
+
+import java.util.HashMap;
 
 public class GroupInfo {
     protected int id;
@@ -15,9 +18,9 @@ public class GroupInfo {
 
     public GroupInfo(int id) {
         this.id = id;
-        setChats(new GroupChats());
-        setTodo(new GroupTodo());
-        setGithub(new GroupGithub());
+        setChats(new GroupChats(id));
+        setTodo(new GroupTodo(id));
+        setGithub(new GroupGithub(id));
     }
 
     public GroupInfo() {
@@ -67,4 +70,10 @@ public class GroupInfo {
         sender.send(message);
     }
 
+    public void setId(int id) {
+        this.id = id;
+        chats.setGroupId(id);
+        github.setGroupId(id);
+        todo.setGroupId(id);
+    }
 }
