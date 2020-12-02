@@ -2,7 +2,9 @@ package main.java.com.urfu.Devy.database.repositories.mocked;
 
 import main.java.com.urfu.Devy.group.modules.todo.ToDo;
 import main.java.com.urfu.Devy.database.repositories.implemented.ToDoRepository;
+import org.checkerframework.checker.interning.qual.UsesObjectEquals;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -45,5 +47,14 @@ public class MockToDoRepository extends ToDoRepository {
     private boolean isToDoExists(int groupId, String todoName) {
         return todoList.containsKey(groupId)
                 && todoList.get(groupId).stream().anyMatch(x -> x.getName().equals(todoName));
+    }
+
+    @Override
+    public void updateGroupId(int newGroupId, int oldGroupId) {
+        var old = todoList.getOrDefault(oldGroupId, new ArrayList<>());
+        if (!todoList.containsKey(newGroupId))
+            todoList.put(newGroupId, new ArrayList<>());
+        todoList.get(newGroupId).addAll(old);
+        todoList.remove(oldGroupId);
     }
 }

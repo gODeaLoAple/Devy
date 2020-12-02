@@ -3,7 +3,6 @@ package test.java.com.urfu.Devy.commands.groups;
 import main.java.com.urfu.Devy.command.Command;
 import main.java.com.urfu.Devy.command.commands.groups.GetChatsCommand;
 import main.java.com.urfu.Devy.group.GroupInfo;
-import main.java.com.urfu.Devy.group.modules.chats.Chats;
 import main.java.com.urfu.Devy.group.modules.chats.GroupChats;
 import main.java.com.urfu.Devy.sender.EmptySender;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,7 +15,7 @@ public class GetChatsCommandTest extends CommandTester {
     public void setUp() {
         group = new GroupInfo();
         group.setChats(new GroupChats(group.getId()));
-        group.asChats().addChats();
+        group.asChats().create();
         sender = new EmptySender();
     }
 

@@ -3,22 +3,11 @@ package main.java.com.urfu.Devy.bot.discord;
 import main.java.com.urfu.Devy.bot.Bot;
 import main.java.com.urfu.Devy.bot.BotBuildException;
 import main.java.com.urfu.Devy.bot.BotBuilder;
-import main.java.com.urfu.Devy.command.parser.ParseCommandException;
 import main.java.com.urfu.Devy.database.RepositoryController;
 import main.java.com.urfu.Devy.group.GroupInfo;
-import main.java.com.urfu.Devy.group.modules.chats.Chats;
-import main.java.com.urfu.Devy.group.modules.github.GitHubController;
-import main.java.com.urfu.Devy.sender.MessageSender;
-import net.dv8tion.jda.api.JDA;
-import net.dv8tion.jda.api.JDABuilder;
-import net.dv8tion.jda.api.MessageBuilder;
-import net.dv8tion.jda.api.entities.ChannelType;
-import net.dv8tion.jda.api.entities.GuildChannel;
-import net.dv8tion.jda.api.entities.MessageChannel;
-import net.dv8tion.jda.api.entities.TextChannel;
-import org.jetbrains.annotations.NotNull;
 
-import javax.security.auth.login.LoginException;
+import main.java.com.urfu.Devy.sender.MessageSender;
+
 import java.util.NoSuchElementException;
 
 public class DiscordBot extends Bot {
@@ -54,7 +43,7 @@ public class DiscordBot extends Bot {
                     .getGroupById(groupId);
         } catch (NoSuchElementException e) {
             var group = createGroup();
-            group.asChats().addChats();
+            group.asChats().create();
             group.asChats().getChats().setDiscordId(guildId);
             return group;
         }
@@ -72,6 +61,9 @@ public class DiscordBot extends Bot {
 
     @Override
     public MessageSender getSenderById(String id){
+        var sender = DiscordBotBuilder.getJda().getTextChannelById(id);
+        if(sender == null)
+            return null;
         return new DiscordMessageSender(DiscordBotBuilder.getJda().getTextChannelById(id));
     }
 }

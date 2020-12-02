@@ -5,10 +5,8 @@ import main.java.com.urfu.Devy.group.GroupInfo;
 import main.java.com.urfu.Devy.sender.MessageSender;
 import org.apache.log4j.Logger;
 import org.dbunit.DatabaseUnitException;
-import org.eclipse.egit.github.core.Commit;
-import org.eclipse.egit.github.core.Contributor;
-import org.eclipse.egit.github.core.IRepositoryIdProvider;
-import org.eclipse.egit.github.core.Repository;
+import org.eclipse.egit.github.core.*;
+import org.eclipse.egit.github.core.client.GitHubClient;
 import org.eclipse.egit.github.core.service.CommitService;
 import org.eclipse.egit.github.core.service.RepositoryService;
 
@@ -19,9 +17,16 @@ import java.util.stream.Collectors;
 public class GitHubController {
     private static final Logger log = Logger.getLogger(GitHubController.class);
     private static final GithubRepositoryWatcher watcher = new GithubRepositoryWatcher();
+    private static String token;
+
+    public static void setGitHubToken(String gitHubToken){
+        token = gitHubToken;
+    }
 
     public static IRepositoryIdProvider getRepository(RepositoryInfo repos) throws IOException{
-        return new RepositoryService().getRepository(repos.getName(), repos.getRepositoryName());
+        var service = new RepositoryService();
+        service.getClient().setOAuth2Token(token);
+        return service.getRepository(repos.getName(), repos.getRepositoryName());
     }
 
     public static RepositoryInfo getRepositoryInfoFromDataBase(int groupId) throws DatabaseUnitException {
@@ -31,7 +36,9 @@ public class GitHubController {
     }
 
     public static Commit getLastCommit(IRepositoryIdProvider repos) throws IOException{
-        return new CommitService().getCommits(repos).get(0).getCommit();
+        var service = new CommitService();
+        service.getClient().setOAuth2Token(token);
+        return service.getCommits(repos).get(0).getCommit();
     }
 
     public static Date getLastCommitDate(IRepositoryIdProvider repository) throws IOException {
@@ -65,7 +72,7 @@ public class GitHubController {
                 RepositoryController.getGitHubRepository().setLastCommitDate(group.getId(), lastCommit.toString());
             }
             else {
-                sender.send("no changes");
+                sender.send("no changes"); // TODO remove at production version
             }
         } catch (DatabaseUnitException e) {
             log.error("On \"taskToRun\"", e);
@@ -76,7 +83,7 @@ public class GitHubController {
         watcher.unsetTracking(group);
     }
     public static String getCommitInfo(Commit commit){
-        return "author: " + commit.getCommitter().getName() + "\n" +
+        return "author: " + commit.getAuthor().getName() + "\n" +
                 "message: " + commit.getMessage() + "\n" +
                 "date: " + commit.getCommitter().getDate();
     }

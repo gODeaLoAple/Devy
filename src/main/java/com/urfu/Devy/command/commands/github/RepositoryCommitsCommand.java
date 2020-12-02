@@ -34,12 +34,12 @@ public class RepositoryCommitsCommand extends Command {
     @Override
     public void execute() {
         if(arguments == null || arguments.size() != 2)
-            throw new IllegalArgumentException("$commits [userName] [repositoryName] [-n]commits count(default - 10)");
+            throw new IllegalArgumentException("$commits [userName] [repositoryName] [-n]commits count(default - 9)");
         var maxCommits = 25;
         if(commitsToShow > maxCommits)
             throw new IllegalArgumentException("max commits number: %d".formatted(maxCommits));
         if(commitsToShow == 0)
-            commitsToShow = 10;
+            commitsToShow = 9;
         var result = new StringBuilder();
         try {
             final var repo = new RepositoryId(arguments.get(0), arguments.get(1));

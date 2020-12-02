@@ -46,7 +46,6 @@ public class GitHubRepository extends Repository {
     }
 
     public RepositoryInfo getRepository(int groupId) {
-        System.out.println(groupId);
         try (var statement = database.getConnection().createStatement()) {
             var data = statement.executeQuery("""
                     SELECT `name`, `repository`, `tracking`
@@ -71,7 +70,7 @@ public class GitHubRepository extends Repository {
                         WHERE `groupId`=%d)
                     """.formatted(groupId)
             );
-            return result.next() && result.getInt(1) >= 0;
+            return result.next() && result.getInt(1) > 0;
         } catch (SQLException throwables) {
             log.error("On 'hasRepository'", throwables);
             return false;

@@ -1,5 +1,6 @@
 package main.java.com.urfu.Devy.group;
-import main.java.com.urfu.Devy.command.CommandException;
+
+import main.java.com.urfu.Devy.database.RepositoryController;
 import main.java.com.urfu.Devy.group.modules.chats.GroupChats;
 import main.java.com.urfu.Devy.group.modules.github.GroupGithub;
 import main.java.com.urfu.Devy.group.modules.GroupModule;
@@ -8,7 +9,6 @@ import main.java.com.urfu.Devy.sender.MessageSender;
 import main.java.com.urfu.Devy.command.CommandData;
 import main.java.com.urfu.Devy.command.CommandsController;
 
-import java.util.HashMap;
 
 public class GroupInfo {
     protected int id;
@@ -66,14 +66,15 @@ public class GroupInfo {
                 .execute();
     }
 
-    public void sendMessage(String message, MessageSender sender) {
-        sender.send(message);
-    }
-
     public void setId(int id) {
         this.id = id;
         chats.setGroupId(id);
         github.setGroupId(id);
         todo.setGroupId(id);
+    }
+
+    public void remove() {
+        chats.remove();
+        RepositoryController.getGroupRepository().removeGroup(this);
     }
 }

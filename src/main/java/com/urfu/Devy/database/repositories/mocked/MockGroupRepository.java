@@ -6,6 +6,7 @@ import main.java.com.urfu.Devy.group.GroupInfo;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 public class MockGroupRepository extends GroupRepository {
 
@@ -13,12 +14,16 @@ public class MockGroupRepository extends GroupRepository {
 
     @Override
     public GroupInfo getGroupById(int groupId) {
+        if (!groups.containsKey(groupId))
+            throw new NoSuchElementException();
         return groups.get(groupId);
     }
 
     @Override
     public boolean removeGroup(GroupInfo group) {
         groups.remove(group.getId());
+        RepositoryController.getGitHubRepository().removeRepository(group.getId());
+        RepositoryController.getTodoRepository().removeAllTodo(group.getId());
         RepositoryController.getChatsRepository().removeChats(group.asChats());
         return true;
     }

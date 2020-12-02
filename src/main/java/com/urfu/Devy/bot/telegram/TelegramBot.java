@@ -3,15 +3,11 @@ package main.java.com.urfu.Devy.bot.telegram;
 import main.java.com.urfu.Devy.bot.Bot;
 import main.java.com.urfu.Devy.bot.BotBuildException;
 import main.java.com.urfu.Devy.bot.BotBuilder;
-import main.java.com.urfu.Devy.bot.discord.DiscordMessageSender;
 import main.java.com.urfu.Devy.database.RepositoryController;
 import main.java.com.urfu.Devy.group.GroupInfo;
-import main.java.com.urfu.Devy.group.modules.chats.Chats;
-import main.java.com.urfu.Devy.group.modules.github.GitHubController;
 import main.java.com.urfu.Devy.sender.MessageSender;
-import net.dv8tion.jda.api.JDABuilder;
 
-import javax.security.auth.login.LoginException;
+
 import java.util.NoSuchElementException;
 
 
@@ -53,7 +49,7 @@ public class TelegramBot extends Bot {
                     .getGroupById(groupId);
         } catch (NoSuchElementException e) {
             var group = createGroup();
-            group.asChats().addChats();
+            group.asChats().create();
             group.asChats().getChats().setTelegramId(chatId);
             return group;
         }

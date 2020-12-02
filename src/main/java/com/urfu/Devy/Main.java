@@ -13,8 +13,10 @@ import main.java.com.urfu.Devy.database.repositories.implemented.*;
 import main.java.com.urfu.Devy.database.repositories.Repository;
 
 import main.java.com.urfu.Devy.database.repositories.mocked.*;
+import main.java.com.urfu.Devy.group.modules.github.GitHubController;
 import org.apache.log4j.Logger;
 import org.eclipse.egit.github.core.client.GitHubClient;
+import org.eclipse.egit.github.core.service.RepositoryService;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -36,15 +38,10 @@ public class Main {
             CommandsController.constructCommandsDictionary();
             log.info("Commands configuring successfully!");
 
-            log.info("Configuring database...");
-            var database = createDataBase(loadProperties(Main.PATH_TO_DATABASE));
-            Repository.setDatabase(database);
-            log.info("Database created!");
-
+            var databaseConfig = loadProperties(Main.PATH_TO_DATABASE);
             log.info("Configuring repositories...");
-            initRepositories();
+            initRepositories(databaseConfig);
             log.info("Repositories created!");
-
 
             var tokens = loadProperties(Main.PATH_TO_TOKENS);
             log.info("Configuring github...");
@@ -70,7 +67,7 @@ public class Main {
     }
 
     private static void initGithub(Properties config) {
-        new GitHubClient().setOAuth2Token(config.getProperty("githubToken"));
+        GitHubController.setGitHubToken(config.getProperty("githubToken"));
     }
 
     private static DataBase createDataBase(Properties config) throws Exception {
@@ -89,16 +86,14 @@ public class Main {
         return properties;
     }
 
-    private static void initRepositories() {
-
+    private static void initRepositories(Properties config) {
         try {
-            Repository.setDatabase(createDataBase(loadProperties(Main.PATH_TO_DATABASE)));
+            Repository.setDatabase(createDataBase(config));
             initImplementedRepositories();
         } catch (Exception e) {
             log.error("Exception when initRepositories: " + e.getMessage());
             initMockedRepositories();
         }
-
     }
 
     private static void initImplementedRepositories() {

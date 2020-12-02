@@ -10,22 +10,16 @@ import main.java.com.urfu.Devy.sender.MessageSender;
 import org.apache.log4j.Logger;
 
 public abstract class Bot {
+    public static final String UserWarningMessage = """
+                    Hello, I'm Devy - bot for development. 
+                    I'm sorry, but I work only in text-channels now.
+                    You can create your own text-channel and call me there!""";
     private final CommandParser parser;
     protected final Logger log;
 
     public Bot(String commandPrefix) {
         parser = new CommandParser(commandPrefix);
         log = Logger.getLogger(getClass().getSimpleName());
-    }
-
-    public void removeGroup(GroupInfo group) {
-        if (!hasGroup(group))
-            throw new IllegalArgumentException("The group was not found");
-        RepositoryController.getGroupRepository().removeGroup(group);
-        RepositoryController.getGitHubRepository().removeRepository(group.getId());
-        RepositoryController.getTodoRepository().removeAllTodo(group.getId());
-        RepositoryController.getChatsRepository().removeChats(group.asChats());
-        log.info("Group was removed: " + group.getId());
     }
 
     protected GroupInfo createGroup() {
@@ -67,7 +61,10 @@ public abstract class Bot {
     public void startTrackRepositoriesOnStart(){
         var trackingGroups = RepositoryController.getGitHubRepository().getAllTrackingGroups();
         for (var groupData : trackingGroups) {
-            GitHubController.startTrackRepository(groupData.getGroup(), getSenderById(groupData.getChatId()));
+            var sender = getSenderById(groupData.getChatId());
+            if(sender == null)
+                continue;
+            GitHubController.startTrackRepository(groupData.getGroup(), sender);
         }
     }
 

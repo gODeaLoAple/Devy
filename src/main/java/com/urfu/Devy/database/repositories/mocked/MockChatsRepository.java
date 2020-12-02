@@ -19,7 +19,8 @@ public class MockChatsRepository extends ChatsRepository {
 
     @Override
     public boolean addChats(int groupId) {
-        this.chats.put(groupId, new Chats());
+        var chats = new Chats(this.chats.size() + 1);
+        this.chats.put(groupId, chats);
         return true;
     }
 

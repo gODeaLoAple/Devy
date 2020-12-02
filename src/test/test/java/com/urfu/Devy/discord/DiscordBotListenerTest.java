@@ -1,5 +1,6 @@
 package test.java.com.urfu.Devy.discord;
 
+import main.java.com.urfu.Devy.bot.Bot;
 import main.java.com.urfu.Devy.bot.discord.DiscordBot;
 import main.java.com.urfu.Devy.bot.discord.DiscordBotListener;
 import main.java.com.urfu.Devy.bot.discord.DiscordUserSender;
@@ -47,7 +48,7 @@ public class DiscordBotListenerTest extends DatabaseIncludeTest {
 
         listener.onMessageReceived(event);
         var sender = new DiscordUserSender(author);
-        Mockito.verify(bot, Mockito.never()).sendMessage(sender, DiscordBotListener.UserWarningMessage);
+        Mockito.verify(bot, Mockito.never()).sendMessage(sender, Bot.UserWarningMessage);
     }
 
     @Test
