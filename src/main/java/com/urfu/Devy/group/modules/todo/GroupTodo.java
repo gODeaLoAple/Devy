@@ -41,4 +41,7 @@ public class GroupTodo extends GroupModule {
                 .getAllToDo(groupId);
     }
 
+    public void removeAllTodo() {
+        RepositoryController.getTodoRepository().removeAllTodo(groupId);
+    }
 }

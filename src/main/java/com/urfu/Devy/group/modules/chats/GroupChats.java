@@ -1,7 +1,6 @@
 package main.java.com.urfu.Devy.group.modules.chats;
 
 import main.java.com.urfu.Devy.database.RepositoryController;
-import main.java.com.urfu.Devy.database.repositories.Repository;
 import main.java.com.urfu.Devy.group.modules.GroupModule;
 
 public class GroupChats extends GroupModule {
