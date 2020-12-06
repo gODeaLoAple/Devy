@@ -7,7 +7,7 @@ import main.java.com.urfu.Devy.group.GroupInfo;
 import main.java.com.urfu.Devy.sender.MessageSender;
 import org.jetbrains.annotations.NotNull;
 
-@CommandName(name = "stoptrack", info = "stop track repository")
+@CommandName(name = "stoptrack", info = "Stop track repository.")
 public class StopTrackCommand extends Command {
 
     public StopTrackCommand(GroupInfo group, MessageSender sender, @NotNull String[] args) {
@@ -17,6 +17,6 @@ public class StopTrackCommand extends Command {
     @Override
     public void execute(){
         GitHubController.stopTrackRepository(groupInfo);
-        sender.send("tracking removed");
+        sender.send("Tracking has removed.");
     }
 }

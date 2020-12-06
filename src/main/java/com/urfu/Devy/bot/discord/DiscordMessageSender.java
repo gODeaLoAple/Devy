@@ -1,9 +1,8 @@
 package main.java.com.urfu.Devy.bot.discord;
 
-import main.java.com.urfu.Devy.sender.MessageSender;
 import net.dv8tion.jda.api.entities.MessageChannel;
 
-public class DiscordMessageSender implements MessageSender {
+public class DiscordMessageSender extends DiscordSender {
 
     protected MessageChannel channel;
 
@@ -19,4 +18,5 @@ public class DiscordMessageSender implements MessageSender {
     public String getId(){
         return channel.getId();
     }
+
 }

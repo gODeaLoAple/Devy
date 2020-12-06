@@ -11,10 +11,7 @@ import main.java.com.urfu.Devy.command.CommandName;
 import java.util.ArrayList;
 import java.util.Objects;
 
-@CommandName(
-        name="addtask",
-        info="Add new task to todo-list.",
-        detailedInfo = "\nUsage todoName taskName author executor content")
+@CommandName(name="addtask", info="Add new task to todo-list.")
 public class AddTaskCommand extends Command {
 
     @Parameter(description = "[todoName] [taskName] [author] [executor] [content]")

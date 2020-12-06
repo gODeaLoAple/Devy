@@ -7,7 +7,7 @@ import main.java.com.urfu.Devy.group.GroupInfo;
 import main.java.com.urfu.Devy.sender.MessageSender;
 import org.jetbrains.annotations.NotNull;
 
-@CommandName(name = "removerep", info = "remove data about your repository")
+@CommandName(name = "rmrepos", info = "Remove data about your repository.")
 public class RemoveRepositoryCommand extends Command {
 
     public RemoveRepositoryCommand(GroupInfo group, MessageSender sender, @NotNull String[] args) {
@@ -16,13 +16,16 @@ public class RemoveRepositoryCommand extends Command {
 
     @Override
     public void execute() {
-        if(!groupInfo.asGithub().hasRepository())
-            throw new IllegalArgumentException("Your group doesn't have a repository.\nFirstly add it by \"addrepos\" command");
         try {
             groupInfo.asGithub().removeRepository();
-            sender.send("repository removed");
+            sender.send("The repository removed.");
         } catch (CommandException e) {
             sender.send(e.getMessage());
         }
+    }
+
+    protected void validate() throws CommandException{
+        if(!groupInfo.asGithub().hasRepository())
+            throw new HasNotRepositoryException();
     }
 }

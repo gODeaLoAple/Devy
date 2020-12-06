@@ -82,37 +82,11 @@ public class GitHubController {
     public static void stopTrackRepository(GroupInfo group) {
         watcher.unsetTracking(group);
     }
+
     public static String getCommitInfo(Commit commit){
         return "author: " + commit.getAuthor().getName() + "\n" +
                 "message: " + commit.getMessage() + "\n" +
                 "date: " + commit.getCommitter().getDate();
     }
 
-    public static String getRepositoryInfo(Repository repository) {
-        var result = new StringBuilder();
-        try {
-            result.append(getSeparatedString("name", repository.getName()));
-            result.append(getSeparatedString("created at", repository.getCreatedAt().toString()));
-            result.append(getSeparatedString("forks", Integer.toString(repository.getForks())));
-            if (repository.getDescription() != null && !repository.getDescription().isEmpty())
-                result.append(getSeparatedString("description", repository.getDescription()));
-            result.append(getSeparatedString("languages", repository.getLanguage()));
-            result.append(getSeparatedString("size", Integer.toString(repository.getSize())));
-            result.append(getSeparatedString("last commit at", getLastCommitDate(repository).toString()));
-            result.append(getSeparatedString("contributors",
-                    getContributors(new RepositoryService().getContributors(repository, true))));
-
-            return result.toString();
-        } catch (IOException e) {
-            throw new IllegalArgumentException("something went wrong at \"getRepositoryInfo\"");
-        }
-    }
-
-    private static String getSeparatedString(String name, String data){
-        return "%s: %s\n".formatted(name, data);
-    }
-
-    private static String getContributors(List<Contributor> contributors){
-        return contributors.stream().map(Contributor::getLogin).filter(Objects::nonNull).collect(Collectors.joining(", "));
-    }
 }

@@ -47,14 +47,13 @@ public class CommandsControllerTest {
 
     @Test
     public void handleGetCommandShortInfoIfDoesNotContainsCommand() {
-        Assertions.assertThrows(IllegalArgumentException.class, () ->
-                Assertions.assertFalse(CommandsController.getCommandNameAndShortInfo("test").isEmpty()));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> CommandsController.getCommandAttribute("test"));
     }
 
     @Test
     public void handleGetCommandShortInfo() {
         Assertions.assertDoesNotThrow(() ->
-                Assertions.assertNotNull(CommandsController.getCommandNameAndShortInfo("help")));
+                Assertions.assertNotNull(CommandsController.getCommandAttribute("help")));
     }
 
     @Test
