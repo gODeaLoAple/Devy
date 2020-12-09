@@ -11,6 +11,9 @@ public class DiscordMessageSender extends DiscordSender {
     }
 
     public void send(String message) {
+        if (message.length() > 2000) {
+            message = message.substring(0, 2000 - 3) + "...";
+        }
         channel.sendMessage(message).queue();
     }
 

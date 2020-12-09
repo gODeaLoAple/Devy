@@ -33,10 +33,8 @@ public class RepositoriesCommand extends Command {
         var count = 1;
         try {
             validate();
-            var sb = new StringBuilder();
             for (var repo : new RepositoryService().getRepositories(userName.get(0)))
-                sb.append(formatMessage(count++, repo));
-            sender.send(sb.toString());
+                sender.send(formatMessage(count++, repo));
         } catch (IOException e) {
             sender.send("No such github user.");
         } catch (CommandException e) {
