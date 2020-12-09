@@ -56,7 +56,6 @@
     <orderEntry type="library" name="mysql-connector-java-8.0.22" level="project" />
     <orderEntry type="library" name="org.dbunit:dbunit:2.7.0" level="project" />
     <orderEntry type="library" name="com.github.github:org.eclipse.egit.github.core.shaded:1.1.2" level="project" />
-    <orderEntry type="library" name="org.kohsuke:github-api:1.85" level="project" />
     <orderEntry type="library" name="org.mockito:mockito-all:2.0.2-beta" level="project" />
     <orderEntry type="library" name="org.slf4j:slf4j-simple:1.7.25" level="project" />
   </component>
