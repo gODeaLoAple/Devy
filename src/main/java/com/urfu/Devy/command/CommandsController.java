@@ -1,11 +1,8 @@
 package main.java.com.urfu.Devy.command;
 
-import main.java.com.urfu.Devy.group.EmptyGroup;
-import main.java.com.urfu.Devy.sender.EmptySender;
 import main.java.com.urfu.Devy.group.GroupInfo;
 import main.java.com.urfu.Devy.sender.MessageSender;
 import main.java.com.urfu.Devy.command.commands.common.UnknownCommand;
-import org.apache.log4j.Logger;
 import org.reflections.Reflections;
 
 import java.lang.reflect.InvocationTargetException;
@@ -25,9 +22,7 @@ public class CommandsController {
 
     public static Command createCommand(GroupInfo group, MessageSender sender, CommandData data) {
         try {
-            return getCommandClass(data.getName())
-                    .getDeclaredConstructor(GroupInfo.class, MessageSender.class, String[].class)
-                    .newInstance(group, sender, data.getArgs());
+            return createInstance(getCommandClass(data.getName()), group, sender, data.getArgs());
         }
         catch (InstantiationException
                 | IllegalAccessException
@@ -52,21 +47,36 @@ public class CommandsController {
         return commands.values();
     }
 
-    public static String getCommandNameAndShortInfo(String commandName) throws IllegalArgumentException{
+
+    public static CommandName getCommandAttribute(String commandName) throws IllegalArgumentException {
         if(!hasCommand(commandName))
             throw new IllegalArgumentException("Command was not found: " + commandName);
-        return getCommandNameAndShortInfo(commands.get(commandName));
+        return getCommandAttribute(commands.get(commandName));
     }
 
-    protected static String getCommandNameAndShortInfo(Class<? extends Command> command) throws IllegalArgumentException{
-        var annotation = command.getDeclaredAnnotation(CommandName.class);
-        var info = annotation.info();
-        return annotation.name() + (info.isEmpty() ? "" : " :: " + info);
+    protected static CommandName getCommandAttribute(Class<? extends Command> command) throws IllegalArgumentException {
+        return command.getDeclaredAnnotation(CommandName.class);
     }
 
     public static String getCommandNameAndFullInfo(String commandName) throws CommandException {
         if(!hasCommand(commandName))
             throw new CommandException("Command was not found: " + commandName);
         return createCommand(null, null, new CommandData(commandName, new String[0])).extractParametersInfo();
+    }
+
+    public static String getCommandName(Class<? extends Command> commandClass) {
+        try {
+            return createInstance(commandClass, null, null, new String[0]).getName();
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Command not found");
+        }
+    }
+
+    private static Command createInstance(Class<? extends Command> commandClass, GroupInfo group,
+                                             MessageSender sender, String[] args)
+            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+        return commandClass
+                .getDeclaredConstructor(GroupInfo.class, MessageSender.class, String[].class)
+                .newInstance(group, sender, args);
     }
 }

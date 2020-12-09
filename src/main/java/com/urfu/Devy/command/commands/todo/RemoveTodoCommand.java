@@ -2,6 +2,7 @@ package main.java.com.urfu.Devy.command.commands.todo;
 
 import com.beust.jcommander.Parameter;
 import main.java.com.urfu.Devy.command.Command;
+import main.java.com.urfu.Devy.command.CommandArgumentsCountException;
 import main.java.com.urfu.Devy.command.CommandException;
 import main.java.com.urfu.Devy.command.CommandName;
 import main.java.com.urfu.Devy.group.GroupInfo;
@@ -10,10 +11,10 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-@CommandName(name="rmtodo", info="Remove todo with name")
+@CommandName(name="rmtodo", info="Remove todo-list with name.")
 public class RemoveTodoCommand extends Command {
 
-    @Parameter(names="-a", description = "Remove all todo-lists")
+    @Parameter(names="-a", description = "Remove all todo-lists.")
     private boolean all;
 
 
@@ -47,7 +48,7 @@ public class RemoveTodoCommand extends Command {
     }
 
     private void validate() throws CommandException {
-        if (text == null || !all && text.size() != 1)
-            throw new CommandException("Incorrect count of arguments. Todo-list name not found.");
+        if (!all && (text == null || text.size() != 1))
+            throw new CommandArgumentsCountException("Todo-list name not found.");
     }
 }

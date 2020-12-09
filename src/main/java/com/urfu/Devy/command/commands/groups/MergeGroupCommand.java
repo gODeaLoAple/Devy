@@ -146,7 +146,7 @@ abstract class GroupMerger {
         try {
             return RepositoryController.getGroupRepository().getGroupById(getOtherGroupId());
         } catch (NoSuchElementException e) {
-            throw new CommandException("Group not found");
+            throw new CommandException("Group not found.");
         }
     }
 

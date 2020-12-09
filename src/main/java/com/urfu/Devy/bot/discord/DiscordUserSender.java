@@ -1,11 +1,10 @@
 package main.java.com.urfu.Devy.bot.discord;
 
-import main.java.com.urfu.Devy.sender.MessageSender;
 import net.dv8tion.jda.api.entities.User;
 
 import java.util.Objects;
 
-public class DiscordUserSender implements MessageSender {
+public class DiscordUserSender extends DiscordSender {
 
     private final User user;
     public DiscordUserSender(User user) {
@@ -34,4 +33,5 @@ public class DiscordUserSender implements MessageSender {
     public int hashCode() {
         return Objects.hash(user);
     }
+
 }

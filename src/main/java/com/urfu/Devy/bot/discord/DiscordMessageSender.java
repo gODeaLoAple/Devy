@@ -1,9 +1,8 @@
 package main.java.com.urfu.Devy.bot.discord;
 
-import main.java.com.urfu.Devy.sender.MessageSender;
 import net.dv8tion.jda.api.entities.MessageChannel;
 
-public class DiscordMessageSender implements MessageSender {
+public class DiscordMessageSender extends DiscordSender {
 
     protected MessageChannel channel;
 
@@ -12,6 +11,9 @@ public class DiscordMessageSender implements MessageSender {
     }
 
     public void send(String message) {
+        if (message.length() > 2000) {
+            message = message.substring(0, 2000 - 3) + "...";
+        }
         channel.sendMessage(message).queue();
     }
 
@@ -19,4 +21,5 @@ public class DiscordMessageSender implements MessageSender {
     public String getId(){
         return channel.getId();
     }
+
 }

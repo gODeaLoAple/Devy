@@ -1,5 +1,6 @@
 package main.java.com.urfu.Devy.sender;
 
+import main.java.com.urfu.Devy.formatter.TextFormatter;
 import org.junit.jupiter.api.Assertions;
 
 public class EmptySender implements MessageSender {
@@ -21,6 +22,11 @@ public class EmptySender implements MessageSender {
 
     @Override
     public String getId(){
+        return null;
+    }
+
+    @Override
+    public TextFormatter createFormatter() {
         return null;
     }
 }
