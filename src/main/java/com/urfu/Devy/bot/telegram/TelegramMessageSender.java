@@ -18,7 +18,7 @@ public class TelegramMessageSender implements MessageSender {
 
     @Override
     public void send(String message) {
-        var sendMessageRequest = new SendMessage(id, message);
+        var sendMessageRequest = new SendMessage(id, message).enableMarkdown(true);
         try {
             bot.execute(sendMessageRequest);
         } catch (TelegramApiException ignored) { }
@@ -31,6 +31,6 @@ public class TelegramMessageSender implements MessageSender {
 
     @Override
     public TextFormatter createFormatter() {
-        return new DiscordTextFormatter();
+        return new TelegramTextFormatter();
     }
 }
