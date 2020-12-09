@@ -5,7 +5,8 @@ todo.md
 
 usbwebserver/
 out/
-src/META-INF
+src/META-INF/
+
 # Compiled class file
 *.class
 
